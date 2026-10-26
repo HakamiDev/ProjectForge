@@ -1,0 +1,129 @@
+# Project Forge
+
+**نظام تشغيل لفريق وكلاء الذكاء الاصطناعي.** أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء على أي منصة، وبوابة جودة مستقلة، وحوكمة قرارات، وأثر تدقيق، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف HTML واحد.
+
+بايثون 3.9 فما فوق، بلا أي مكتبة خارجية، وبلا خادم. [English below](#english).
+
+## التثبيت
+
+سطر واحد يُلصق في الطرفية: يحمّل الأداة ويشغّلها ويسأل أربعة أسئلة ثم يفتح موقع الإدارة.
+
+macOS وLinux:
+
+```
+curl -fsSL https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```
+irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1 | iex
+```
+
+أو نزّل `Project Forge.zip` من صفحة الإصدارات وانقر مرتين على `Project Forge.command` (Mac) أو `Project Forge.bat` (Windows). المشاريع تُنشأ في `Documents/Project Forge`.
+
+## ما الذي يحله
+
+المحادثات مع الذكاء الاصطناعي تنسى، وتتعارض، ولا تُقاس. هنا المجلد هو الذاكرة، واللوحة هي العقل المشترك، والأرقام هي الحكم:
+
+| المشكلة | الحل |
+| --- | --- |
+| كل محادثة تبدأ من الصفر | `CLAUDE.md` وملف دور لكل وكيل يُقرأ من المجلد، لا من ذاكرة المحادثة |
+| وكيلان يعملان على الشيء نفسه | لوحة واحدة بصفوف مرقمة، و«قيد التنفيذ» تحجز الصف، وبصمة تمنع الكتابة المتعارضة |
+| مخرجات تصل إليك بلا فحص | رئيس ضمان الجودة يحكم «يمر أو لا يمر» قبل أن يصل أي مخرج إلى صاحب المشروع |
+| قرارات معلقة تعطّل الفريق | سقف خمسة قرارات، ومهلة 48 ساعة تؤخذ بعدها التوصية، وسجل موسوم |
+| لا أحد يعرف ما أُنجز | `report` يعطي نسبة التسليم وزمن الدورة ومرور الجودة والحمل، و`export` يصدّرها إلى Power BI |
+| من غيّر ماذا؟ | `Agents/Audit Log.md` يسجّل كل كتابة، و`Data/Status History.csv` كل تغيّر حالة |
+| بيانات حساسة في أدوات خارجية | `Docs/Data Policy.md` ملزم: تصنيف البيانات والأدوات المعتمدة |
+
+## قوالب الفرق
+
+| القالب | الأدوار |
+| --- | --- |
+| `general` | رئيس المنتج، رئيس التنفيذ، المدير الإبداعي، رئيس ضمان الجودة، الرئيس التقني |
+| `transformation` | رئيس التحول، محلل العمليات، مهندس الأتمتة، مسؤول البيانات والامتثال، رئيس ضمان الجودة، مدير التغيير والتبني |
+| `operations` | رئيس العمليات، محلل الأداء، مصمم الإجراءات، مهندس الأتمتة، رئيس ضمان الجودة |
+| `data` | رئيس البيانات، مهندس البيانات، محلل ذكاء الأعمال، مسؤول جودة البيانات، رئيس ضمان الجودة |
+| `software` | رئيس المنتج، مهندس الواجهات، مهندس الخلفية، مصمم التجربة، رئيس ضمان الجودة، رئيس العمليات والنشر |
+| `content` | رئيس التحرير، الكاتب الأول، الباحث، المصمم البصري، رئيس ضمان الجودة، رئيس النمو والنشر |
+
+وفي كل فريق «البوصلة»: مدير المكتب الذي تكلّمه وحده فيوزع العمل. وتضيف أي دور بأمر `add-role`.
+
+## الأوامر
+
+| الأمر | الوظيفة |
+| --- | --- |
+| `new` | ينشئ مشروعًا كاملًا |
+| `build` | يعيد بناء موقع الإدارة من اللوحة |
+| `watch` | يعيد البناء تلقائيًا عند تغيّر اللوحة |
+| `rows` | يعرض الصفوف الجاهزة لدور |
+| `add-row` | يضيف صفًا بأمان: رقم تلقائي ومنع للتعارض وسقف للمفتوح |
+| `set-status` | يغيّر حالة صف؛ «معتمدة» و«ملغاة» بأمر صاحب المشروع فقط |
+| `add-role` | يضيف دورًا ويحدّث القواعد والأوامر والموقع |
+| `decide` | يسجّل قرارًا موسومًا في سجل القرارات |
+| `report` | تقرير أداء: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة |
+| `export` | يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI وExcel |
+| `check` | يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات |
+| `register` | يسجّل المشروع في سجل مركزي للمشاريع |
+| `selftest` | يختبر الأداة على مشروع مؤقت |
+
+## للمطورين
+
+```
+git clone https://github.com/hakami-bros/project-forge.git
+cd project-forge
+python3 -m forge new
+python3 -I tests/testforge.py
+python3 -I tools/build-single.py
+```
+
+```
+forge/                حزمة الأداة (core.py) وقالب موقع الإدارة
+tools/build-single.py يبني ملف الأداة الواحد المكتفي بنفسه في dist/
+tools/build-site.py   يبني الموقع التعريفي site/index.html
+tests/                اختبارات الوحدة واختبار المتصفح (Playwright)
+site/                 الموقع التعريفي ومكتبة الأوامر وصورة المعاينة
+launchers/            مشغّلات بنقرتين لـ Mac وWindows
+```
+
+الموقع يُنشر تلقائيًا على GitHub Pages عند الدفع إلى `main` (فعّل Pages من Settings ثم Source: GitHub Actions)، ووسم `v1.0.0` يرفع ملف الأداة الواحد و`Project Forge.zip` إلى صفحة الإصدارات.
+
+## الترخيص
+
+MIT.
+
+---
+
+## English
+
+**Project Forge is an operating system for a team of AI agents.** One command turns a plain folder into a disciplined office: a single board every agent works from (on any platform), an independent QA gate, decision governance, a full audit trail, performance metrics exported to Power BI, and a management site that runs from a single HTML file.
+
+Python 3.9+, no dependencies, no server. Arabic-first: every generated file, role brief and report is written in Arabic.
+
+**Install** (macOS/Linux):
+
+```
+curl -fsSL https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```
+irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1 | iex
+```
+
+**What it solves**
+
+- Chats forget: rules and role briefs live in the folder, not in chat memory.
+- Agents collide: one numbered board, "in progress" locks a row, a checksum guard prevents conflicting writes.
+- Unchecked output: a QA lead rules pass/fail before anything reaches the owner.
+- Stalled decisions: a cap of five open decisions and a 48-hour rule after which the recommendation stands.
+- Nothing is measured: `report` gives delivery rate, cycle time, QA pass rate and load per role; `export` writes CSVs for Power BI.
+- No accountability: every board write is logged with who, when and what.
+- Sensitive data in external tools: a binding data policy with classification and approved tools.
+
+**Team presets:** general, transformation (AI transformation team), operations, data (BI), software, content. Add any role with `add-role`.
+
+**Commands:** `new`, `build`, `watch`, `rows`, `add-row`, `set-status`, `add-role`, `decide`, `report`, `export`, `check`, `register`, `selftest`.
+
+MIT licensed.

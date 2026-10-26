@@ -1,0 +1,33 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python3 -I tests/testforge.py
+      - run: python3 -I tools/build-single.py
+      - run: python3 -I "dist/Project Forge 1.py" selftest
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - run: |
+          python3 -I tools/build-single.py
+          mkdir demo && cd demo
+          python3 -I "../dist/Project Forge 1.py" new "مشروع تجريبي" --goal "اختبار" --owner "الرئيس" --preset general --yes --dest .
+          cd ..
+          NODE_PATH=$PWD/node_modules node tests/smoke.js "demo/مشروع تجريبي/Office/Project Office.html" shots
