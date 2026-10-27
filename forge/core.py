@@ -990,6 +990,56 @@ def build_site(root, report=None, open_it=False):
 # ---------------------------------------------------------------- الأوامر
 
 
+def parse_role_spec(spec):
+    """«الاسم | المجال | المهام» ← صف دور."""
+    parts = [x.strip() for x in str(spec).split("|")]
+    name = clean_name(parts[0])
+    if not name:
+        return None
+    title = parts[1] if len(parts) > 1 and parts[1] else name
+    scope = parts[2] if len(parts) > 2 and parts[2] else title
+    return (name, title, scope, "Claude")
+
+
+def customize_roles(base, drops, adds):
+    roles = list(base)
+    for d in drops or []:
+        key = role_key(d)
+        if key == QA_NAME:
+            continue
+        roles = [r for r in roles if role_key(r[0]) != key]
+    for a in adds or []:
+        r = parse_role_spec(a)
+        if r and all(role_key(x[0]) != role_key(r[0]) for x in roles):
+            roles.append(r)
+    if all(role_key(r[0]) != QA_NAME for r in roles):
+        roles.append((QA_NAME, "الاختبار المستقل والحكم", "الاختبار المستقل والحكم بيمر أو لا يمر على كل مخرج قبل أن يصل إلى صاحب المشروع", "Claude"))
+    return roles
+
+
+def choose_roles_interactive(base):
+    """يعرض الفريق المقترح ويتيح الحذف والإضافة قبل الإنشاء."""
+    roles = list(base)
+    while True:
+        print("\nالفريق المقترح (البوصلة تُضاف تلقائيًا، ودور ضمان الجودة لا يُحذف):")
+        for i, r in enumerate(roles, 1):
+            print("  %d) %s: %s" % (i, r[0], r[1]))
+        print("اضغط Enter للموافقة، أو اكتب:")
+        print("  -2        لحذف الدور رقم 2 (ويصح -2,3)")
+        print("  +اسم الدور | مجاله     لإضافة دور")
+        cmd = input("> ").strip()
+        if not cmd:
+            return roles
+        if cmd[0] in "-−":
+            nums = [int(x) for x in re.findall(r"\d+", cmd)]
+            drops = [roles[n - 1][0] for n in nums if 1 <= n <= len(roles)]
+            roles = customize_roles(roles, drops, [])
+        elif cmd[0] == "+":
+            roles = customize_roles(roles, [], [cmd[1:]])
+        else:
+            print("لم أفهم الأمر. اضغط Enter للموافقة على الفريق كما هو.")
+
+
 def cmd_new(a):
     interactive = sys.stdin.isatty() and not a.yes
 
@@ -1022,6 +1072,11 @@ def cmd_new(a):
     if a.roles_file:
         data = json.loads(Path(a.roles_file).read_text(encoding="utf-8"))
         roles = [(r["name"], r.get("title", r["name"]), r.get("scope", ""), r.get("platform", "Claude")) for r in data]
+    elif a.drop_role or a.add_role:
+        roles = customize_roles(PRESETS[preset], a.drop_role, a.add_role)
+    elif interactive:
+        picked = choose_roles_interactive(PRESETS[preset])
+        roles = picked if picked != list(PRESETS[preset]) else None
     parent = a.dest or (str(Path.home() / "Documents" / "Project Forge") if interactive else str(Path.cwd()))
     report = []
     root = create_project(parent, name, goal, owner, preset, roles, a.accent, report)
@@ -1568,6 +1623,8 @@ def main(argv=None):
     p.add_argument("--owner")
     p.add_argument("--preset", choices=list(PRESETS))
     p.add_argument("--roles-file", help="ملف JSON بقائمة أدوار: [{name,title,scope,platform}]")
+    p.add_argument("--drop-role", action="append", help="حذف دور من القالب (يتكرر)")
+    p.add_argument("--add-role", action="append", help="إضافة دور بصيغة «الاسم | المجال | المهام» (يتكرر)")
     p.add_argument("--dest", help="المجلد الأب الذي يُنشأ فيه المشروع")
     p.add_argument("--accent", help="لون أساسي بصيغة #RRGGBB للوضع الفاتح")
     p.add_argument("--register", action="store_true", help="سجّل المشروع في مركز البوصلات")

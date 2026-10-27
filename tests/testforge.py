@@ -107,6 +107,16 @@ class ForgeTests(unittest.TestCase):
         core.write_new(f, "جديد", [])
         self.assertEqual(f.read_text(encoding="utf-8"), "مخصص")
 
+    def test_customize_roles(self):
+        base = core.PRESETS["operations"]
+        r = core.customize_roles(base, ["محلل الأداء", core.QA_NAME], ["مراجع قانوني | الامتثال النظامي"])
+        names = [x[0] for x in r]
+        self.assertNotIn("محلل الأداء", names)
+        self.assertIn("مراجع قانوني", names)
+        self.assertIn(core.QA_NAME, names)
+        r2 = core.customize_roles([("أ", "أ", "", "Claude")], [], [])
+        self.assertIn(core.QA_NAME, [x[0] for x in r2])
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)
