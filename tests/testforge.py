@@ -176,6 +176,17 @@ class ForgeTests(unittest.TestCase):
             self.assertIn(k, core.GOAL_EXAMPLES)
             self.assertTrue(core.skills_for(k))
 
+    def test_custom_team_has_no_missing_product_lead(self):
+        roles = core.customize_roles(core.PRESETS["blank"], [], ["مدير المنتج والهندسة | تطوير | شيفرة", "مدير المحتوى | محتوى | موقع"])
+        root = core.create_project(self.tmp, "فريق ثلاثي", "هدف", "الرئيس", "blank", roles, None, [])
+        self.assertEqual(core.check_project(root), [])
+        for f in root.rglob("*.md"):
+            t = f.read_text(encoding="utf-8")
+            self.assertNotIn("{{", t, f.name)
+            self.assertNotIn("رئيس المنتج", t, f.name)
+        ref = (root / "فريق ثلاثي Project Reference.md").read_text(encoding="utf-8")
+        self.assertIn("مدير المنتج والهندسة وحده", ref)
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)

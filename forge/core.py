@@ -1268,6 +1268,17 @@ def fmt_dt(d):
     return "%s، %s" % (fmt_date(d), d.strftime("%H:%M"))
 
 
+def pm_name(roster):
+    """صاحب المرجع: «رئيس المنتج» إن وُجد، وإلا أول دور غير البوصلة وغير ضمان الجودة."""
+    names = [r["name"] for r in roster]
+    if "رئيس المنتج" in names:
+        return "رئيس المنتج"
+    for r in roster:
+        if r["id"] != "compass" and r["name"] != QA_NAME:
+            return r["name"]
+    return COMPASS
+
+
 def fill(t, **kw):
     for k, v in kw.items():
         t = t.replace("{{" + k + "}}", str(v))
@@ -1476,7 +1487,7 @@ CLAUDE_T = """# تعليمات العمل في {{project}}
 1. اقرأ اللوحة وحدها. لا تُعد قراءة ملف دورك ولا المرجع إلا إن تغيّر.
 2. نفّذ مهامك الجاهزة بترتيب أرقامها. المهمة جاهزة إن كانت باسمك وحالتها «محالة» وما في «يبدأ بعد» مسلَّم أو معتمد.
 3. عند البدء اجعل حالتها «قيد التنفيذ». وعند التسليم احفظ المخرج في مساره، واجعل حالتها «مسلّمة»، أو «بانتظار التدقيق» إن كان {{qa}} هو التالي، واكتب في «للتالي» ما يحتاجه من يليك.
-4. تحتاج شيئًا من زميل؟ أضف صفًا جديدًا (`add-row`) باسمك في «من» واسمه في «إلى». وما يلزم المرجع صفٌّ إلى رئيس المنتج. وما يحتاج قرار {{owner}} بندٌ في القسم 1 من اللوحة.
+4. تحتاج شيئًا من زميل؟ أضف صفًا جديدًا (`add-row`) باسمك في «من» واسمه في «إلى». وما يلزم المرجع صفٌّ إلى {{pm}}. وما يحتاج قرار {{owner}} بندٌ في القسم 1 من اللوحة.
 5. حدّث صفك في «حالة الفريق».
 6. اقرأ من ملفات المدخلات ما تحتاجه المهمة فقط، ولا تنسخ محتواها في ردك.
 7. ردك على {{owner}} ثلاثة أسطر: ما نفّذت، وما ينتظر غيرك، وما تحتاجه منه. وإن لم تجد مهمة جاهزة فاكتب «لا مهام جاهزة».
@@ -1488,7 +1499,7 @@ CLAUDE_T = """# تعليمات العمل في {{project}}
 3. سقف الصفوف المفتوحة لكل موظف خمسة. واللوحة لا تتجاوز صفحتين؛ تنقل البوصلة المسلَّم إلى `Archive/`.
 4. المهمة في اللوحة تفويض من {{owner}} ضمن نطاقها داخل المجلد. النشر والدفع والتواصل مع أي جهة خارجية بأمر {{owner}} المباشر فقط.
 5. طلب {{owner}} المباشر من موظف نافذ. نبّهه في سطر قبل التنفيذ إن خالف المرجع أو مسّ مهمة مفتوحة أو اختصاص زميل، ثم سجّله صفًا في اللوحة باسمك.
-6. ما يخص بنية الفريق وأوامره يُحال إلى البوصلة. ما يخص المرجع يُحال إلى رئيس المنتج.
+6. ما يخص بنية الفريق وأوامره يُحال إلى البوصلة. ما يخص المرجع يُحال إلى {{pm}}.
 7. موظف جديد لا يرد اسمه في الجدول: يُضاف بـ`add-role`، ولا يعمل قبل ذلك.
 8. إن لم يكن المجلد موصولًا بالمحادثة فقل ذلك صراحة، ولا تدّعِ أنك حفظت ملفًا.
 
@@ -1571,8 +1582,8 @@ README_T = """# {{project}}
 ## أوامر الأداة
 
 ```
-python3 -I "Tools/{{tool}}" rows "رئيس المنتج"
-python3 -I "Tools/{{tool}}" add-row --from "رئيس المنتج" --to "رئيس التنفيذ" --task "..." --inputs "..." --output "..."
+python3 -I "Tools/{{tool}}" rows "{{pm}}"
+python3 -I "Tools/{{tool}}" add-row --from "{{pm}}" --to "رئيس التنفيذ" --task "..." --inputs "..." --output "..."
 python3 -I "Tools/{{tool}}" set-status 3 "مسلّمة" --note "..."
 python3 -I "Tools/{{tool}}" add-role "اسم الدور" --title "المسمى" --scope "الاختصاص"
 python3 -I "Tools/{{tool}}" decide "نص القرار" --tag "قابل للتراجع"
@@ -1588,7 +1599,7 @@ REF_T = """# {{project}}: المرجع الشامل للمشروع
 **آخر تحديث:** {{date}}
 **المالك:** {{owner}}
 
-هذا الملف هو المرجع الوحيد المعتمد. كل قرار يُقاس عليه، ويُحدَّث مع كل قرار أو إنجاز. عند التعارض مع أي وثيقة أقدم يُعتمد ما هنا. يعدّله رئيس المنتج وحده.
+هذا الملف هو المرجع الوحيد المعتمد. كل قرار يُقاس عليه، ويُحدَّث مع كل قرار أو إنجاز. عند التعارض مع أي وثيقة أقدم يُعتمد ما هنا. يعدّله {{pm}} وحده.
 
 ## 1. التعريف
 
@@ -1738,7 +1749,7 @@ ROLE_T = """# {{name}}: أمر التكليف
 
 1. لا تنفّذ عمل زميل ولا تكتب بدلًا منه؛ أحِل إليه صفًا.
 2. لا تنشر ولا تدفع ولا تتواصل مع جهة خارجية دون أمر {{owner}} المباشر.
-3. لا تعدّل المرجع (رئيس المنتج وحده)، ولا تعد بندًا من «المستبعد».
+3. لا تعدّل المرجع ({{pm}} وحده)، ولا تعد بندًا من «المستبعد».
 4. لا تحذف ملفًا؛ انقله إلى `Archive/`.
 
 ## 4. كيف تعمل
@@ -1828,9 +1839,9 @@ def md_table(header, rows):
 
 def role_doc(team, r):
     t = fill(COMPASS_T if r["id"] == "compass" else ROLE_T, name=r["name"], chat=r["chat"], platform=r["platform"], title=r["title"],
-             scope=r["scope"], project=team["project"], goal=team["goal"], owner=team["owner"])
+             scope=r["scope"], project=team["project"], goal=team["goal"], owner=team["owner"], pm=pm_name(team["roster"]))
     if r["name"] == QA_NAME:
-        t += fill(QA_EXTRA, owner=team["owner"])
+        t += fill(QA_EXTRA, owner=team["owner"], pm=pm_name(team["roster"]))
     return t
 
 
@@ -1872,10 +1883,10 @@ def create_project(parent, name, goal, owner, preset, roles, accent, report, ski
     save_team(root, team)
     report.append(("أُنشئ", root / "Agents" / "Team.json"))
     qa = QA_NAME
-    write_new(root / "CLAUDE.md", fill(CLAUDE_T, project=project, goal=goal, owner=owner, tool=TOOL_NAME, qa=qa, team_table=team_table(roster)), report)
+    write_new(root / "CLAUDE.md", fill(CLAUDE_T, project=project, goal=goal, owner=owner, tool=TOOL_NAME, qa=qa, team_table=team_table(roster), pm=pm_name(roster)), report)
     write_new(root / "AGENTS.md", fill(AGENTS_T, project=project, owner=owner), report)
-    write_new(root / "Read Me.md", fill(README_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, office=OFFICE_FILE), report)
-    write_new(root / ("%s Project Reference.md" % project), fill(REF_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME), report)
+    write_new(root / "Read Me.md", fill(README_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, office=OFFICE_FILE, pm=pm_name(roster)), report)
+    write_new(root / ("%s Project Reference.md" % project), fill(REF_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, pm=pm_name(roster)), report)
     write_new(root / "Agents" / "Board.md", board_text(team), report)
     write_new(root / "Agents" / "Start Commands.md", start_commands_md(team), report)
     write_new(root / "Agents" / "Handoff Commands.md", HANDOFF_T, report)
