@@ -13,13 +13,13 @@
 macOS وLinux:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.sh | bash
 ```
 
 Windows (PowerShell):
 
 ```
-irm https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | iex
 ```
 
 أو نزّل `Project Forge 1.py` من صفحة الإصدارات وشغّله: `python3 -I "Project Forge 1.py"`. تفتح الأداة صفحة بسيطة في المتصفح: تكتب اسم مشروعك وهدفه، وتختار فريقك وتعدّل أدواره بالنقر، ثم تضغط «أنشئ المشروع». المشاريع تُنشأ في `Documents/Project Forge`.
@@ -89,7 +89,7 @@ irm https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/instal
 ## للمطورين
 
 ```
-git clone https://github.com/HakamiDevelopment/ProjectForge.git
+git clone https://github.com/HakamiDev/ProjectForge.git
 cd ProjectForge
 python3 -m forge
 python3 -I tests/testforge.py
@@ -121,13 +121,13 @@ Python 3.9+, no dependencies, no server. Arabic-first: every generated file, rol
 **Install** (macOS/Linux):
 
 ```
-curl -fsSL https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.sh | bash
 ```
 
 Windows (PowerShell):
 
 ```
-irm https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | iex
 ```
 
 **What it solves**

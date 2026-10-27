@@ -1,6 +1,6 @@
 #!/bin/bash
 # تثبيت Project Forge وتشغيله (macOS وLinux). الاستعمال: سطر واحد في Terminal، انظر README.
-REPO="${FORGE_REPO:-https://github.com/HakamiDevelopment/ProjectForge}"
+REPO="${FORGE_REPO:-https://github.com/HakamiDev/ProjectForge}"
 URL="${FORGE_URL:-$REPO/releases/latest/download/Project.Forge.1.py}"
 DIR="${FORGE_DIR:-$HOME/Documents/Project Forge}"
 FILE="$DIR/Project Forge 1.py"
