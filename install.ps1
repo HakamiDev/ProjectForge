@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $env:PYTHONUTF8 = "1"
-$Repo = if ($env:FORGE_REPO) { $env:FORGE_REPO } else { "https://github.com/hakami-bros/project-forge" }
+$Repo = if ($env:FORGE_REPO) { $env:FORGE_REPO } else { "https://github.com/HakamiDevelopment/project-forge" }
 $Url  = if ($env:FORGE_URL)  { $env:FORGE_URL }  else { "$Repo/releases/latest/download/Project.Forge.1.py" }
 $Dir  = if ($env:FORGE_DIR)  { $env:FORGE_DIR }  else { Join-Path $HOME "Documents\Project Forge" }
 $File = Join-Path $Dir "Project Forge 1.py"

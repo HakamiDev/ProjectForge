@@ -11,7 +11,7 @@ root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root))
 from forge import core  # noqa: E402
 
-REPO = (sys.argv[1] if len(sys.argv) > 1 else "https://github.com/hakami-bros/project-forge").rstrip("/")
+REPO = (sys.argv[1] if len(sys.argv) > 1 else "https://github.com/HakamiDevelopment/project-forge").rstrip("/")
 T = core.TOOL_NAME
 RUN = 'python3 -I "%s"' % T
 
