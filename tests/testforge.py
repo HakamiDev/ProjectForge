@@ -169,7 +169,9 @@ class ForgeTests(unittest.TestCase):
         groups = core.commands_library(team)
         self.assertGreaterEqual(len(groups), 5)
         self.assertTrue(all(it["text"] for g in groups for it in g["items"]))
-        self.assertGreaterEqual(len(core.PRESETS), 40)
+        self.assertGreaterEqual(len(core.PRESETS), 70)
+        self.assertTrue(all(core.preset_tags(k) for k in core.PRESETS))
+        self.assertTrue(set(core.PRESET_SYNONYMS) <= set(core.PRESETS))
         for k in core.PRESETS:
             self.assertIn(k, core.GOAL_EXAMPLES)
             self.assertTrue(core.skills_for(k))

@@ -45,6 +45,12 @@ textarea{min-height:84px;resize:vertical}
 .opt b{display:block;font-size:15px}
 .opt small{color:var(--mut);font-size:12.5px;line-height:1.5;display:block;margin-top:3px}
 .opt .em{font-size:22px;display:block;margin-bottom:2px}
+.sugg{display:flex;gap:8px;flex-wrap:wrap;min-height:4px}
+.sugg .s{display:flex;align-items:center;gap:8px;border:1.5px solid var(--acc);background:var(--chip);border-radius:14px;padding:8px 14px;cursor:pointer;font:inherit;color:inherit;transition:.25s;animation:up .4s both}
+.sugg .s:hover{transform:translateY(-2px)}
+.sugg .s b{font-size:14px;display:block}.sugg .s small{color:var(--mut);font-size:12px;display:block}.sugg .s>div{text-align:right}
+.sugg .s .m{font-size:11px;color:var(--acc);background:var(--bg);padding:1px 8px;border-radius:99px}
+.sugg .none{color:var(--mut);font-size:13px}
 .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .tools input{flex:1;min-width:180px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
@@ -153,7 +159,10 @@ textarea{min-height:84px;resize:vertical}
 
 <section class="card hide" id="s1">
 <h1>ما مجال مشروعك؟</h1><p class="sub">اختر الأقرب. يمكنك تعديل كل شيء بعد ذلك.</p>
-<div class="tools"><input id="q" placeholder="ابحث: تسويق، مطاعم، مالية، تعليم، بحث…" autocomplete="off"></div>
+<label for="desc" style="margin-top:0">صف مشروعك بجملة، وسنقترح الأقرب</label>
+<div class="tools"><input id="desc" placeholder="مثال: عندي كافيه صغير وأبغى أنظم الطلبات والتسويق" autocomplete="off"></div>
+<div class="sugg" id="sugg"></div>
+<div class="tools" style="margin-top:14px"><input id="q" placeholder="أو ابحث في 80 تخصصًا: تسويق، مطاعم، مالية، تعليم…" autocomplete="off"></div>
 <div class="chips" id="groups"></div>
 <div class="grid" id="types"></div>
 <details class="why"><summary>لماذا أختار مجالًا؟</summary><div>لكل مجال فريق جاهز بأدوار مجرّبة ومهارات موصى بها، فتبدأ من نقطة متقدمة بدل الصفر. وإن لم تجد مجالك، اختر «فريق من الصفر» وابنِ فريقك بنفسك في الخطوة التالية.</div></details>
@@ -178,7 +187,7 @@ textarea{min-height:84px;resize:vertical}
 <h1>فريقك</h1><p class="sub">هذا الفريق المقترح لمجالك. احذف ما لا تحتاجه، وأضف ما ينقصك.</p>
 <div class="roles" id="roles"></div>
 <div class="row" style="justify-content:flex-start;margin:12px 0 0"><button class="btn sec" id="lb">+ أضف من مكتبة الأدوار الجاهزة</button></div>
-<div class="lib hide" id="lib"><div class="tools"><input id="lq" placeholder="ابحث في 180 دورًا: محلل، كاتب، مسؤول…" autocomplete="off"></div><div id="ll"></div></div>
+<div class="lib hide" id="lib"><div class="tools"><input id="lq" placeholder="ابحث في 330 دورًا: محلل، كاتب، مسؤول…" autocomplete="off"></div><div id="ll"></div></div>
 <div class="add"><input id="rn" placeholder="أو اكتب اسم دور جديد"><input id="rt" placeholder="مجاله (اختياري)"><button class="btn sec" id="ra">أضف</button></div>
 <details class="why"><summary>ما البوصلة؟ ولماذا لا يُحذف رئيس ضمان الجودة؟</summary><div><ol><li>«البوصلة» مدير المكتب: تكلّمها وحدها فتوزّع العمل وتتابعه وتعود إليك بما يحتاج قرارك.</li><li>«رئيس ضمان الجودة» يفحص كل مخرج باستقلال ويحكم عليه قبل أن يصلك، فلا يصحّح أحد عمله بنفسه. ثابت في كل فريق.</li><li>كل دور آخر محادثة مستقلة لها مجال واحد لا يتداخل مع غيره.</li></ol></div></details>
 <div class="err" id="e3"></div>
@@ -231,7 +240,7 @@ function copy(t,ok){(navigator.clipboard?navigator.clipboard.writeText(t):Promis
 function renderGroups(){var g=$("groups");g.innerHTML="";["الكل"].concat(S.groups).forEach(function(n){var c=el("button","chip"+(S.group===n?" on":""),n);c.onclick=function(){S.group=n;renderGroups();renderTypes()};g.appendChild(c)})}
 function renderTypes(){var g=$("types");g.innerHTML="";var q=S.q.trim(),n=0;S.presets.forEach(function(p){
 if(S.group!=="الكل"&&p.group!==S.group&&S.preset!==p.key)return;
-if(q&&(p.label+" "+p.blurb+" "+p.roles.map(function(r){return r.name+" "+r.title}).join(" ")).indexOf(q)<0)return;n++;
+if(q&&(p.label+" "+p.blurb+" "+(p.syn||"")+" "+p.roles.map(function(r){return r.name+" "+r.title}).join(" ")).indexOf(q)<0)return;n++;
 var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("span","em",p.icon));b.appendChild(el("b","",p.label));b.appendChild(el("small","",p.blurb));
 b.onclick=function(){if(S.preset!==p.key){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});S.skills={};(S.recommended[p.key]||[]).forEach(function(k){S.skills[k]=1})}renderTypes();err("e1","")};g.appendChild(b)});
 if(!n)g.appendChild(el("div","empty","لا يوجد مجال مطابق. اختر «فريق من الصفر» من مجموعة «مخصص» وابنِ فريقك بنفسك."))}
@@ -246,6 +255,17 @@ var b=el("button","",have[r.name]?"مضاف":"أضف");b.disabled=!!have[r.name]
 if(!n)box.appendChild(el("div","empty","لا نتائج. اكتب الدور يدويًا في الخانة أدناه."))}
 function renderSkills(){var box=$("skills");box.innerHTML="";S.skillGroups.forEach(function(g){var items=S.skillList.filter(function(s){return s.group===g});if(!items.length)return;box.appendChild(el("div","sg",g));var grid=el("div","sk");
 items.forEach(function(s){var on=!!S.skills[s.key];var l=el("label","skill"+(on?" on":""));var c=el("input");c.type="checkbox";c.checked=on;c.onchange=function(){if(c.checked)S.skills[s.key]=1;else delete S.skills[s.key];l.classList.toggle("on",c.checked)};l.appendChild(c);var t=el("div");t.appendChild(el("b","",s.name));t.appendChild(el("small","",s.desc));l.appendChild(t);grid.appendChild(l)});box.appendChild(grid)})}
+
+function tok(t){return (t||"").replace(/[\u064B-\u065F\u0640]/g,"").split(/[\s،,.:;()«»"'\/|+\-]+/).map(function(w){w=w.trim();if(w.length>=3){w=w.replace(/^(وال|بال|لل|ال|و|ب|ل|ف|ك)(?=.{3,})/,"")}return w}).filter(function(w){return w.length>=3})}
+function mt(x,w){return x===w||(x.length>=4&&w.length>=4&&(x.indexOf(w)===0||w.indexOf(x)===0))}
+function suggest(){var box=$("sugg");box.innerHTML="";var ws=tok($("desc").value);if(!ws.length)return;
+var pre=S.presets.map(function(p){return{p:p,syn:tok(p.syn),lab:tok(p.label),tg:p.tags||[]}});
+var df={};ws.forEach(function(w){var c=0;pre.forEach(function(x){if(x.syn.some(function(y){return mt(y,w)})||x.lab.some(function(y){return mt(y,w)})||x.tg.indexOf(w)>=0)c++});df[w]=c});
+var sc=pre.map(function(x){var score=0,hits=[];ws.forEach(function(w){if(!df[w])return;var base=0;if(x.syn.some(function(y){return mt(y,w)}))base=3;else if(x.lab.some(function(y){return mt(y,w)}))base=2;else if(x.tg.indexOf(w)>=0)base=1;if(base){score+=base*(4/(1+df[w]));hits.push(w)}});return{p:x.p,score:score,hits:hits}}).filter(function(x){return x.score>0}).sort(function(a,b){return b.score-a.score}).slice(0,3);
+if(!sc.length){box.appendChild(el("div","none","لم أجد تطابقًا واضحًا بعد. أضف كلمة عن مجالك، أو ابحث أدناه."));return}
+sc.forEach(function(x,i){var b=el("button","s");b.appendChild(el("span","",x.p.icon));var t=el("div");t.appendChild(el("b","",x.p.label));t.appendChild(el("small","",i===0?"الأقرب لوصفك":"خيار قريب"));b.appendChild(t);b.appendChild(el("span","m","تطابق: "+x.hits.slice(0,3).join("، ")));
+b.onclick=function(){S.group="الكل";S.q="";$("q").value="";S.preset=x.p.key;S.roles=x.p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});S.skills={};(S.recommended[x.p.key]||[]).forEach(function(k){S.skills[k]=1});renderGroups();renderTypes();err("e1","");document.querySelector("#types .opt.sel").scrollIntoView({behavior:"smooth",block:"center"})};box.appendChild(b)})}
+var _dt;$("desc").oninput=function(){clearTimeout(_dt);_dt=setTimeout(suggest,180)};
 $("q").oninput=function(){S.q=this.value;renderTypes()};
 $("lq").oninput=renderLib;
 $("lb").onclick=function(){var l=$("lib");l.classList.toggle("hide");if(!l.classList.contains("hide")){renderLib();$("lq").focus()}};
@@ -254,7 +274,7 @@ if(S.roles.some(function(r){return r.name===n})){err("e3","هذا الدور م�
 $("rn").onkeydown=$("rt").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("ra").onclick()}};
 $("n0").onclick=function(){show(1)};
 $("b1").onclick=function(){show(0)};
-$("n1").onclick=function(){if(!S.preset){err("e1","اختر مجالًا أولًا، أو «فريق من الصفر».");return}renderEx();show(2);$("name").focus()};
+$("n1").onclick=function(){if(!S.preset){err("e1","اختر مجالًا أولًا، أو «فريق من الصفر».");return}renderEx();if(!$("goal").value&&$("desc").value.trim())$("goal").value=$("desc").value.trim();show(2);$("name").focus()};
 $("b2").onclick=function(){show(1)};
 $("n2").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
 if(!S.name){err("e2","اكتب اسم المشروع.");return}if(/[\\/:*?"<>|]/.test(S.name)){err("e2","اسم المشروع لا يقبل هذه الرموز: \\ / : * ? \" < > |");return}if(!S.goal){err("e2","اكتب هدف المشروع، أو اضغط أحد الأمثلة.");return}err("e2","");renderRoles();show(3)};
