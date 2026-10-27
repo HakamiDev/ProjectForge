@@ -59,6 +59,9 @@ textarea{min-height:84px;resize:vertical}
 .ex{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .ex button{border:1px dashed var(--acc2);background:transparent;color:var(--acc);font:inherit;font-size:13px;padding:5px 11px;border-radius:99px;cursor:pointer;text-align:right}
 .roles{display:grid;gap:10px;margin-top:8px}
+select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 12px;outline:none;max-width:100%}
+.role select{width:auto;padding:6px 10px;border-radius:10px;font-size:13px;flex:none}
+.role .pt{font-size:12px;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:3px 10px;flex:none}
 .role{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 14px}
 .role .n{width:30px;height:30px;border-radius:9px;background:var(--chip);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--acc);flex:none}
 .role .t{flex:1;min-width:0}
@@ -179,6 +182,13 @@ textarea{min-height:84px;resize:vertical}
 <div class="ex" id="ex"></div>
 <label for="owner">كيف تحب أن يخاطبك الفريق؟</label><input id="owner" value="الرئيس" autocomplete="off">
 <div class="hint">مثل: الرئيس، أو اسمك، أو «الأستاذ فلان».</div>
+<label>أين ستعمل مع الفريق؟</label>
+<div class="chips" id="plat"><button type="button" class="chip on" data-p="Claude">Claude</button><button type="button" class="chip" data-p="ChatGPT">ChatGPT</button></div>
+<div class="hint">هذه المنصة الافتراضية للجميع. وفي خطوة الفريق تختار منصة كل موظف على حدة (مثلًا: الكاتب في ChatGPT والمحلل في Claude).</div>
+<label for="lang">لغة العمل</label>
+<select id="lang"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select>
+<input id="lang2" class="hide" placeholder="اكتب اسم اللغة" autocomplete="off" style="margin-top:8px">
+<div class="hint">بها يخاطبك الفريق وتُكتب المخرجات والتقارير. أسماء الملفات والأوامر تبقى كما هي.</div>
 <details class="why"><summary>لماذا الهدف مهم إلى هذا الحد؟</summary><div>الهدف يُكتب في أعلى كل ملف يقرؤه الموظفون، ويُقاس به كل مخرج. جملة واضحة الآن توفّر عشرات التصحيحات لاحقًا.</div></details>
 <div class="err" id="e2"></div>
 <div class="nav"><button class="btn sec" id="b2">السابق</button><button class="btn pri" id="n2">التالي</button></div>
@@ -217,7 +227,7 @@ textarea{min-height:84px;resize:vertical}
 <div class="row"><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button><button class="btn sec" id="sc">أيقونة على سطح المكتب</button></div>
 <div class="tabs"><button class="on" data-t="t1">الخطوات التالية</button><button data-t="t2">أوامر الفريق</button><button data-t="t3">مكتبة الأوامر</button></div>
 <div id="t1" class="guide">
-<div class="g"><div class="n">1</div><div class="t"><b>افتح محادثة جديدة في Claude</b><p>من التطبيق أو الموقع. وإن أمكن، أرفق مجلد المشروع بالمحادثة (زر «+» ثم اختيار المجلد)، لتقرأ الملفات وتكتب فيها مباشرة.</p></div></div>
+<div class="g"><div class="n">1</div><div class="t"><b id="g1b">افتح محادثة جديدة في Claude</b><p id="g1p">من التطبيق أو الموقع. وإن أمكن، أرفق مجلد المشروع بالمحادثة (زر «+» ثم اختيار المجلد)، لتقرأ الملفات وتكتب فيها مباشرة.</p></div></div>
 <div class="g"><div class="n">2</div><div class="t"><b>ألصق أمر البوصلة</b><p>هذا الأمر يجعل المحادثة تعمل بدور «مدير المكتب»، فتقرأ ملف دورها وتسألك عمّا تريد.</p><div class="cmd" id="cmd"></div><button class="btn pri sm" id="cp">انسخ الأمر</button></div></div>
 <div class="g"><div class="n">3</div><div class="t"><b>اكتب هدفك بلغتك</b><p>مثل: «وزّع هذا الهدف على الفريق». ستضيف البوصلة المهام إلى اللوحة، وتخبرك بالموظف الذي تبدأ معه.</p></div></div>
 <div class="g"><div class="n">4</div><div class="t"><b>شغّل الموظفين</b><p>لكل موظف محادثة مستقلة: انسخ أمره من تبويب «أوامر الفريق»، وألصقه، ثم اكتب «تابع». وافتح موقع الإدارة لترى التقدم.</p></div></div>
@@ -230,7 +240,7 @@ textarea{min-height:84px;resize:vertical}
 <div class="toast" id="toast"></div>
 <script>
 var TOKEN="@@TOKEN@@";
-var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],skills:{},dest:"",presets:[],groups:[],library:[],qa:"رئيس ضمان الجودة",examples:{},skillList:[],skillGroups:[],recommended:{},group:"الكل",q:""};
+var S={platform:"Claude",language:"العربية",name:"",goal:"",owner:"الرئيس",preset:null,roles:[],skills:{},dest:"",presets:[],groups:[],library:[],qa:"رئيس ضمان الجودة",examples:{},skillList:[],skillGroups:[],recommended:{},group:"الكل",q:""};
 var $=function(i){return document.getElementById(i)};
 function api(path,body){return fetch(path,{method:body===undefined?"GET":"POST",headers:{"X-Token":TOKEN,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)}).then(function(r){return r.json()})}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2000)}
@@ -246,8 +256,9 @@ var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("span","e
 b.onclick=function(){if(S.preset!==p.key){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});S.skills={};(S.recommended[p.key]||[]).forEach(function(k){S.skills[k]=1})}renderTypes();err("e1","")};g.appendChild(b)});
 if(!n)g.appendChild(el("div","empty","لا يوجد مجال مطابق. اختر «فريق من الصفر» من مجموعة «مخصص» وابنِ فريقك بنفسك."))}
 function renderEx(){var x=$("ex");x.innerHTML="";(S.examples[S.preset]||[]).forEach(function(t){var b=el("button","","مثال: "+t);b.onclick=function(){$("goal").value=t;$("goal").focus()};x.appendChild(b)})}
-function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل وتعود إليك بالقرارات"));c.appendChild(t);c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
+function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل وتعود إليك بالقرارات"));c.appendChild(t);c.appendChild(el("span","pt",S.platform));c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
 S.roles.forEach(function(r,i){var d=el("div","role");d.appendChild(el("div","n",String(i+1)));var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title||""));d.appendChild(t);
+var ps=el("select");ps.title="منصة هذا الموظف";["Claude","ChatGPT"].forEach(function(o){var op=el("option","",o);op.value=o;ps.appendChild(op)});ps.value=r.platform||S.platform;ps.onchange=function(){r.platform=ps.value};d.appendChild(ps);
 if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles();renderLib()};d.appendChild(x)}box.appendChild(d)})}
 function renderLib(){var box=$("ll");box.innerHTML="";var q=$("lq").value.trim(),have={};S.roles.forEach(function(r){have[r.name]=1});var n=0;
 S.library.forEach(function(r){if(q&&(r.name+" "+r.title+" "+r.scope+" "+r.from).indexOf(q)<0)return;n++;if(n>60)return;
@@ -277,7 +288,7 @@ $("n0").onclick=function(){show(1)};
 $("b1").onclick=function(){show(0)};
 $("n1").onclick=function(){if(!S.preset){err("e1","اختر مجالًا أولًا، أو «فريق من الصفر».");return}renderEx();if(!$("goal").value&&$("desc").value.trim())$("goal").value=$("desc").value.trim();show(2);$("name").focus()};
 $("b2").onclick=function(){show(1)};
-$("n2").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
+$("n2").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";var lv=$("lang").value;S.language=lv==="__other"?($("lang2").value.trim()||"العربية"):lv;
 if(!S.name){err("e2","اكتب اسم المشروع.");return}if(/[\\/:*?"<>|]/.test(S.name)){err("e2","اسم المشروع لا يقبل هذه الرموز: \\ / : * ? \" < > |");return}if(!S.goal){err("e2","اكتب هدف المشروع، أو اضغط أحد الأمثلة.");return}err("e2","");renderRoles();show(3)};
 $("b3").onclick=function(){show(2)};
 $("n3").onclick=function(){if(S.roles.length<1){err("e3","أضف دورًا واحدًا على الأقل.");return}err("e3","");renderSkills();show(4)};
@@ -286,14 +297,22 @@ $("ska").onclick=function(){S.skills={};S.skillList.forEach(function(s){S.skills
 $("skr").onclick=function(){S.skills={};(S.recommended[S.preset]||[]).forEach(function(k){S.skills[k]=1});renderSkills()};
 $("skn").onclick=function(){S.skills={};renderSkills()};
 $("n4").onclick=function(){var d=$("sum");d.innerHTML="";var p=S.presets.filter(function(x){return x.key===S.preset})[0];var sk=Object.keys(S.skills).map(function(k){var s=S.skillList.filter(function(x){return x.key===k})[0];return s?s.name:k});
-var rows=[["المجال",p?p.label:""],["المشروع",S.name],["الهدف",S.goal],["يخاطبك الفريق",S.owner],["الفريق","البوصلة، "+S.roles.map(function(r){return r.name}).join("، ")],["المهارات",sk.length?sk.join("، "):"لا شيء"]];
+var rows=[["المجال",p?p.label:""],["المشروع",S.name],["الهدف",S.goal],["يخاطبك الفريق",S.owner],["المنصة",platSummary()],["لغة العمل",S.language],["الفريق","البوصلة، "+S.roles.map(function(r){return r.name}).join("، ")],["المهارات",sk.length?sk.join("، "):"لا شيء"]];
 rows.forEach(function(r){d.appendChild(el("dt","",r[0]));d.appendChild(el("dd","",r[1]))});if(!$("dest").value)$("dest").value=S.dest;show(5)};
 $("b5").onclick=function(){show(4)};
 $("go").onclick=function(){var b=$("go");b.disabled=true;b.textContent="جارٍ الإنشاء…";err("e5","");
-api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles,skills:Object.keys(S.skills),dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
-if(!r.ok){err("e5",r.error||"تعذّر الإنشاء.");return}var pn=String(r.root).replace(/[\\\/]+$/,"").split(/[\\\/]/).pop();$("pname").textContent=pn;$("where").textContent=r.root+"  ("+r.files+" ملفًا)";$("cmd").textContent=r.cmd;renderTeam(r.team);renderLibrary(r.library);show(6)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e5","انقطع الاتصال بالأداة. أغلق الصفحة وشغّل Project Forge من جديد.")})};
-function renderTeam(team){var box=$("t2");box.innerHTML="";box.appendChild(el("div","h","لكل موظف محادثة مستقلة. انسخ أمره، وألصقه في محادثة جديدة، ثم اكتب «تابع»."));team.forEach(function(r){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",r.name+": "+r.title));t.appendChild(pre(r.cmd));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(r.cmd,"نُسخ أمر "+r.name)};d.appendChild(c);box.appendChild(d)})}
-function pre(txt){var p=el("pre","",txt);if(!/[\u0600-\u06FF]/.test(txt)){p.dir="ltr";p.style.textAlign="left";p.style.fontFamily="ui-monospace,Menlo,Consolas,monospace"}return p}
+api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope,platform:r.platform||S.platform}}),platform:S.platform,language:S.language,skills:Object.keys(S.skills),dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
+if(!r.ok){err("e5",r.error||"تعذّر الإنشاء.");return}var pn=String(r.root).replace(/[\\\/]+$/,"").split(/[\\\/]/).pop();$("pname").textContent=pn;setPlatText();$("where").textContent=r.root+"  ("+r.files+" ملفًا)";bidi($("cmd"),r.cmd);renderTeam(r.team);renderLibrary(r.library);show(6)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e5","انقطع الاتصال بالأداة. أغلق الصفحة وشغّل Project Forge من جديد.")})};
+function renderTeam(team){var box=$("t2");box.innerHTML="";box.appendChild(el("div","h","لكل موظف محادثة مستقلة. انسخ أمره، وألصقه في محادثة جديدة، ثم اكتب «تابع»."));team.forEach(function(r){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",r.name+": "+r.title+(r.platform?" · "+r.platform:"")));t.appendChild(pre(r.cmd));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(r.cmd,"نُسخ أمر "+r.name)};d.appendChild(c);box.appendChild(d)})}
+function bidi(node,txt){node.textContent="";String(txt).split(/((?:Agents|Docs|Outputs|Data|Office|Tools)\/[^«»،؛"]*?\.(?:md|py|csv|html|json)|[A-Za-z][^\s«»،؛"]*\.(?:md|py|csv|html|json))/).forEach(function(part,i){if(i%2){var b=document.createElement("bdi");b.dir="ltr";b.textContent=part;node.appendChild(b)}else if(part){node.appendChild(document.createTextNode(part))}});return node}
+function pre(txt){var p=el("pre","",txt);if(/[\u0600-\u06FF]/.test(txt))bidi(p,txt);if(!/[\u0600-\u06FF]/.test(txt)){p.dir="ltr";p.style.textAlign="left";p.style.fontFamily="ui-monospace,Menlo,Consolas,monospace"}return p}
+function platSummary(){var m={};m[S.platform]=1;S.roles.forEach(function(r){m[r.platform||S.platform]=1});var k=Object.keys(m);return k.length>1?"مختلطة: "+k.join(" و"):k[0]}
+function setPlatText(){var m=platSummary();var b=$("g1b"),p=$("g1p");if(!b)return;
+if(m==="ChatGPT"){b.textContent="افتح محادثة جديدة في ChatGPT";p.textContent="من التطبيق أو الموقع. الأفضل داخل «Project» جديد في ChatGPT: ارفع إليه ملفات مجلد المشروع، لتقرأها المحادثة وتعمل عليها. وإن لم يتوفر فارفع الملفات التي يطلبها كل موظف."}
+else if(m.indexOf("مختلطة")===0){b.textContent="افتح محادثة جديدة لكل موظف في منصته (Claude أو ChatGPT)";p.textContent="المنصة مكتوبة بجانب كل موظف في تبويب «أوامر الفريق». ابدأ بالبوصلة، وأرفق مجلد المشروع (أو ارفع ملفاته في Project إن كانت المنصة ChatGPT)."}
+else{b.textContent="افتح محادثة جديدة في Claude";p.textContent="من التطبيق أو الموقع. وإن أمكن، أرفق مجلد المشروع بالمحادثة (زر «+» ثم اختيار المجلد)، لتقرأ الملفات وتكتب فيها مباشرة."}}
+Array.prototype.forEach.call(document.querySelectorAll("#plat .chip"),function(c){c.onclick=function(){S.platform=c.dataset.p;Array.prototype.forEach.call(document.querySelectorAll("#plat .chip"),function(x){x.classList.toggle("on",x===c)});S.roles.forEach(function(r){delete r.platform})}});
+$("lang").onchange=function(){$("lang2").classList.toggle("hide",$("lang").value!=="__other");if($("lang").value==="__other")$("lang2").focus()};
 function renderLibrary(lib){var box=$("t3");box.innerHTML="";lib.forEach(function(g,gi){if(gi===0)return;box.appendChild(el("h3","",g.title));if(g.hint)box.appendChild(el("div","h",g.hint));g.items.forEach(function(it){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",it.label));t.appendChild(pre(it.text));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(it.text)};d.appendChild(c);box.appendChild(d)})})}
 Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(b){b.onclick=function(){Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(x){x.classList.toggle("on",x===b)});["t1","t2","t3"].forEach(function(id){$(id).classList.toggle("hide",id!==b.getAttribute("data-t"))})}});
 $("cp").onclick=function(){copy($("cmd").textContent,"نُسخ أمر البوصلة")};

@@ -60,6 +60,16 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 
 مفاتيح القوالب للأمر `--preset`: general، software، transformation، operations، data، content، startup، consulting، pmo، finance، hr، legal، marketing، sales، ecommerce، support، hospitality، realestate، healthcare، education، government، nonprofit، supply، research، design، media، events، job، personal، mobile، cyber، construction، tourism، procurement، book، smallbiz، pr، excellence، innovation، audit، translation، games، strategy، change، governance، riskmgmt، tax، investment، training، recruitment، brand، social، crm، itops، product، aiproduct، nocode، manufacturing، facilities، safety، video، creator، retail، agriculture، energy، transport، hajj، sportsclub، salon، thesis، course، certification، language، pfinance، home، trip، wedding، reading، studentorg، blank.
 
+## المنصة واللغة
+
+عند الإنشاء تختار منصة المحادثات: **Claude** أو **ChatGPT** للجميع، ثم تغيّر منصة كل موظف على حدة إن أردت (الكاتب في ChatGPT والمحلل في Claude مثلًا). وتختار **لغة العمل**: العربية أو English أو أي لغة تكتب اسمها، فيخاطبك الفريق ويكتب مخرجاته وتقاريره بها. وفي سطر الأوامر:
+
+```
+python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt --language English
+```
+
+أسماء الملفات والأوامر وكلمات حالات اللوحة تبقى كما هي لأن الأداة تقرؤها حرفيًا. وواجهة المعالج وملفات التعليمات بالعربية حاليًا.
+
 ## المهارات ومكتبة الأوامر
 
 مع كل مشروع 22 مهارة جاهزة تختار منها (قياس قبل وبعد، تقرير تنفيذي، مراجعة جودة، تحليل السبب الجذري، رسم إجراء، تصميم وكيل لإجراء، تحليل بيانات، لوحة مؤشرات، خطة مشروع، تحليل مخاطر وغيرها). المهارة ملف قصير في `Agents/Skills/` يحدد متى تُستعمل وخطواتها ومخرجها ومعيار قبولها، فيلتزم بها الموظف بدل الاجتهاد كل مرة. تضيف مهارة لاحقًا بأمر `add-skill` وتعرضها بأمر `skills`.

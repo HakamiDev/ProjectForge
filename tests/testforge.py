@@ -187,6 +187,21 @@ class ForgeTests(unittest.TestCase):
         ref = (root / "فريق ثلاثي Project Reference.md").read_text(encoding="utf-8")
         self.assertIn("مدير المنتج والهندسة وحده", ref)
 
+    def test_platform_and_language(self):
+        roles = [("مدير", "إدارة", "إدارة", "ChatGPT"), ("كاتب", "كتابة", "كتابة", "Claude")]
+        roles = core.customize_roles(roles, [], [])
+        root = core.create_project(self.tmp, "خيارات", "هدف", "الرئيس", "blank", roles, None, [], None, "ChatGPT", "English")
+        team = json.loads((root / "Agents" / "Team.json").read_text(encoding="utf-8"))
+        self.assertEqual((team["platform"], team["language"]), ("ChatGPT", "English"))
+        self.assertEqual({r["name"]: r["platform"] for r in team["roster"]}["مدير"], "ChatGPT")
+        self.assertEqual({r["name"]: r["platform"] for r in team["roster"]}["كاتب"], "Claude")
+        self.assertIn("English", (root / "CLAUDE.md").read_text(encoding="utf-8"))
+        self.assertIn("English", (root / "Agents" / "Roles" / "كاتب.md").read_text(encoding="utf-8"))
+        self.assertEqual(core.check_project(root), [])
+        self.assertEqual(core.norm_platform("chatgpt"), "ChatGPT")
+        self.assertEqual(core.norm_platform(None), "Claude")
+        self.assertIn("العربية", core.lang_note(""))
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)

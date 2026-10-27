@@ -1460,6 +1460,8 @@ CLAUDE_T = """# تعليمات العمل في {{project}}
 
 أنت تعمل على {{project}}: {{goal}}. صاحب المشروع: {{owner}}.
 
+{{lang}}
+
 ## 1. قبل أي عمل
 
 1. اقرأ النسخة الحالية من الملفات من هذا المجلد، لا من ذاكرة المحادثة. أي تغيير تجده فيها يُعامل على أنه تغيير {{owner}}؛ احفظه وابنِ عليه ولا تلغه دون طلبه (`AGENTS.md`).
@@ -1737,6 +1739,8 @@ ROLE_T = """# {{name}}: أمر التكليف
 
 > **نفاذ:** `CLAUDE.md` يعلو على ما يخالفه هنا. جدول الفريق الحالي فيه.
 
+{{lang}}
+
 ## 1. من أنت
 
 أنت «{{name}}» في {{project}}: {{goal}}. تعمل مع {{owner}} ضمن فريق في ملفات هذا المجلد، وتكمل عملك من أي محادثة لأن أساس عملك الملفات لا الذاكرة.
@@ -1777,7 +1781,7 @@ QA_EXTRA = """
 
 COMPASS_T = """# البوصلة: أمر التكليف
 
-اسم المحادثة: «البوصلة: التوجيه العام». المسمى الوظيفي: مدير مكتب {{owner}} (Chief of Staff). المنصة: Claude.
+اسم المحادثة: «البوصلة: التوجيه العام». المسمى الوظيفي: مدير مكتب {{owner}} (Chief of Staff). المنصة: {{platform}}.
 
 > **نفاذ:** `CLAUDE.md` يعلو على ما يخالفه هنا.
 
@@ -1802,10 +1806,29 @@ COMPASS_T = """# البوصلة: أمر التكليف
 # ---------------------------------------------------------------- بناء الفريق والملفات
 
 
-def make_roster(preset_roles, project, goal, owner):
+PLATFORMS = ["Claude", "ChatGPT"]
+LANG_AR = ("العربية", "arabic", "ar", "عربي", "")
+
+
+def norm_platform(p):
+    v = str(p or "").strip().lower()
+    return "ChatGPT" if v in ("chatgpt", "gpt", "openai", "شات جي بي تي") else "Claude"
+
+
+def lang_note(language):
+    """فقرة تُحقن في كل ملف يقرؤه الموظف لتحدد لغة العمل."""
+    lang = clean_name(str(language or "")) or "العربية"
+    if lang.strip().lower() in LANG_AR:
+        return "**لغة العمل:** العربية. اكتب بها كل ردودك ومخرجاتك."
+    return ("**لغة العمل:** %s. خاطب صاحب المشروع، واكتب كل ردودك ومخرجاتك وتقاريرك والصفوف الجديدة بهذه اللغة. "
+            "كلمات حالات اللوحة تبقى بالعربية كما هي (%s) لأن الأداة تقرؤها حرفيًا، وكذلك أسماء الملفات والأوامر. "
+            "وإن كانت ملفات التعليمات بالعربية فافهمها واعمل بها، ولا تنقل لغتها إلى مخرجاتك." % (lang, "، ".join(STATUSES)))
+
+
+def make_roster(preset_roles, project, goal, owner, platform="Claude"):
     roster = [{
         "id": "compass", "n": 0, "name": COMPASS, "title": "مدير المكتب", "scope": "التوجيه العام: تستقبل الطلبات وتوزعها وتتابعها وتحسم القرارات بتوصيتها",
-        "platform": "Claude", "chat": "البوصلة: التوجيه العام"}]
+        "platform": norm_platform(platform), "chat": "البوصلة: التوجيه العام"}]
     for i, (name, title, scope, platform) in enumerate(preset_roles, 1):
         name = clean_name(name)
         roster.append({"id": "r%d" % i, "n": i, "name": name, "title": title, "scope": scope, "platform": platform,
@@ -1839,7 +1862,8 @@ def md_table(header, rows):
 
 def role_doc(team, r):
     t = fill(COMPASS_T if r["id"] == "compass" else ROLE_T, name=r["name"], chat=r["chat"], platform=r["platform"], title=r["title"],
-             scope=r["scope"], project=team["project"], goal=team["goal"], owner=team["owner"], pm=pm_name(team["roster"]))
+             scope=r["scope"], project=team["project"], goal=team["goal"], owner=team["owner"], pm=pm_name(team["roster"]),
+             lang=lang_note(team.get("language")))
     if r["name"] == QA_NAME:
         t += fill(QA_EXTRA, owner=team["owner"], pm=pm_name(team["roster"]))
     return t
@@ -1869,7 +1893,7 @@ def command_script(tool_rel):
             'python3 -I "Tools/%s" build --open\nexec python3 -I "Tools/%s" watch\n' % (tool_rel, tool_rel))
 
 
-def create_project(parent, name, goal, owner, preset, roles, accent, report, skills=None):
+def create_project(parent, name, goal, owner, preset, roles, accent, report, skills=None, platform="Claude", language="العربية"):
     project = clean_name(name)
     root = Path(parent).resolve() / project
     if (root / "Agents" / "Team.json").exists():
@@ -1877,13 +1901,14 @@ def create_project(parent, name, goal, owner, preset, roles, accent, report, ski
     for d in ["Agents/Roles", "Agents/Handoffs", "Agents/Row Drafts", "Docs/QA", "Docs/Reports", "Outputs", "Data", "Archive", "Office", "Tools"]:
         (root / d).mkdir(parents=True, exist_ok=True)
     preset_roles = roles if roles else PRESETS[preset]
-    roster = make_roster(preset_roles, project, goal, owner)
+    roster = make_roster(preset_roles, project, goal, owner, platform)
     skills = [k for k in (skills if skills is not None else skills_for(preset)) if k in SKILLS]
-    team = {"version": VERSION, "project": project, "goal": goal, "owner": owner, "accent": accent, "created": fmt_date(now()), "roster": roster, "skills": skills}
+    team = {"version": VERSION, "project": project, "goal": goal, "owner": owner, "accent": accent, "created": fmt_date(now()), "roster": roster, "skills": skills,
+            "platform": norm_platform(platform), "language": clean_name(str(language or "")) or "العربية"}
     save_team(root, team)
     report.append(("أُنشئ", root / "Agents" / "Team.json"))
     qa = QA_NAME
-    write_new(root / "CLAUDE.md", fill(CLAUDE_T, project=project, goal=goal, owner=owner, tool=TOOL_NAME, qa=qa, team_table=team_table(roster), pm=pm_name(roster)), report)
+    write_new(root / "CLAUDE.md", fill(CLAUDE_T, project=project, goal=goal, owner=owner, tool=TOOL_NAME, qa=qa, team_table=team_table(roster), pm=pm_name(roster), lang=lang_note(language)), report)
     write_new(root / "AGENTS.md", fill(AGENTS_T, project=project, owner=owner), report)
     write_new(root / "Read Me.md", fill(README_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, office=OFFICE_FILE, pm=pm_name(roster)), report)
     write_new(root / ("%s Project Reference.md" % project), fill(REF_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, pm=pm_name(roster)), report)
@@ -2279,7 +2304,16 @@ def cmd_new(a):
         skills = []
     elif a.skills:
         skills = [k.strip() for k in a.skills.split(",")]
-    root = create_project(parent, name, goal, owner, preset, roles, a.accent, report, skills)
+    pv = a.platform
+    if not pv and interactive:
+        pv = {"2": "chatgpt"}.get(ask("المنصة: 1) Claude  2) ChatGPT", "1"), "claude")
+    platform = norm_platform(pv) if pv else "Claude"
+    if not a.language and interactive:
+        a.language = ask("لغة العمل (العربية أو English أو أي لغة)", "العربية")
+    if platform != "Claude":
+        base = roles if roles else PRESETS[preset]
+        roles = [(n, t, sc, platform if norm_platform(pl) == "Claude" else pl) for (n, t, sc, pl) in base]
+    root = create_project(parent, name, goal, owner, preset, roles, a.accent, report, skills, platform, a.language or "العربية")
     if a.register:
         try_register(root, a.registry)
     if interactive:
@@ -2407,7 +2441,7 @@ def cmd_gui(a):
             n = clean_name(str(r.get("name", "")))
             if n and all(role_key(n) != role_key(x[0]) for x in roles):
                 title = str(r.get("title") or n).strip()
-                roles.append((n, title, str(r.get("scope") or title).strip(), "Claude"))
+                roles.append((n, title, str(r.get("scope") or title).strip(), norm_platform(r.get("platform") or d.get("platform"))))
         roles = customize_roles(roles, [], [])
         parent = os.path.expanduser(str(d.get("dest", "")).strip() or default_dest)
         skills = [k for k in (d.get("skills") or []) if k in SKILLS] if isinstance(d.get("skills"), list) else None
@@ -2415,7 +2449,8 @@ def cmd_gui(a):
         report = []
         try:
             with contextlib.redirect_stderr(err):
-                root = create_project(parent, name, goal, owner, preset, roles, None, report, skills)
+                root = create_project(parent, name, goal, owner, preset, roles, None, report, skills,
+                                      platform=d.get("platform"), language=str(d.get("language") or "").strip()[:40])
         except SystemExit:
             return {"ok": False, "error": err.getvalue().strip() or "تعذّر الإنشاء."}
         except OSError as e:
@@ -2424,7 +2459,7 @@ def cmd_gui(a):
         compass = next(r for r in load_team(root)["roster"] if r["id"] == "compass")
         team = load_team(root)
         return {"ok": True, "root": str(root), "cmd": start_cmd(compass), "files": len(report),
-                "library": commands_library(team), "team": [{"name": r["name"], "title": r["title"], "cmd": start_cmd(r)} for r in team["roster"]]}
+                "library": commands_library(team), "team": [{"name": r["name"], "title": r["title"], "platform": r["platform"], "cmd": start_cmd(r)} for r in team["roster"]]}
 
     def open_path(what):
         root = state["root"]
@@ -3068,6 +3103,8 @@ def main(argv=None):
     p.add_argument("--goal")
     p.add_argument("--owner")
     p.add_argument("--preset", choices=list(PRESETS))
+    p.add_argument("--platform", choices=["claude", "chatgpt"], help="منصة المحادثات: claude (الافتراضي) أو chatgpt")
+    p.add_argument("--language", help="لغة العمل: العربية (الافتراضي) أو English أو أي لغة تكتبها")
     p.add_argument("--roles-file", help="ملف JSON بقائمة أدوار: [{name,title,scope,platform}]")
     p.add_argument("--drop-role", action="append", help="حذف دور من القالب (يتكرر)")
     p.add_argument("--add-role", action="append", help="إضافة دور بصيغة «الاسم | المجال | المهام» (يتكرر)")
