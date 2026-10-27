@@ -5,48 +5,51 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project Forge</title>
 <style>
-:root{--bg:#f4f3fa;--card:rgba(255,255,255,.78);--ink:#17172b;--mut:#6b6b85;--line:rgba(23,23,43,.1);--acc:#5b4bf0;--acc2:#8a7dff;--accInk:#fff;--ok:#12a066;--bad:#d6334a;--chip:#ecebfb;--sh:0 10px 40px rgba(60,50,150,.12)}
-@media (prefers-color-scheme:dark){:root{--bg:#0e0e18;--card:rgba(28,28,44,.78);--ink:#f1f0fb;--mut:#9a99b8;--line:rgba(255,255,255,.09);--acc:#8a7dff;--acc2:#5b4bf0;--accInk:#0e0e18;--ok:#34d399;--bad:#ff6b81;--chip:#25253d;--sh:0 10px 40px rgba(0,0,0,.45)}}
+:root{--bg:#f4f3fa;--card:rgba(255,255,255,.8);--ink:#17172b;--mut:#6b6b85;--line:rgba(23,23,43,.1);--acc:#5b4bf0;--acc2:#8a7dff;--accInk:#fff;--ok:#12a066;--bad:#d6334a;--chip:#ecebfb;--sh:0 10px 40px rgba(60,50,150,.12)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e0e18;--card:rgba(28,28,44,.8);--ink:#f1f0fb;--mut:#9a99b8;--line:rgba(255,255,255,.09);--acc:#8a7dff;--acc2:#5b4bf0;--accInk:#0e0e18;--ok:#34d399;--bad:#ff6b81;--chip:#25253d;--sh:0 10px 40px rgba(0,0,0,.45)}}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:radial-gradient(1200px 600px at 85% -10%,rgba(138,125,255,.25),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(91,75,240,.18),transparent 60%),var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI","SF Arabic","Geeza Pro",Tahoma,sans-serif;min-height:100vh}
-.wrap{max-width:780px;margin:0 auto;padding:28px 18px 60px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;box-shadow:var(--sh)}
+.wrap{max-width:820px;margin:0 auto;padding:28px 18px 60px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;box-shadow:var(--sh);flex:none}
 .logo svg{width:24px;height:24px;stroke:var(--accInk);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-header b{font-size:19px;letter-spacing:.2px}
+header b{font-size:19px}
 header span{color:var(--mut);font-size:13px;display:block;margin-top:-4px}
-.steps{display:flex;gap:8px;margin-bottom:18px}
-.steps i{flex:1;height:5px;border-radius:9px;background:var(--line);transition:.3s}
-.steps i.on{background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px}
+.steps div{text-align:center;font-size:12px;color:var(--mut)}
+.steps i{display:block;height:5px;border-radius:9px;background:var(--line);margin-bottom:4px;transition:.3s}
+.steps div.on i{background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.steps div.on{color:var(--ink);font-weight:600}
 .card{background:var(--card);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--sh)}
-h1{font-size:26px;margin:0 0 4px}
-p.sub{color:var(--mut);margin:0 0 20px}
+h1{font-size:25px;margin:0 0 4px}
+h2{font-size:17px;margin:18px 0 6px}
+p.sub{color:var(--mut);margin:0 0 18px}
 label{display:block;font-weight:600;font-size:14px;margin:16px 0 6px}
 input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none;transition:.2s}
 input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(138,125,255,.2)}
 textarea{min-height:84px;resize:vertical}
 .hint{color:var(--mut);font-size:13px;margin-top:5px}
+.why{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);overflow:hidden}
+.why summary{cursor:pointer;padding:10px 14px;font-size:14px;font-weight:600;list-style:none;display:flex;align-items:center;gap:8px}
+.why summary::-webkit-details-marker{display:none}
+.why summary:before{content:"؟";width:22px;height:22px;border-radius:50%;background:var(--chip);color:var(--acc);display:grid;place-items:center;font-size:13px}
+.why div{padding:0 14px 12px;color:var(--mut);font-size:14px}
+.why ol{margin:4px 0 0;padding-inline-start:20px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:6px}
 .opt{border:1.5px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;cursor:pointer;text-align:right;font:inherit;color:inherit;transition:.2s}
 .opt:hover{transform:translateY(-2px);border-color:var(--acc2)}
 .opt.sel{border-color:var(--acc);background:var(--chip);box-shadow:0 0 0 3px rgba(138,125,255,.22)}
 .opt b{display:block;font-size:15px}
 .opt small{color:var(--mut);font-size:12.5px;line-height:1.5;display:block;margin-top:3px}
+.opt .em{font-size:22px;display:block;margin-bottom:2px}
 .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .tools input{flex:1;min-width:180px}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
 .chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;padding:6px 13px;border-radius:99px;cursor:pointer;transition:.2s}
 .chip.on{background:var(--acc);color:var(--accInk);border-color:var(--acc)}
-.opt .em{font-size:22px;display:block;margin-bottom:2px}
-.lib{margin-top:14px;border:1px dashed var(--line);border-radius:16px;padding:14px;max-height:340px;overflow:auto}
-.lib .it{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line)}
-.lib .it:last-child{border:0}
-.lib .it .t{flex:1;min-width:0}.lib .it b{font-size:14px}.lib .it small{display:block;color:var(--mut);font-size:12px}
-.lib .it .fr{font-size:11px;color:var(--acc);background:var(--chip);padding:2px 8px;border-radius:99px;white-space:nowrap}
-.lib button{border:0;background:var(--chip);color:var(--acc);font:inherit;font-weight:700;border-radius:10px;padding:4px 12px;cursor:pointer}
-.lib button:disabled{opacity:.4;cursor:default}
-.empty{color:var(--mut);text-align:center;padding:14px}
+.ex{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ex button{border:1px dashed var(--acc2);background:transparent;color:var(--acc);font:inherit;font-size:13px;padding:5px 11px;border-radius:99px;cursor:pointer;text-align:right}
 .roles{display:grid;gap:10px;margin-top:8px}
 .role{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 14px}
 .role .n{width:30px;height:30px;border-radius:9px;background:var(--chip);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--acc);flex:none}
@@ -55,127 +58,206 @@ textarea{min-height:84px;resize:vertical}
 .role .t small{color:var(--mut);font-size:12.5px}
 .role button{border:0;background:transparent;color:var(--bad);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px;border-radius:8px}
 .role button:hover{background:rgba(214,51,74,.12)}
-.role .lock{color:var(--mut);font-size:12px;padding:0 8px}
+.role .lock{color:var(--mut);font-size:12px;padding:0 8px;white-space:nowrap}
 .add{display:grid;grid-template-columns:1fr 1.3fr auto;gap:8px;margin-top:12px}
+.lib{margin-top:14px;border:1px dashed var(--line);border-radius:16px;padding:14px;max-height:340px;overflow:auto}
+.lib .it{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line)}
+.lib .it:last-child{border:0}
+.lib .it .t{flex:1;min-width:0}.lib .it b{font-size:14px}.lib .it small{display:block;color:var(--mut);font-size:12px}
+.lib .it .fr{font-size:11px;color:var(--acc);background:var(--chip);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.lib button{border:0;background:var(--chip);color:var(--acc);font:inherit;font-weight:700;border-radius:10px;padding:4px 12px;cursor:pointer}
+.lib button:disabled{opacity:.4;cursor:default}
+.empty{color:var(--mut);text-align:center;padding:14px}
+.sk{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.skill{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;padding:11px 12px;cursor:pointer;transition:.2s}
+.skill.on{border-color:var(--acc);background:var(--chip)}
+.skill input{width:18px;height:18px;margin-top:4px;accent-color:var(--acc);flex:none}
+.skill b{display:block;font-size:14px}.skill small{color:var(--mut);font-size:12.5px;line-height:1.5}
+.sg{font-size:13px;color:var(--mut);margin:14px 0 6px;font-weight:600}
 .btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 22px;cursor:pointer;transition:.2s}
 .btn.pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--accInk);box-shadow:0 8px 24px rgba(91,75,240,.35)}
 .btn.pri:hover{transform:translateY(-1px)}
 .btn.pri:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .btn.sec{background:var(--chip);color:var(--ink)}
-.nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px}
-.sum{display:grid;grid-template-columns:110px 1fr;gap:8px 14px;font-size:15px;margin:6px 0 4px}
+.btn.sm{padding:7px 14px;font-size:13px;border-radius:10px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px;align-items:center}
+.nav .l{color:var(--mut);font-size:13px}
+.sum{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:15px;margin:6px 0 4px}
 .sum dt{color:var(--mut)}.sum dd{margin:0;font-weight:600;word-break:break-word}
 .err{background:rgba(214,51,74,.12);color:var(--bad);border-radius:12px;padding:10px 14px;margin-top:14px;display:none;font-size:14px}
-.done{text-align:center}
 .done .ok{width:64px;height:64px;border-radius:50%;background:rgba(18,160,102,.15);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px;font-size:32px}
-.cmd{direction:rtl;text-align:right;background:var(--bg);border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin:12px 0;font-size:15px;user-select:all}
+.center{text-align:center}
+.cmd{direction:rtl;text-align:right;background:var(--bg);border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin:10px 0;font-size:15px;white-space:pre-wrap;word-break:break-word}
 .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-ol.next{text-align:right;color:var(--mut);padding-inline-start:22px;margin:14px 0 0}
-ol.next li{margin:4px 0}
-.path{color:var(--mut);font-size:13px;direction:ltr;word-break:break-all}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:12px;opacity:0;transition:.25s;font-size:14px;pointer-events:none}
+.path{color:var(--mut);font-size:13px;direction:ltr;word-break:break-all;text-align:center}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:20px 0 14px;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;color:var(--mut);font:inherit;font-weight:600;padding:8px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button.on{color:var(--acc);border-color:var(--acc)}
+.guide{display:grid;gap:12px}
+.g{display:flex;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px}
+.g .n{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--accInk);display:grid;place-items:center;font-weight:700;flex:none}
+.g .t{flex:1;min-width:0}.g b{display:block;font-size:15px}.g p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.cl{margin-top:4px}
+.cl h3{font-size:15px;margin:16px 0 4px}
+.cl .h{color:var(--mut);font-size:13px;margin-bottom:8px}
+.ci{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
+.ci .t{flex:1;min-width:0}.ci b{font-size:14px;display:block}.ci pre{margin:4px 0 0;white-space:pre-wrap;word-break:break-word;font:14px/1.6 inherit;color:var(--mut);max-height:120px;overflow:auto}
+.welcome .w3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
+.welcome .w3 div{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px}
+.welcome .w3 span{font-size:26px;display:block;margin-bottom:6px}
+.welcome .w3 b{display:block;margin-bottom:4px}.welcome .w3 p{margin:0;color:var(--mut);font-size:14px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:12px;opacity:0;transition:.25s;font-size:14px;pointer-events:none;z-index:9}
 .toast.on{opacity:1;transform:translateX(-50%)}
 .hide{display:none!important}
-@media(max-width:560px){.add{grid-template-columns:1fr}.card{padding:18px}.sum{grid-template-columns:1fr}}
+@media(max-width:560px){.add{grid-template-columns:1fr}.card{padding:18px}.sum{grid-template-columns:1fr}.steps div{font-size:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div></header>
-<div class="steps" id="steps"><i class="on"></i><i></i><i></i></div>
+<div class="steps hide" id="steps"><div><i></i>التخصص</div><div><i></i>التفاصيل</div><div><i></i>الفريق</div><div><i></i>المهارات</div><div><i></i>المراجعة</div></div>
 
-<section class="card" id="s1">
-<h1>ما مشروعك؟</h1><p class="sub">ثلاث إجابات قصيرة، وتبني الأداة كل شيء.</p>
-<label for="name">اسم المشروع</label><input id="name" placeholder="مثال: أتمتة الإجراءات" autocomplete="off">
-<label for="goal">هدف المشروع بجملة واحدة</label><textarea id="goal" placeholder="مثال: نظام وكلاء يؤتمت إجراءً متكررًا مع قياس الزمن والأخطاء قبل الأتمتة وبعدها."></textarea>
-<label for="owner">كيف تحب أن يخاطبك الفريق؟</label><input id="owner" value="الرئيس" autocomplete="off">
+<section class="card welcome" id="s0">
+<h1>مرحبًا. سنبني مكتبك في خمس خطوات.</h1>
+<p class="sub">لا تحتاج أي خبرة تقنية. تجيب عن أسئلة بسيطة، وتترك الباقي للأداة.</p>
+<div class="w3">
+<div><span>🗂️</span><b>ما الذي ستحصل عليه؟</b><p>مجلد منظم لمشروعك، وموقع إدارة يعرض الفريق والمهام والقرارات.</p></div>
+<div><span>🤖</span><b>من هم «الموظفون»؟</b><p>محادثات ذكاء اصطناعي، لكل واحدة دور واضح وملف تعليمات يقرؤه قبل أن يعمل.</p></div>
+<div><span>👤</span><b>ما دورك أنت؟</b><p>أنت صاحب المشروع. تكلّم «البوصلة» وحدها، وهي توزّع العمل وتعود إليك بالقرارات.</p></div>
+</div>
+<div class="nav"><span class="l">نحو ثلاث دقائق</span><button class="btn pri" id="n0">لنبدأ</button></div>
+</section>
+
+<section class="card hide" id="s1">
+<h1>ما مجال مشروعك؟</h1><p class="sub">اختر الأقرب. يمكنك تعديل كل شيء بعد ذلك.</p>
+<div class="tools"><input id="q" placeholder="ابحث: تسويق، مطاعم، مالية، تعليم، بحث…" autocomplete="off"></div>
+<div class="chips" id="groups"></div>
+<div class="grid" id="types"></div>
+<details class="why"><summary>لماذا أختار مجالًا؟</summary><div>لكل مجال فريق جاهز بأدوار مجرّبة ومهارات موصى بها، فتبدأ من نقطة متقدمة بدل الصفر. وإن لم تجد مجالك، اختر «فريق من الصفر» وابنِ فريقك بنفسك في الخطوة التالية.</div></details>
 <div class="err" id="e1"></div>
-<div class="nav"><span></span><button class="btn pri" id="n1">التالي</button></div>
+<div class="nav"><button class="btn sec" id="b1">السابق</button><button class="btn pri" id="n1">التالي</button></div>
 </section>
 
 <section class="card hide" id="s2">
-<h1>اختر فريقك</h1><p class="sub">ابدأ بنوع قريب من مشروعك، ثم عدّل الأدوار كما تشاء.</p>
-<div class="tools"><input id="q" placeholder="ابحث عن تخصصك: تسويق، مطاعم، مالية، تعليم…" autocomplete="off"></div>
-<div class="chips" id="groups"></div>
-<div class="grid" id="types"></div>
-<label style="margin-top:22px">الأدوار</label>
-<div class="roles" id="roles"></div>
-<div class="row" style="justify-content:flex-start;margin:12px 0 0"><button class="btn sec" id="lb">+ مكتبة الأدوار الجاهزة</button></div>
-<div class="lib hide" id="lib"><div class="tools"><input id="lq" placeholder="ابحث في الأدوار: محلل، كاتب، مسؤول…" autocomplete="off"></div><div id="ll"></div></div>
-<div class="add"><input id="rn" placeholder="اسم دور جديد"><input id="rt" placeholder="مجاله (اختياري)"><button class="btn sec" id="ra">أضف</button></div>
-<div class="hint">«البوصلة» مدير المكتب وتُضاف تلقائيًا. دور «رئيس ضمان الجودة» ثابت لأنه يختبر كل مخرج باستقلال.</div>
+<h1>عرّفنا بمشروعك</h1><p class="sub">ثلاث إجابات قصيرة.</p>
+<label for="name">اسم المشروع</label><input id="name" placeholder="مثال: أتمتة الإجراءات" autocomplete="off">
+<div class="hint">يصبح اسم المجلد وعنوان الموقع. تجنّب الرموز.</div>
+<label for="goal">هدف المشروع بجملة واحدة</label><textarea id="goal" placeholder="ما الذي يجب أن يكون صحيحًا عند النجاح؟"></textarea>
+<div class="ex" id="ex"></div>
+<label for="owner">كيف تحب أن يخاطبك الفريق؟</label><input id="owner" value="الرئيس" autocomplete="off">
+<div class="hint">مثل: الرئيس، أو اسمك، أو «الأستاذ فلان».</div>
+<details class="why"><summary>لماذا الهدف مهم إلى هذا الحد؟</summary><div>الهدف يُكتب في أعلى كل ملف يقرؤه الموظفون، ويُقاس به كل مخرج. جملة واضحة الآن توفّر عشرات التصحيحات لاحقًا.</div></details>
 <div class="err" id="e2"></div>
 <div class="nav"><button class="btn sec" id="b2">السابق</button><button class="btn pri" id="n2">التالي</button></div>
 </section>
 
 <section class="card hide" id="s3">
+<h1>فريقك</h1><p class="sub">هذا الفريق المقترح لمجالك. احذف ما لا تحتاجه، وأضف ما ينقصك.</p>
+<div class="roles" id="roles"></div>
+<div class="row" style="justify-content:flex-start;margin:12px 0 0"><button class="btn sec" id="lb">+ أضف من مكتبة الأدوار الجاهزة</button></div>
+<div class="lib hide" id="lib"><div class="tools"><input id="lq" placeholder="ابحث في 180 دورًا: محلل، كاتب، مسؤول…" autocomplete="off"></div><div id="ll"></div></div>
+<div class="add"><input id="rn" placeholder="أو اكتب اسم دور جديد"><input id="rt" placeholder="مجاله (اختياري)"><button class="btn sec" id="ra">أضف</button></div>
+<details class="why"><summary>ما البوصلة؟ ولماذا لا يُحذف رئيس ضمان الجودة؟</summary><div><ol><li>«البوصلة» مدير المكتب: تكلّمها وحدها فتوزّع العمل وتتابعه وتعود إليك بما يحتاج قرارك.</li><li>«رئيس ضمان الجودة» يفحص كل مخرج باستقلال ويحكم عليه قبل أن يصلك، فلا يصحّح أحد عمله بنفسه. ثابت في كل فريق.</li><li>كل دور آخر محادثة مستقلة لها مجال واحد لا يتداخل مع غيره.</li></ol></div></details>
+<div class="err" id="e3"></div>
+<div class="nav"><button class="btn sec" id="b3">السابق</button><button class="btn pri" id="n3">التالي</button></div>
+</section>
+
+<section class="card hide" id="s4">
+<h1>المهارات</h1><p class="sub">طرق عمل جاهزة يلتزم بها الفريق. اخترنا لك الموصى بها لمجالك، ويمكنك تغييرها.</p>
+<div class="row" style="justify-content:flex-start;margin:0 0 8px"><button class="btn sec sm" id="ska">اختر الكل</button><button class="btn sec sm" id="skr">الموصى بها فقط</button><button class="btn sec sm" id="skn">لا شيء</button></div>
+<div id="skills"></div>
+<details class="why"><summary>ما المهارة؟</summary><div>ملف قصير يصف طريقة عمل معتمدة: متى تُستعمل، وخطواتها، ومخرجها، ومعيار قبولها. حين تطلب من موظف تقريرًا أو قياسًا، يطبّق المهارة بدل الاجتهاد كل مرة. تُحفظ في مجلد <code>Agents/Skills</code>، ويمكنك إضافة غيرها لاحقًا.</div></details>
+<div class="nav"><button class="btn sec" id="b4">السابق</button><button class="btn pri" id="n4">التالي</button></div>
+</section>
+
+<section class="card hide" id="s5">
 <h1>المراجعة والإنشاء</h1><p class="sub">تأكد من التفاصيل ثم أنشئ المشروع.</p>
 <dl class="sum" id="sum"></dl>
 <label for="dest">مكان الحفظ</label><input id="dest" dir="ltr" autocomplete="off">
 <div class="hint">يُنشأ داخله مجلد باسم المشروع، ولا يُستبدل أي ملف موجود.</div>
-<div class="err" id="e3"></div>
-<div class="nav"><button class="btn sec" id="b3">السابق</button><button class="btn pri" id="go">أنشئ المشروع</button></div>
+<div class="err" id="e5"></div>
+<div class="nav"><button class="btn sec" id="b5">السابق</button><button class="btn pri" id="go">أنشئ المشروع</button></div>
 </section>
 
-<section class="card done hide" id="s4">
-<div class="ok">✓</div>
-<h1>تم إنشاء مشروعك</h1>
-<div class="path" id="where"></div>
-<p class="sub" style="margin-top:14px">افتح محادثة جديدة في Claude وأرفق مجلد المشروع، ثم ألصق هذا الأمر لتبدأ مع البوصلة:</p>
-<div class="cmd" id="cmd"></div>
-<div class="row"><button class="btn pri" id="cp">انسخ الأمر</button><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button></div>
-<div class="row"><button class="btn sec" id="sc">ضع أيقونة Project Forge على سطح المكتب</button></div>
-<ol class="next"><li>أعطِ البوصلة هدفك بلغتك الطبيعية، وهي توزع العمل على الفريق.</li><li>لكل دور آخر محادثة مستقلة: انسخ أمر بدئه من صفحة «الأوامر» في موقع الإدارة.</li><li>يمكنك إغلاق هذه الصفحة؛ تتوقف الأداة تلقائيًا.</li></ol>
+<section class="card done hide" id="s6">
+<div class="center"><div class="ok">✓</div><h1>تم إنشاء مشروعك</h1><div class="path" id="where"></div></div>
+<div class="row"><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button><button class="btn sec" id="sc">أيقونة على سطح المكتب</button></div>
+<div class="tabs"><button class="on" data-t="t1">الخطوات التالية</button><button data-t="t2">أوامر الفريق</button><button data-t="t3">مكتبة الأوامر</button></div>
+<div id="t1" class="guide">
+<div class="g"><div class="n">1</div><div class="t"><b>افتح محادثة جديدة في Claude</b><p>من التطبيق أو الموقع. وإن أمكن، أرفق مجلد المشروع بالمحادثة (زر «+» ثم اختيار المجلد)، لتقرأ الملفات وتكتب فيها مباشرة.</p></div></div>
+<div class="g"><div class="n">2</div><div class="t"><b>ألصق أمر البوصلة</b><p>هذا الأمر يجعل المحادثة تعمل بدور «مدير المكتب»، فتقرأ ملف دورها وتسألك عمّا تريد.</p><div class="cmd" id="cmd"></div><button class="btn pri sm" id="cp">انسخ الأمر</button></div></div>
+<div class="g"><div class="n">3</div><div class="t"><b>اكتب هدفك بلغتك</b><p>مثل: «وزّع هذا الهدف على الفريق». ستضيف البوصلة المهام إلى اللوحة، وتخبرك بالموظف الذي تبدأ معه.</p></div></div>
+<div class="g"><div class="n">4</div><div class="t"><b>شغّل الموظفين</b><p>لكل موظف محادثة مستقلة: انسخ أمره من تبويب «أوامر الفريق»، وألصقه، ثم اكتب «تابع». وافتح موقع الإدارة لترى التقدم.</p></div></div>
+</div>
+<div id="t2" class="cl hide"></div>
+<div id="t3" class="cl hide"></div>
+<p class="hint center" style="margin-top:16px">كل هذه الأوامر محفوظة أيضًا في المجلد: <code>Agents/Commands Library.md</code>. يمكنك إغلاق هذه الصفحة؛ تتوقف الأداة تلقائيًا.</p>
 </section>
 </div>
 <div class="toast" id="toast"></div>
 <script>
 var TOKEN="@@TOKEN@@";
-var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],dest:"",presets:[],groups:[],library:[],qa:"رئيس ضمان الجودة"};
+var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],skills:{},dest:"",presets:[],groups:[],library:[],qa:"رئيس ضمان الجودة",examples:{},skillList:[],skillGroups:[],recommended:{},group:"الكل",q:""};
 var $=function(i){return document.getElementById(i)};
 function api(path,body){return fetch(path,{method:body===undefined?"GET":"POST",headers:{"X-Token":TOKEN,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)}).then(function(r){return r.json()})}
-function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},1800)}
-function show(n){for(var i=1;i<=4;i++)$("s"+i).classList.toggle("hide",i!==n);var b=$("steps").children;for(i=0;i<3;i++)b[i].classList.toggle("on",i<Math.min(n,3));$("steps").classList.toggle("hide",n===4);window.scrollTo({top:0,behavior:"smooth"})}
-function err(id,m){var e=$(id);e.textContent=m||"";e.style.display=m?"block":"none"}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},2000)}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
-S.group="الكل";S.q="";
+function err(id,m){var e=$(id);e.textContent=m||"";e.style.display=m?"block":"none"}
+function show(n){for(var i=0;i<=6;i++)$("s"+i).classList.toggle("hide",i!==n);var st=$("steps");st.classList.toggle("hide",n===0||n===6);var b=st.children;for(i=0;i<5;i++)b[i].classList.toggle("on",i<n);window.scrollTo({top:0,behavior:"smooth"})}
+function copy(t,ok){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast(ok||"نُسخ")},function(){toast("تعذّر النسخ تلقائيًا؛ حدّد النص وانسخه")})}
 function renderGroups(){var g=$("groups");g.innerHTML="";["الكل"].concat(S.groups).forEach(function(n){var c=el("button","chip"+(S.group===n?" on":""),n);c.onclick=function(){S.group=n;renderGroups();renderTypes()};g.appendChild(c)})}
 function renderTypes(){var g=$("types");g.innerHTML="";var q=S.q.trim(),n=0;S.presets.forEach(function(p){
 if(S.group!=="الكل"&&p.group!==S.group&&S.preset!==p.key)return;
 if(q&&(p.label+" "+p.blurb+" "+p.roles.map(function(r){return r.name+" "+r.title}).join(" ")).indexOf(q)<0)return;n++;
 var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("span","em",p.icon));b.appendChild(el("b","",p.label));b.appendChild(el("small","",p.blurb));
-b.onclick=function(){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});renderTypes();renderRoles();renderLib()};g.appendChild(b)});
-if(!n)g.appendChild(el("div","empty","لا يوجد تخصص مطابق. اختر «فريق من الصفر» وأضف أدوارك من المكتبة."))}
+b.onclick=function(){if(S.preset!==p.key){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});S.skills={};(S.recommended[p.key]||[]).forEach(function(k){S.skills[k]=1})}renderTypes();err("e1","")};g.appendChild(b)});
+if(!n)g.appendChild(el("div","empty","لا يوجد مجال مطابق. اختر «فريق من الصفر» من مجموعة «مخصص» وابنِ فريقك بنفسك."))}
+function renderEx(){var x=$("ex");x.innerHTML="";(S.examples[S.preset]||[]).forEach(function(t){var b=el("button","","مثال: "+t);b.onclick=function(){$("goal").value=t;$("goal").focus()};x.appendChild(b)})}
+function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل وتعود إليك بالقرارات"));c.appendChild(t);c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
+S.roles.forEach(function(r,i){var d=el("div","role");d.appendChild(el("div","n",String(i+1)));var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title||""));d.appendChild(t);
+if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles();renderLib()};d.appendChild(x)}box.appendChild(d)})}
 function renderLib(){var box=$("ll");box.innerHTML="";var q=$("lq").value.trim(),have={};S.roles.forEach(function(r){have[r.name]=1});var n=0;
 S.library.forEach(function(r){if(q&&(r.name+" "+r.title+" "+r.scope+" "+r.from).indexOf(q)<0)return;n++;if(n>60)return;
 var d=el("div","it");var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title));d.appendChild(t);d.appendChild(el("span","fr",r.from));
 var b=el("button","",have[r.name]?"مضاف":"أضف");b.disabled=!!have[r.name];b.onclick=function(){S.roles.push({name:r.name,title:r.title,scope:r.scope});renderRoles();renderLib()};d.appendChild(b);box.appendChild(d)});
-if(!n)box.appendChild(el("div","empty","لا نتائج."))}
+if(!n)box.appendChild(el("div","empty","لا نتائج. اكتب الدور يدويًا في الخانة أدناه."))}
+function renderSkills(){var box=$("skills");box.innerHTML="";S.skillGroups.forEach(function(g){var items=S.skillList.filter(function(s){return s.group===g});if(!items.length)return;box.appendChild(el("div","sg",g));var grid=el("div","sk");
+items.forEach(function(s){var on=!!S.skills[s.key];var l=el("label","skill"+(on?" on":""));var c=el("input");c.type="checkbox";c.checked=on;c.onchange=function(){if(c.checked)S.skills[s.key]=1;else delete S.skills[s.key];l.classList.toggle("on",c.checked)};l.appendChild(c);var t=el("div");t.appendChild(el("b","",s.name));t.appendChild(el("small","",s.desc));l.appendChild(t);grid.appendChild(l)});box.appendChild(grid)})}
 $("q").oninput=function(){S.q=this.value;renderTypes()};
 $("lq").oninput=renderLib;
-$("lb").onclick=function(){var l=$("lib");l.classList.toggle("hide");if(!l.classList.contains("hide"))renderLib()};
-function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل"));c.appendChild(t);c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
-S.roles.forEach(function(r,i){var d=el("div","role");d.appendChild(el("div","n",String(i+1)));var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title||""));d.appendChild(t);
-if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles();renderLib()};d.appendChild(x)}box.appendChild(d)})}
-$("ra").onclick=function(){var n=$("rn").value.trim(),t=$("rt").value.trim();if(!n){err("e2","اكتب اسم الدور.");return}
-if(S.roles.some(function(r){return r.name===n})){err("e2","هذا الدور موجود.");return}err("e2","");S.roles.push({name:n,title:t||n,scope:t||n});$("rn").value="";$("rt").value="";renderRoles();renderLib()};
+$("lb").onclick=function(){var l=$("lib");l.classList.toggle("hide");if(!l.classList.contains("hide")){renderLib();$("lq").focus()}};
+$("ra").onclick=function(){var n=$("rn").value.trim(),t=$("rt").value.trim();if(!n){err("e3","اكتب اسم الدور.");return}
+if(S.roles.some(function(r){return r.name===n})){err("e3","هذا الدور موجود.");return}err("e3","");S.roles.push({name:n,title:t||n,scope:t||n});$("rn").value="";$("rt").value="";renderRoles();renderLib()};
 $("rn").onkeydown=$("rt").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("ra").onclick()}};
-$("n1").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
-if(!S.name){err("e1","اكتب اسم المشروع.");return}if(!S.goal){err("e1","اكتب هدف المشروع.");return}err("e1","");show(2)};
+$("n0").onclick=function(){show(1)};
+$("b1").onclick=function(){show(0)};
+$("n1").onclick=function(){if(!S.preset){err("e1","اختر مجالًا أولًا، أو «فريق من الصفر».");return}renderEx();show(2);$("name").focus()};
 $("b2").onclick=function(){show(1)};
-$("n2").onclick=function(){if(!S.preset){err("e2","اختر نوع الفريق أولًا.");return}if(S.roles.length<1){err("e2","أضف دورًا واحدًا على الأقل.");return}err("e2","");
-var d=$("sum");d.innerHTML="";var rows=[["المشروع",S.name],["الهدف",S.goal],["يخاطبك الفريق",S.owner],["الفريق","البوصلة، "+S.roles.map(function(r){return r.name}).join("، ")]];
-rows.forEach(function(r){d.appendChild(el("dt","",r[0]));d.appendChild(el("dd","",r[1]))});$("dest").value=S.dest;show(3)};
+$("n2").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
+if(!S.name){err("e2","اكتب اسم المشروع.");return}if(/[\\/:*?"<>|]/.test(S.name)){err("e2","اسم المشروع لا يقبل هذه الرموز: \\ / : * ? \" < > |");return}if(!S.goal){err("e2","اكتب هدف المشروع، أو اضغط أحد الأمثلة.");return}err("e2","");renderRoles();show(3)};
 $("b3").onclick=function(){show(2)};
-$("go").onclick=function(){var b=$("go");b.disabled=true;b.textContent="جارٍ الإنشاء…";err("e3","");
-api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles,dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
-if(!r.ok){err("e3",r.error||"تعذّر الإنشاء.");return}$("where").textContent=r.root;$("cmd").textContent=r.cmd;show(4)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e3","انقطع الاتصال بالأداة. أعد تشغيلها.")})};
-$("cp").onclick=function(){var t=$("cmd").textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("نُسخ الأمر")},function(){var r=document.createRange();r.selectNodeContents($("cmd"));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("حدّدت الأمر، اضغط ⌘C أو Ctrl+C")})};
-$("oo").onclick=function(){api("/api/open",{what:"office"})};
+$("n3").onclick=function(){if(S.roles.length<1){err("e3","أضف دورًا واحدًا على الأقل.");return}err("e3","");renderSkills();show(4)};
+$("b4").onclick=function(){show(3)};
+$("ska").onclick=function(){S.skills={};S.skillList.forEach(function(s){S.skills[s.key]=1});renderSkills()};
+$("skr").onclick=function(){S.skills={};(S.recommended[S.preset]||[]).forEach(function(k){S.skills[k]=1});renderSkills()};
+$("skn").onclick=function(){S.skills={};renderSkills()};
+$("n4").onclick=function(){var d=$("sum");d.innerHTML="";var p=S.presets.filter(function(x){return x.key===S.preset})[0];var sk=Object.keys(S.skills).map(function(k){var s=S.skillList.filter(function(x){return x.key===k})[0];return s?s.name:k});
+var rows=[["المجال",p?p.label:""],["المشروع",S.name],["الهدف",S.goal],["يخاطبك الفريق",S.owner],["الفريق","البوصلة، "+S.roles.map(function(r){return r.name}).join("، ")],["المهارات",sk.length?sk.join("، "):"لا شيء"]];
+rows.forEach(function(r){d.appendChild(el("dt","",r[0]));d.appendChild(el("dd","",r[1]))});if(!$("dest").value)$("dest").value=S.dest;show(5)};
+$("b5").onclick=function(){show(4)};
+$("go").onclick=function(){var b=$("go");b.disabled=true;b.textContent="جارٍ الإنشاء…";err("e5","");
+api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles,skills:Object.keys(S.skills),dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
+if(!r.ok){err("e5",r.error||"تعذّر الإنشاء.");return}$("where").textContent=r.root+"  ("+r.files+" ملفًا)";$("cmd").textContent=r.cmd;renderTeam(r.team);renderLibrary(r.library);show(6)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e5","انقطع الاتصال بالأداة. أغلق الصفحة وشغّل Project Forge من جديد.")})};
+function renderTeam(team){var box=$("t2");box.innerHTML="";box.appendChild(el("div","h","لكل موظف محادثة مستقلة. انسخ أمره، وألصقه في محادثة جديدة، ثم اكتب «تابع»."));team.forEach(function(r){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",r.name+": "+r.title));t.appendChild(pre(r.cmd));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(r.cmd,"نُسخ أمر "+r.name)};d.appendChild(c);box.appendChild(d)})}
+function pre(txt){var p=el("pre","",txt);if(!/[\u0600-\u06FF]/.test(txt)){p.dir="ltr";p.style.textAlign="left";p.style.fontFamily="ui-monospace,Menlo,Consolas,monospace"}return p}
+function renderLibrary(lib){var box=$("t3");box.innerHTML="";lib.forEach(function(g,gi){if(gi===0)return;box.appendChild(el("h3","",g.title));if(g.hint)box.appendChild(el("div","h",g.hint));g.items.forEach(function(it){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",it.label));t.appendChild(pre(it.text));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(it.text)};d.appendChild(c);box.appendChild(d)})})}
+Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(b){b.onclick=function(){Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(x){x.classList.toggle("on",x===b)});["t1","t2","t3"].forEach(function(id){$(id).classList.toggle("hide",id!==b.getAttribute("data-t"))})}});
+$("cp").onclick=function(){copy($("cmd").textContent,"نُسخ أمر البوصلة")};
 $("sc").onclick=function(){api("/api/shortcut",{}).then(function(r){toast(r.ok?"تمت إضافة الأيقونة إلى سطح المكتب":(r.error||"تعذّر إنشاء الأيقونة"))})};
+$("oo").onclick=function(){api("/api/open",{what:"office"})};
 $("of").onclick=function(){api("/api/open",{what:"folder"})};
-api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;renderGroups();renderTypes();$("name").focus()});
-setInterval(function(){api("/api/ping",{})},4000);api("/api/ping",{});
+api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;S.examples=r.examples||{};S.skillList=r.skills||[];S.skillGroups=r.skillGroups||[];S.recommended=r.recommended||{};renderGroups();renderTypes()}).catch(function(){err("e1","تعذّر الاتصال بالأداة. أغلق الصفحة وشغّلها من جديد.");show(1)});
+setInterval(function(){api("/api/ping",{}).catch(function(){})},4000);api("/api/ping",{}).catch(function(){});
 </script>
 </body>
 </html>

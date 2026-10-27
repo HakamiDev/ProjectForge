@@ -153,6 +153,25 @@ class ForgeTests(unittest.TestCase):
         tool = home / "Library" / "Application Support" / "Project Forge" / core.TOOL_NAME
         compile(tool.read_text(encoding="utf-8"), "tool", "exec")
 
+    def test_skills_and_library(self):
+        self.assertGreaterEqual(len(core.SKILLS), 20)
+        root = new_project(self.tmp)
+        team = core.load_team(root)
+        self.assertTrue(team["skills"])
+        for k in team["skills"]:
+            self.assertTrue((root / "Agents" / "Skills" / ("%s.md" % core.SKILLS[k][0])).is_file())
+        self.assertTrue((root / "Agents" / "Skills" / "Read Me.md").is_file())
+        lib = (root / "Agents" / "Commands Library.md").read_text(encoding="utf-8")
+        self.assertIn("البوصلة", lib)
+        self.assertIn("export", lib)
+        groups = core.commands_library(team)
+        self.assertGreaterEqual(len(groups), 5)
+        self.assertTrue(all(it["text"] for g in groups for it in g["items"]))
+        self.assertGreaterEqual(len(core.PRESETS), 40)
+        for k in core.PRESETS:
+            self.assertIn(k, core.GOAL_EXAMPLES)
+            self.assertTrue(core.skills_for(k))
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)
