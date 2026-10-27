@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>@@TITLE@@</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
 <style>
 /* التخطيط: رأس زجاجي بتنقل ستة أقسام، ومحتوى بطاقات مفتوحة، ولوحة استكشاف جانبية تفتح لكل عنصر يُضغط؛ ألوان وإعدادات «استوديو التصميم» المعتمدة (القرار 61) */
-:root{--bg:#F4F7FF;--ink:#17203A;--muted:#58627F;--line:rgba(23,32,58,.14);--card:rgba(23,32,58,.035);--accent:#2F6BE0;--accent-fg:#2F6BE0;--accent-ink:#fff;--glow:#2F6BE0;--shine:#7FB0FF;--btnfill:#FFFFFF;--btntx:#17203A;--ok:#0F7A96;--wait:#95660D;--bad:#C2415F;--prog:#535CDD;--s1:#34F5A0;--s2:#3EC7FF;--dotn:60,80,120;--dotl:60,80,120;--doth:59,106,168;--dlo:.2;--dsp:30;--dR:150;--shd:rgba(47,80,160,.45);--hi:1;color-scheme:light;--font:"Readex Pro","Segoe UI",Tahoma,sans-serif}
+:root{--bg:#F4F7FF;--ink:#17203A;--muted:#58627F;--line:rgba(23,32,58,.14);--card:rgba(23,32,58,.035);--accent:#2F6BE0;--accent-fg:#2F6BE0;--accent-ink:#fff;--glow:#2F6BE0;--shine:#7FB0FF;--btnfill:#FFFFFF;--btntx:#17203A;--ok:#0F7A96;--wait:#95660D;--bad:#C2415F;--prog:#535CDD;--s1:#34F5A0;--s2:#3EC7FF;--dotn:60,80,120;--dotl:60,80,120;--doth:59,106,168;--dlo:.2;--dsp:30;--dR:150;--shd:rgba(47,80,160,.45);--hi:1;color-scheme:light;--font:"Cairo","Segoe UI",Tahoma,sans-serif}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#FFD86B;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#FFD86B;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}
 *{box-sizing:border-box}
@@ -313,7 +313,7 @@ input[type=text]{background:var(--card);border:1px solid var(--line);border-radi
 html[data-motion="static"] #dr,html[data-motion="static"] #dr.on{transition:none}html[data-motion="static"] .menu.on{animation:none}
 
 /* ===== مكتبة الزجاج المضمّنة (تحت .xlib) ===== */
-/* Glass Button 1: زر زجاجي بانكسار الحافة للمكتب (الواجهة فقط، لا الدعوات).
+/* Glass Button 1: زر زجاجي بانكسار الحافة للمكتب (الواجهة فقط).
    المصدر الفكري: آلية «عدسة الحافة» العامة (خريطة إزاحة في مرشح SVG داخل backdrop-filter)؛ الكود كله مكتوب للمكتب.
    الرموز من Brand Tokens 1.css، والحركة من UI Motion Kit 1 (أوضاع data-motion).
    قاعدة الأداء: الحركة transform وopacity فقط؛ لا تحريك box-shadow ولا blur ولا background. */
@@ -697,7 +697,7 @@ html[data-motion="static"] .sb[aria-current="page"]::after,html[data-motion="sta
 .fcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:14px}
 .fc{border:1px solid color-mix(in srgb,var(--ink) 8%,transparent);border-radius:18px;background:var(--card);padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
 .fc.on{border-color:color-mix(in srgb,var(--glow) 70%,transparent)}
-.fcn,.fch2,.fcs,.fcn2,.fcw,.fcu *{font-family:var(--ff),"Readex Pro",sans-serif}
+.fcn,.fch2,.fcs,.fcn2,.fcw,.fcu *{font-family:var(--ff),"Cairo",sans-serif}
 .fcn{font-size:19px;font-weight:600}
 .fch2{font-size:30px;font-weight:600;line-height:1.4}
 .fcs{line-height:1.8}
@@ -716,7 +716,7 @@ html[data-motion="static"] .sb[aria-current="page"]::after,html[data-motion="sta
 #dr .bd{padding-bottom:34px}
 #gpop .gpb{padding-bottom:26px}
 /* ---- متغيرات هوية الزجاج لعناصر المكتبة المضمّنة ---- */
-.xlib{--blue:#354BD4;--lilac:#C5B5F2;--rose:#F2BDD1;--cyan:#85DDEB;--font-ui:var(--font,"Readex Pro",Tahoma,sans-serif);--radius-pill:999px;--motion-fast:160ms;--motion-normal:240ms;--motion-ease:cubic-bezier(.22,1,.36,1);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--glass-fill:rgba(35,30,59,.46);--glass-fill-strong:rgba(35,30,59,.64);--glass-sheen:linear-gradient(135deg,rgba(247,244,255,.16),rgba(247,244,255,.04) 42%,rgba(197,181,242,.06));--glass-border:rgba(247,244,255,.24);--glass-edge:inset 0 1px 0 rgba(255,255,255,.30),inset 0 -1px 0 rgba(255,255,255,.06);--glass-shadow:0 24px 60px rgba(6,8,23,.42);--glass-blur:24px;--glass-sat:150%;--glass-radius:28px;--glass-radius-s:20px}
+.xlib{--blue:#354BD4;--lilac:#C5B5F2;--rose:#F2BDD1;--cyan:#85DDEB;--font-ui:var(--font,"Cairo",Tahoma,sans-serif);--radius-pill:999px;--motion-fast:160ms;--motion-normal:240ms;--motion-ease:cubic-bezier(.22,1,.36,1);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--glass-fill:rgba(35,30,59,.46);--glass-fill-strong:rgba(35,30,59,.64);--glass-sheen:linear-gradient(135deg,rgba(247,244,255,.16),rgba(247,244,255,.04) 42%,rgba(197,181,242,.06));--glass-border:rgba(247,244,255,.24);--glass-edge:inset 0 1px 0 rgba(255,255,255,.30),inset 0 -1px 0 rgba(255,255,255,.06);--glass-shadow:0 24px 60px rgba(6,8,23,.42);--glass-blur:24px;--glass-sat:150%;--glass-radius:28px;--glass-radius-s:20px}
 .xlib[data-xt="light"]{--glass-fill:rgba(255,255,255,.55);--glass-fill-strong:rgba(255,255,255,.75);--glass-sheen:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,.2) 42%,rgba(197,181,242,.12));--glass-border:rgba(255,255,255,.7);--glass-edge:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(53,75,212,.08);--glass-shadow:0 18px 44px rgba(53,75,212,.18)}
 .xlib :is(.gb,.gfb,.afb,.cta,.gst,.ngb,.shb,.tt,.di){font-family:var(--font-ui)}
 /* المؤشر المنزلق خلف الأزرار، والأزرار فوقه */
@@ -1198,7 +1198,7 @@ function outPaint(){var q=OF.q.trim().toLowerCase(),L=D.out.filter(function(f){v
  $("#ol").innerHTML='<div class="mini" style="margin-bottom:8px">'+fmtN(L.length)+' ملف، الأحدث أولًا</div><div class="list">'+L.slice(0,OF.lim).map(function(f){var p=f[0],b=p.split("/").pop(),d=p.slice(0,p.length-b.length-1),u=D.links[b]||encP(p);return'<div class="row" style="padding:8px 0;border-top:1px solid var(--line);gap:10px"><div style="flex:1;min-width:0"><b style="overflow-wrap:anywhere">'+E(b)+'</b><div class="mini" dir="ltr" style="overflow-wrap:anywhere;text-align:right">'+E(d)+"</div></div><span class='mini'>"+fz(f[1])+" · "+new Date(f[2]*1000).toISOString().slice(0,10)+"</span>"+(u?'<a class="chip" href="'+u+'" target="_blank" rel="noopener">افتح</a>':"")+"</div>"}).join("")+"</div>"+(L.length>OF.lim?'<button class="sb more" type="button" id="omore" style="margin-top:12px">عرض المزيد ('+fmtN(L.length-OF.lim)+")</button>":"")}
 function outBind(){if(!$("#oq"))return;outPaint();$("#oq").oninput=function(){OF.q=this.value;OF.lim=40;outPaint()};$("#og").onchange=function(){OF.g=this.value;OF.lim=40;outPaint()};$("#oe").onchange=function(){OF.e=this.value;OF.lim=40;outPaint()};document.addEventListener("click",function f(e){if(e.target&&e.target.id==="omore"){OF.lim+=40;outPaint()}if(!$("#oq"))document.removeEventListener("click",f)})}
 
-var PGC=[["layers","قصاصات الطبقات (مكة والمدن)",/^Templates\/Layers\//],["assist","أقنعة المساعد ومدخلات القوالب",/^Templates\//],["design","شاشات استوديو التصميم",/^Docs\/Design Studio\//],["motion","نماذج الحركة والرحلات",/^Docs\/Motion\//],["cities","عوالم المدن والخلفيات",/^Brand\/City Worlds 1\//],["motasset","أصول الحركة",/^Brand\/Motion Assets/],["logo","الشعار والهوية",/^Brand\/(Office Logo|Phase|Color Options|Zodiac)|Logos\//],["card","بطاقة الدعوة",/^Brand\/Invitation Card/],["proto3","نموذج 3 وطبقات الأشياء",/^Brand\/Prototype 3/],["web","تصميم الموقع ونماذجه",/^(Website|Brand\/Website Concept|Brand\/Office Prototype)/],["review","المراجعات والفحص",/^Docs\/(Reviews|QA)/],["trash","مؤجلة للحذف",/^_to_delete\//],["gen","صور مولّدة خام",/^generated_images\//],["style","مكتبة الأنماط والمفاهيم",/^Brand\/(Style Library|Concepts)/],["docs","أوراق فحص ووثائق مصوّرة",/^Docs\//],["arch","الأرشيف والمستبعد",/^(Archive|Brand\/Archive)\//]];
+var PGC=[["outputs","المخرجات",/^Outputs\//],["docs","المستندات والمراجعات",/^Docs\//],["brand","الهوية والشعار",/^(Brand|Logos?)\//],["design","التصاميم والنماذج",/^(Design|Website|Prototypes?)\//],["data","البيانات",/^Data\//],["archive","الأرشيف",/^Archive\//]];
 function pgCat(p){for(var k=0;k<PGC.length;k++)if(PGC[k][2].test(p))return PGC[k][0];return"other"}
 function pgCatName(c){for(var k=0;k<PGC.length;k++)if(PGC[k][0]===c)return PGC[k][1];return"أخرى"}
 var PGN=null;function pgCnt(){if(!PGN){PGN={};D.png.forEach(function(f){var c=pgCat(f[0]);PGN[c]=(PGN[c]||0)+1})}return PGN}
@@ -1455,7 +1455,7 @@ function curDemoInd(){$$(".cd").forEach(function(d){var i=d.querySelector(".navi
 /* ---------- 4. أدوات مشتركة للمكتبة ---------- */
 function libTheme(){return effTheme()}
 function libApply(){curApply();var tm=libTheme();$$(".xlib,.gzs").forEach(function(e){e.setAttribute("data-xt",tm)});
- var f=sg("fontui",null),r=document.documentElement;if(f&&FONTS.some(function(x){return x.n===f})){libFontLoad([f]);r.style.setProperty("--font",'"'+f+'","Readex Pro",Tahoma,sans-serif')}else r.style.removeProperty("--font");
+ var f=sg("fontui",null),r=document.documentElement;if(f&&FONTS.some(function(x){return x.n===f})){libFontLoad([f]);r.style.setProperty("--font",'"'+f+'","Cairo",Tahoma,sans-serif')}else r.style.removeProperty("--font");
  sbmScan()}
 function libCopy(t,msg){var done=function(){toast(msg||"تم النسخ")};try{navigator.clipboard.writeText(t).then(done,function(){libCopyOld(t);done()})}catch(e){libCopyOld(t);done()}}
 function libCopyOld(t){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}document.body.removeChild(a)}
@@ -1465,15 +1465,15 @@ var ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d
 var LBGS=[
  ["sb","الزر الأساسي","`.sb`","الواجهة الحالية: حلقة لمعة بمتغيرات اللون من «المظهر التفصيلي»","<button class=\"sb\" type=\"button\">زر أساسي</button><button class=\"sb sm\" type=\"button\">صغير</button><button class=\"sb\" type=\"button\" aria-pressed=\"true\">محدّد</button><button class=\"sb ic\" type=\"button\" aria-label=\"رمز\">✦</button>",0],
  ["shiny","Shiny Button (القرار 50)","`.shiny`","`Templates/Shared Assets/Shiny Button 1.css`، الزر الرئيسي المعتمد للنماذج؛ اللمعة عند التحويم","<button class=\"shiny\" type=\"button\" style=\"font-size:.72em\"><span>انسخ الإجابات</span></button><button class=\"shiny\" type=\"button\" style=\"font-size:.72em;--shiny-accent:#5800db;--shiny-accent-soft:#4dffe1;--shiny-fill:#0d0e12\"><span>نيون</span></button>",0],
- ["gb","زر الزجاج بانكسار الحافة","`.gb`","`Glass Button 1`: عدسة حافة بخريطة إزاحة، ثانوي",'<button class="gb" type="button" data-depth="9" data-refraction=".75" style="--gb-h:52px;--gb-fs:16px"><span class="gb-shadow" aria-hidden="true"></span><span class="gb-face"><span class="gb-glass" aria-hidden="true"></span><span class="gb-sheen" aria-hidden="true"></span><span class="gb-rim" aria-hidden="true"></span><span class="gb-label">ابدأ دعوتك</span><svg class="gb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></span></button>',1],
- ["gfb","زر التوهّج السفلي","`.gfb`","`Glass Extras 1`: توهج يصعد من الحافة السفلية عند التحويم",'<button class="gfb" type="button">ابدأ دعوتك '+ARW+'</button>',1],
+ ["gb","زر الزجاج بانكسار الحافة","`.gb`","`Glass Button 1`: عدسة حافة بخريطة إزاحة، ثانوي",'<button class="gb" type="button" data-depth="9" data-refraction=".75" style="--gb-h:52px;--gb-fs:16px"><span class="gb-shadow" aria-hidden="true"></span><span class="gb-face"><span class="gb-glass" aria-hidden="true"></span><span class="gb-sheen" aria-hidden="true"></span><span class="gb-rim" aria-hidden="true"></span><span class="gb-label">ابدأ الآن</span><svg class="gb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></span></button>',1],
+ ["gfb","زر التوهّج السفلي","`.gfb`","`Glass Extras 1`: توهج يصعد من الحافة السفلية عند التحويم",'<button class="gfb" type="button">ابدأ الآن '+ARW+'</button>',1],
  ["afb","زر الدائرة والسهم","`.afb`","`Glass Extras 1`: دائرة تتسع فتكشف النص المعكوس",'<button class="afb" type="button"><span>شاهد القوالب</span><span class="afb-cover" aria-hidden="true"><span>شاهد القوالب</span></span><span class="afb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
  ["cta","زر الدعوة إلى إجراء","`.cta`","`Glass Extras 2`: على نمط الدائرة والسهم للاتصال",'<button class="cta" type="button"><span>تواصل معنا</span><span class="cta-cover" aria-hidden="true"><span>تواصل معنا</span></span><span class="cta-ic" aria-hidden="true">'+ARW+'</span></button>',0],
- ["gst","زر النجوم","`.gst`","`Glass Extras 1`: نجوم تومض عند التحويم، زينة للموقع العام",'<button class="gst" type="button">'+[[8,25,0],[18,70,300],[30,35,700],[42,78,150],[55,22,900],[66,66,450],[78,30,1100],[90,72,600],[48,48,1250]].map(function(s){return'<span class="gst-s" style="--x:'+s[0]+'%;--y:'+s[1]+'%;--d:'+s[2]+'ms"></span>'}).join("")+'<span>أنشئ دعوتك</span></button>',1],
+ ["gst","زر النجوم","`.gst`","`Glass Extras 1`: نجوم تومض عند التحويم، زينة للموقع العام",'<button class="gst" type="button">'+[[8,25,0],[18,70,300],[30,35,700],[42,78,150],[55,22,900],[66,66,450],[78,30,1100],[90,72,600],[48,48,1250]].map(function(s){return'<span class="gst-s" style="--x:'+s[0]+'%;--y:'+s[1]+'%;--d:'+s[2]+'ms"></span>'}).join("")+'<span>أنشئ مشروعك</span></button>',1],
  ["ngb","زر نوفا المتوهّج","`.ngb`","`Glass Extras 2`: حلقة مخروطية تدور وهالة ولمعة تعبر",'<button class="ngb" type="button"><span class="ngb-halo" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-ring" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-shine" aria-hidden="true"></span><span class="ngb-label">استكشف القوالب</span></button>',0],
- ["shb","زر التدرج السائل","`.shb` و`.lqg`","`Glass Extras 2`: بقع لونية تنجرف خلف النص، للموقع العام",'<button class="shb" type="button" style="min-height:48px;padding:0 28px;font-size:16px"><span class="lqg" aria-hidden="true"></span><span class="shb-label">صمّم دعوتك</span><span class="shb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
+ ["shb","زر التدرج السائل","`.shb` و`.lqg`","`Glass Extras 2`: بقع لونية تنجرف خلف النص، للموقع العام",'<button class="shb" type="button" style="min-height:48px;padding:0 28px;font-size:16px"><span class="lqg" aria-hidden="true"></span><span class="shb-label">أنشئ مشروعك</span><span class="shb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
  ["tt","مبدّل المظهر","`.tt`","`Glass Extras 2`: شمس وقمر؛ هنا يبدّل سمة هذا الموقع",'<button class="tt" type="button" aria-label="تبديل المظهر"><span class="tt-i tt-sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.4 5.4l1.7 1.7M16.9 16.9l1.7 1.7M5.4 18.6l1.7-1.7M16.9 7.1l1.7-1.7"/></svg></span><span class="tt-i tt-moon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg></span></button>',0],
- ["di","تأكيد الحذف بعدّ","`.di`","`Glass Extras 1`: نقرة تبدأ عدًّا 5 ثوانٍ، ونقرة ثانية تلغي",'<button class="di" type="button" data-seconds="5" data-cancel="إلغاء الحذف" data-done="تم الحذف"><span class="di-bar"></span><span class="di-l">حذف الدعوة</span><span class="di-n" aria-hidden="true"></span></button>',0],
+ ["di","تأكيد الحذف بعدّ","`.di`","`Glass Extras 1`: نقرة تبدأ عدًّا 5 ثوانٍ، ونقرة ثانية تلغي",'<button class="di" type="button" data-seconds="5" data-cancel="إلغاء الحذف" data-done="تم الحذف"><span class="di-bar"></span><span class="di-l">حذف العنصر</span><span class="di-n" aria-hidden="true"></span></button>',0],
  ["ab","شارات الحالة","`.ab`","`Glass Extras 1`: نقطة بنبضة حلقة",'<span class="ab" data-state="ok"><span class="ab-dot"></span>منشورة</span><span class="ab" data-state="warn"><span class="ab-dot"></span>مسودة</span><span class="ab" data-state="bad"><span class="ab-dot"></span>بها خطأ</span>',0],
  ["ir","حلقة الأيقونة","`.ir`","`Glass Extras 1`: حلقة مخروطية تدور حول رمز",'<span class="ir" style="--ir-size:64px"><span class="ir-ring"></span><span class="ir-body"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.5 7.2 12 13l8.5-5.8"/></svg></span>',0],
  ["chips","الشرائح والمفاتيح","`.chip` و`.seg` و`.pill`","عناصر الواجهة المساندة في هذا الموقع",'<button class="chip" type="button">شريحة</button><button class="chip" type="button" style="border-color:var(--accent)">محددة</button><span class="seg"><button type="button" aria-pressed="true">كامل</button><button type="button" aria-pressed="false">مبسّط</button><button type="button" aria-pressed="false">ثابت</button></span><span class="pill s-ok">مسلّمة</span><span class="pill s-wait">بانتظار</span><span class="pill s-bad">أُعيدت</span>',0]];
@@ -1519,19 +1519,17 @@ function gzCss(id){var el=$('.gzp[data-gz="'+id+'"]');if(!el)return"";var c=getC
 
 /* ---------- 7. تبويب «الخطوط» ---------- */
 var FONTS=[
- {n:"Readex Pro",r:"خط واجهة هذا الموقع حاليًا",gf:"Readex+Pro:wght@300;400;500;600;700",w:[300,400,500,600,700]},
- {n:"Alexandria",r:"الشعار والعناوين (هوية المشروع، بوزن 650)",gf:"Alexandria:wght@300;400;500;600;700",w:[300,400,500,600,700],p:"`Brand/Phase 2/Fonts`"},
- {n:"IBM Plex Sans Arabic",r:"واجهة الهوية والنصوص (400 و700)",gf:"IBM+Plex+Sans+Arabic:wght@300;400;500;600;700",w:[300,400,500,600,700],p:"`Brand/Phase 2/Fonts`"},
- {n:"Noto Naskh Arabic",r:"نصوص الدعوة التجريبية داخل القوالب",gf:"Noto+Naskh+Arabic:wght@400;500;600;700",w:[400,500,600,700],p:"`Brand/Phase 2/Fonts`"},
- {n:"Amiri",r:"خط الدعوات والعناوين الأدبية (الأكثر استعمالًا في القوالب)",gf:"Amiri:wght@400;700",w:[400,700]},
- {n:"Aref Ruqaa",r:"خط الرقعة للأسماء والزخرفة",gf:"Aref+Ruqaa:wght@400;700",w:[400,700]},
- {n:"Reem Kufi",r:"كوفي للعناوين القصيرة",gf:"Reem+Kufi:wght@400;500;600;700",w:[400,500,600,700]},
- {n:"Noto Kufi Arabic",r:"كوفي حديث للواجهات",gf:"Noto+Kufi+Arabic:wght@300;400;500;600;700",w:[300,400,500,600,700]},
+ {n:"Cairo",r:"خط واجهة هذا الموقع حاليًا",gf:"Cairo:wght@300;400;500;600;700",w:[300,400,500,600,700]},
+ {n:"IBM Plex Sans Arabic",r:"واجهات ونصوص تقنية",gf:"IBM+Plex+Sans+Arabic:wght@300;400;500;600;700",w:[300,400,500,600,700]},
+ {n:"Readex Pro",r:"واجهات مفتوحة مقروءة",gf:"Readex+Pro:wght@300;400;500;600;700",w:[300,400,500,600,700]},
  {n:"Tajawal",r:"واجهات حديثة نظيفة",gf:"Tajawal:wght@300;400;500;700;800",w:[300,400,500,700,800]},
- {n:"El Messiri",r:"عناوين بطابع ناعم",gf:"El+Messiri:wght@400;500;600;700",w:[400,500,600,700]},
  {n:"Almarai",r:"نص قراءة واضح",gf:"Almarai:wght@300;400;700;800",w:[300,400,700,800]},
- {n:"Markazi Text",r:"نص أدبي بحروف مكتنزة",gf:"Markazi+Text:wght@400;500;600;700",w:[400,500,600,700]},
- {n:"Mada",r:"واجهات وعناوين",gf:"Mada:wght@300;400;500;600;700",w:[300,400,500,600,700]},
+ {n:"Noto Kufi Arabic",r:"كوفي حديث للواجهات",gf:"Noto+Kufi+Arabic:wght@300;400;500;600;700",w:[300,400,500,600,700]},
+ {n:"Noto Sans Arabic",r:"محايد واسع التغطية",gf:"Noto+Sans+Arabic:wght@400;500;600;700",w:[400,500,600,700]},
+ {n:"Vazirmatn",r:"نحيف أنيق",gf:"Vazirmatn:wght@300;400;500;700",w:[300,400,500,700]},
+ {n:"Amiri",r:"نصوص أدبية وعناوين كلاسيكية",gf:"Amiri:wght@400;700",w:[400,700]},
+ {n:"Reem Kufi",r:"كوفي للعناوين القصيرة",gf:"Reem+Kufi:wght@400;500;600;700",w:[400,500,600,700]},
+ {n:"El Messiri",r:"عناوين بطابع ناعم",gf:"El+Messiri:wght@400;500;600;700",w:[400,500,600,700]},
  {n:"IBM Plex Mono",r:"الشيفرة والأرقام والمسارات (لاتيني)",gf:"IBM+Plex+Mono:wght@400;500;600",w:[400,500,600],l:1}];
 var FS=Object.assign({t:"نص تجريبي لمعاينة الخط داخل المكتب",sz:20,wt:400},sg("fs",{})),FLOAD={};
 function libFontLoad(names){var fam=FONTS.filter(function(f){return names.indexOf(f.n)>=0&&!FLOAD[f.n]});if(!fam.length)return;fam.forEach(function(f){FLOAD[f.n]=1});
@@ -1575,7 +1573,7 @@ document.addEventListener("input",function(e){var t=e.target;if(!t.closest)retur
  if(t.id==="fst"||t.id==="fsz"||t.id==="fwt"){if(t.id==="fst")FS.t=t.value;if(t.id==="fsz"){FS.sz=+t.value;$("#fszo").textContent=FS.sz+"px"}if(t.id==="fwt"){FS.wt=+t.value;$("#fwto").textContent=FS.wt}ss("fs",FS);
   $$(".fcs").forEach(function(s){if(t.id==="fst"&&!s.closest(".fc").style.cssText.match(/IBM Plex Mono/))s.textContent=FS.t;s.style.fontSize=FS.sz+"px";s.style.fontWeight=FS.wt})}});
 
-/* Glass Button 1: يضيف انكسار الحافة وتتبّع الضوء والميل إلى العناصر .gb (الواجهة فقط، لا الدعوات).
+/* Glass Button 1: يضيف انكسار الحافة وتتبّع الضوء والميل إلى العناصر .gb (الواجهة فقط).
    بلا اعتماد. خريطة الإزاحة تُولَّد مرة واحدة لكل مقاس، ولا حلقة حركة إلا أثناء التفاعل. */
 (function(){
 'use strict';

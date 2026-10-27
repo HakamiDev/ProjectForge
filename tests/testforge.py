@@ -50,6 +50,8 @@ class ForgeTests(unittest.TestCase):
         html = (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8")
         self.assertNotIn("@@", html)
         self.assertNotIn("Makkah", html)
+        for bad in ("مكة", "Brand/Phase", "Invitation", "دعوتك", "الدعوات"):
+            self.assertNotIn(bad, html, bad)
         m = re.search(r"var D=(\{.*?\});\nvar \$=", html, re.S)
         self.assertTrue(json.loads(m.group(1))["team"])
 
