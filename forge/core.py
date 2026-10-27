@@ -2497,7 +2497,9 @@ def cmd_gui(a):
             if self.path.split("?")[0] == "/":
                 return self._send(200, page, "text/html; charset=utf-8")
             if self.path == "/api/presets" and self.headers.get("X-Token") == token:
-                return self._send(200, json.dumps(presets_payload(), ensure_ascii=False))
+                pl = presets_payload()
+                pl["defaults"] = {"platform": norm_platform(os.environ.get("FORGE_PLATFORM")), "language": re.sub(r"[\x00-\x1f<>\"'`]", "", os.environ.get("FORGE_LANGUAGE", "")).strip()[:40]}
+                return self._send(200, json.dumps(pl, ensure_ascii=False))
             self._send(404, "{}")
 
         def do_POST(self):

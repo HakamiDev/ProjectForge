@@ -144,13 +144,13 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 .logo{animation:float 6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){.aurora i,.card,.logo,.done .ok{animation:none!important}}
-.hl{margin-inline-start:auto;display:flex;align-items:center;gap:6px}.hl select{width:auto;min-width:0;padding:7px 10px;font-size:13px;border-radius:12px}.hl input{width:120px;padding:7px 10px;font-size:13px;border-radius:12px}@media (max-width:520px){header{flex-wrap:wrap}.hl{flex:1 1 100%;margin:0}.hl select{flex:1}.hl input{flex:1;width:auto}}
+.hl{margin-inline-start:auto;display:flex;align-items:center;gap:6px}.hl select{width:auto;min-width:0;padding:7px 10px;font-size:13px;border-radius:12px}.hl input{width:120px;padding:7px 10px;font-size:13px;border-radius:12px}@media (max-width:520px){header{flex-wrap:wrap}.hl em{display:none}.hl{flex:1 1 100%;margin:0}.hl select{flex:1}.hl input{flex:1;width:auto}}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="wrap">
-<header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div><div class="hl" title="لغة العمل: بها يخاطبك الفريق وتُكتب المخرجات والتقارير"><em aria-hidden="true" style="font-style:normal">🌐</em><select id="lang" aria-label="لغة العمل"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lang2" class="hide" placeholder="اكتب اسم اللغة" autocomplete="off" aria-label="اسم اللغة"></div></header>
+<header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div><div class="hl" title="اللغة المفضلة لإدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين"><em style="font-style:normal;font-size:13px;color:var(--mut)">🌐 اللغة المفضلة</em><select id="lang" aria-label="لغة العمل"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lang2" class="hide" placeholder="اكتب اسم اللغة" autocomplete="off" aria-label="اسم اللغة"></div></header>
 <div class="steps hide" id="steps"><div><i></i>التخصص</div><div><i></i>التفاصيل</div><div><i></i>الفريق</div><div><i></i>المهارات</div><div><i></i>المراجعة</div></div>
 
 <section class="card welcome" id="s0">
@@ -188,7 +188,7 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 <label>أين ستعمل مع الفريق؟</label>
 <div class="chips" id="plat"><button type="button" class="chip on" data-p="Claude">Claude</button><button type="button" class="chip" data-p="ChatGPT">ChatGPT</button></div>
 <div class="hint">هذه المنصة الافتراضية للجميع. وفي خطوة الفريق تختار منصة كل موظف على حدة (مثلًا: الكاتب في ChatGPT والمحلل في Claude).</div>
-<div class="hint">لغة العمل تُختار من القائمة أعلى الصفحة (الرمز 🌐)، وبها يخاطبك الفريق وتُكتب المخرجات والتقارير.</div>
+<div class="hint">اللغة المفضلة تُختار من القائمة أعلى الصفحة. هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير.</div>
 <details class="why"><summary>لماذا الهدف مهم إلى هذا الحد؟</summary><div>الهدف يُكتب في أعلى كل ملف يقرؤه الموظفون، ويُقاس به كل مخرج. جملة واضحة الآن توفّر عشرات التصحيحات لاحقًا.</div></details>
 <div class="err" id="e2"></div>
 <div class="nav"><button class="btn sec" id="b2">السابق</button><button class="btn pri" id="n2">التالي</button></div>
@@ -307,6 +307,8 @@ function renderTeam(team){var box=$("t2");box.innerHTML="";box.appendChild(el("d
 function bidi(node,txt){node.textContent="";String(txt).split(/((?:Agents|Docs|Outputs|Data|Office|Tools)\/[^«»،؛"]*?\.(?:md|py|csv|html|json)|[A-Za-z][^\s«»،؛"]*\.(?:md|py|csv|html|json))/).forEach(function(part,i){if(i%2){var b=document.createElement("bdi");b.dir="ltr";b.textContent=part;node.appendChild(b)}else if(part){node.appendChild(document.createTextNode(part))}});return node}
 function pre(txt){var p=el("pre","",txt);if(/[\u0600-\u06FF]/.test(txt))bidi(p,txt);if(!/[\u0600-\u06FF]/.test(txt)){p.dir="ltr";p.style.textAlign="left";p.style.fontFamily="ui-monospace,Menlo,Consolas,monospace"}return p}
 function platSummary(){var m={};m[S.platform]=1;S.roles.forEach(function(r){m[r.platform||S.platform]=1});var k=Object.keys(m);return k.length>1?"مختلطة: "+k.join(" و"):k[0]}
+function applyDefaults(d){if(d.platform==="ChatGPT"||d.platform==="Claude"){S.platform=d.platform;Array.prototype.forEach.call(document.querySelectorAll("#plat .chip"),function(x){x.classList.toggle("on",x.dataset.p===d.platform)})}
+if(d.language){var sel=$("lang"),ok=false;Array.prototype.forEach.call(sel.options,function(o){if(o.value===d.language||o.text===d.language){sel.value=o.value;ok=true}});if(!ok){sel.value="__other";$("lang2").classList.remove("hide");$("lang2").value=d.language}}}
 function rich(node,parts){node.textContent="";parts.forEach(function(x){if(typeof x==="string"){node.appendChild(document.createTextNode(x))}else{var b=document.createElement("bdi");b.dir=x.ltr?"ltr":"auto";if(x.b)b.style.fontWeight="800";b.textContent=x.t;node.appendChild(b)}})}
 function setPlatText(){var m=platSummary();var b=$("g1b"),p=$("g1p"),n=S.pn||"",r=S.root||"";if(!b)return;
 var nm={t:n,b:1},pt={t:r,ltr:1,b:1};
@@ -322,7 +324,7 @@ function dead(){toast("انتهت جلسة الأداة. أعد فتحها من 
 $("sc").onclick=function(){api("/api/shortcut",{}).then(function(r){toast(r.ok?"تمت إضافة الأيقونة إلى سطح المكتب":(r.error||"تعذّر إنشاء الأيقونة"))}).catch(dead)};
 $("oo").onclick=function(){api("/api/open",{what:"office"}).catch(dead)};
 $("of").onclick=function(){api("/api/open",{what:"folder"}).catch(dead)};
-api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;S.examples=r.examples||{};S.skillList=r.skills||[];S.skillGroups=r.skillGroups||[];S.recommended=r.recommended||{};renderGroups();renderTypes()}).catch(function(){err("e1","تعذّر الاتصال بالأداة. أغلق الصفحة وشغّلها من جديد.");show(1)});
+api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;S.examples=r.examples||{};S.skillList=r.skills||[];S.skillGroups=r.skillGroups||[];S.recommended=r.recommended||{};applyDefaults(r.defaults||{});renderGroups();renderTypes()}).catch(function(){err("e1","تعذّر الاتصال بالأداة. أغلق الصفحة وشغّلها من جديد.");show(1)});
 setInterval(function(){api("/api/ping",{}).catch(function(){})},4000);api("/api/ping",{}).catch(function(){});
 </script>
 </body>

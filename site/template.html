@@ -109,6 +109,11 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 .ico{transition:transform .35s}
 .card:hover .ico{transform:rotate(-8deg) scale(1.08)}
 @media (prefers-reduced-motion:reduce){.aurora i,.hero>*,h1 em,.brand i{animation:none!important}.rv{opacity:1;transform:none}}
+.prefs{max-width:720px;margin:26px auto 22px;padding:16px 18px;text-align:start;display:grid;gap:12px}
+.prefs .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.prefs .row b{min-width:92px}
+.prefs select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 14px;font:inherit}
+.prefs input{min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 14px;font:inherit;width:150px}
+.prefs p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.7}.prefs .tabs{margin:0}
 </style>
 </head>
 <body>
@@ -127,6 +132,9 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
   <h1>نظام تشغيل لفريق <em>وكلاء</em> الذكاء الاصطناعي</h1>
   <p class="lead">أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف واحد.</p>
   <div class="cta"><a class="btn p" href="#install">ابدأ التثبيت</a><a class="btn" href="#library">تصفّح المكتبة</a></div>
+  <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button></div></div>
+  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
+  <p>اللغة المفضلة هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير. تُضمَّن في أمر التثبيت وتُختار مسبقًا في المعالج، وتستطيع تغييرها هناك. يمكن لكل موظف أن يعمل على منصة مختلفة.</p></div>
   <div class="quick"></div>
 </div>
 
@@ -212,21 +220,28 @@ function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button cl
 $("#gh").href=$("#gh2").href=L.repo;
 var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")+"/main/";
 var WIN=/Win/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent||"");
-var SH='curl -fsSL '+RAW+'install.sh | bash';
-var PS='irm '+RAW+'install.ps1 | iex';
+var PLAT="Claude",LANGV="العربية";
+function envs(){var o=[];if(PLAT!=="Claude")o.push(["FORGE_PLATFORM",PLAT]);if(LANGV!=="العربية")o.push(["FORGE_LANGUAGE",LANGV]);return o}
+function shCmd(){var e=envs().map(function(x){return x[0]+'="'+x[1]+'"'}).join(" ");return'curl -fsSL '+RAW+'install.sh | '+(e?e+" ":"")+'bash'}
+function psCmd(){var e=envs().map(function(x){return'$env:'+x[0]+'="'+x[1]+'"; '}).join("");return e+'irm '+RAW+'install.ps1 | iex'}
 var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge';
 var OSI=WIN?1:0;
-var INST=[
- ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",SH],
- ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",PS],
+function INST(i){return[
+ ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",shCmd()],
+ ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",psCmd()],
  ["لمن يستعمل Git ويريد التحديث بأمر git pull.",CLONE+"\n\n# للتحديث لاحقًا\ngit pull"]
-];
+][i]}
 function quick(){var w=OSI===1;
- $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(w?"الصق هذا السطر في PowerShell":"الصق هذا السطر في Terminal")+'</p>'+codeCopy(w?PS:SH);
+ $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(w?"الصق هذا السطر في PowerShell":"الصق هذا السطر في Terminal")+'</p>'+codeCopy(w?psCmd():shCmd());
  bindCopy($(".quick"));$$(".qos").forEach(function(b){b.onclick=function(){setOS(+b.dataset.i)}})}
-function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST[i][0])+'</p>'+codeCopy(INST[i][1]);bindCopy($("#inst"))}
-function setOS(i){OSI=i;quick();inst(i);$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",+x.dataset.i===i)})}
-$$(".os .tab").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;if(i<2){setOS(i)}else{$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(2)}}});
+function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST(i)[0])+'</p>'+codeCopy(INST(i)[1]);bindCopy($("#inst"))}
+$$(".os .tab").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;if(i<2){setOS(i)}else{CUR=2;$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(2)}}});
+var CUR=0;
+function refresh(){quick();inst(CUR)}
+function setOS(i){OSI=i;CUR=i;quick();inst(i);$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",+x.dataset.i===i)})}
+$$(".pl").forEach(function(b){b.onclick=function(){PLAT=b.dataset.p;$$(".pl").forEach(function(x){x.setAttribute("aria-selected",x===b)});refresh()}});
+$("#lg").onchange=function(){var o=$("#lg").value==="__other";$("#lg2").hidden=!o;LANGV=o?($("#lg2").value.trim()||"العربية"):$("#lg").value;refresh();if(o)$("#lg2").focus()};
+$("#lg2").oninput=function(){LANGV=$("#lg2").value.trim().replace(/["`$\\<>]/g,"")||"العربية";refresh()};
 setOS(OSI);
 var T="cli";
 function lib(){var q=$("#q").value.trim().toLowerCase(),h="";
