@@ -101,6 +101,7 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 | `skills` | يعرض المهارات الجاهزة وما أُضيف منها |
 | `add-skill` | يضيف مهارة جاهزة أو أكثر: `add-skill measure,deck` |
 | `decide` | يسجّل قرارًا موسومًا في سجل القرارات |
+| `status` | إحاطة سريعة من الطرفية: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر، راكد، محجوب، تبعية معطّلة). `--json` للآلة و`--strict` لرمز خروج 2 عند وجود بند عاجل |
 | `report` | تقرير أداء: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة |
 | `export` | يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI وExcel |
 | `check` | يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات |
@@ -163,6 +164,6 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 
 **Team presets:** general, transformation (AI transformation team), operations, data (BI), software, content. Add any role with `add-role`.
 
-**Commands:** `new`, `build`, `watch`, `rows`, `add-row`, `set-status`, `add-role`, `decide`, `report`, `export`, `check`, `register`, `selftest`.
+**Commands:** `new`, `build`, `watch`, `rows`, `add-row`, `set-status`, `add-role`, `decide`, `status`, `report`, `export`, `check`, `register`, `selftest`.
 
 MIT licensed.
