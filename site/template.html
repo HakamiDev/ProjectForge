@@ -25,11 +25,11 @@ a{color:var(--accent)}
 .wrap{max-width:1120px;margin:0 auto}
 .gl{background:var(--card);border:1px solid var(--line);border-radius:22px;-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);box-shadow:0 10px 30px -18px var(--shd)}
 header.top{position:sticky;top:10px;z-index:20;margin-top:10px}
-.hd{display:flex;align-items:center;gap:10px;padding:9px 14px}
+.hd{display:flex;align-items:center;gap:10px;padding:9px 14px}.hd .btn{flex:0 0 auto;white-space:nowrap}.hd.t1 nav.links a.h{display:none}.hd.t2 nav.links{display:none}.hd.t2 #lgbtn{margin-inline-start:auto}.hd.t3 .brand span{display:none}.hd.t3 .btn.sm{padding:0 10px;font-size:.84rem}
 .brand{display:flex;align-items:center;gap:9px;font-weight:700;white-space:nowrap}
 .brand i{width:28px;height:28px;display:block;background:url(logo/logo.svg) center/contain no-repeat}
-nav.links{display:flex;gap:4px;margin-inline-start:auto}
-nav.links a{text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:999px;font-size:.93rem}
+nav.links{display:flex;gap:4px;margin-inline-start:auto;min-width:0}
+nav.links a{white-space:nowrap;text-decoration:none;color:var(--ink);padding:6px 12px;border-radius:999px;font-size:.93rem}
 nav.links a:hover{background:var(--line)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;text-decoration:none;color:var(--ink);font-weight:500;transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -10px var(--shd)}
@@ -43,8 +43,8 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#34F5A0,#3EC7FF,#7B4DFF
 .lead{max-width:680px;margin:0 auto 28px;color:var(--muted);font-size:1.1rem}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .quick{max-width:760px;margin:34px auto 0;text-align:start}
-.code{padding-right:76px;position:relative;background:var(--code);color:var(--code-ink);border-radius:16px;padding:16px 18px;direction:ltr;text-align:left;font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre-wrap;word-break:break-word;margin:0}
-.code.ar{direction:rtl;text-align:right;font-family:var(--font);font-size:14.5px;padding-top:42px}
+.code{position:relative;background:var(--code);color:var(--code-ink);border-radius:16px;padding:16px 18px;direction:ltr;text-align:left;font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre-wrap;word-break:break-word;margin:0}
+.code.ar{direction:rtl;text-align:right;font-family:var(--font);font-size:14.5px}.cw{position:relative}.cw .code{padding-top:46px}
 .copy{position:absolute;top:8px;right:8px;min-height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:12px;cursor:pointer}
 .copy:hover{background:rgba(255,255,255,.18)}
 .copy.ok{background:var(--ok);color:#001018;border-color:transparent}
@@ -120,7 +120,7 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="wrap">
 <header class="top"><div class="gl hd">
-  <div class="brand"><i></i>Project Forge</div>
+  <div class="brand"><i></i><span>Project Forge</span></div>
   <nav class="links" aria-label="الأقسام"><a class="h" href="#features">المميزات</a><a class="h" href="#metrics">المؤشرات</a><a class="h" href="#how">كيف يعمل</a><a href="#install">التثبيت</a><a href="#library">المكتبة</a></nav>
   <button class="btn sm" id="lgbtn" type="button" aria-label="Language">EN</button>
   <button class="btn sm" id="th" type="button" aria-label="تبديل السمة">الوضع</button>
@@ -223,7 +223,7 @@ function copy(t,btn){function ok(){toast();if(btn){btn.classList.add("ok");btn.t
  try{navigator.clipboard.writeText(t).then(ok,function(){fb(t,ok)})}catch(e){fb(t,ok)}}
 function fb(t,ok){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast(T("copyfail"))}a.remove()}
 function code(t){var ar=/[\u0600-\u06FF]/.test(t);return'<pre class="code'+(ar?' ar':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+E(t)+'</pre>'}
-function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">'+T("copy")+'</button></div>'}
+function codeCopy(t){return'<div class="cw">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">'+T("copy")+'</button></div>'}
 $("#gh").href=$("#gh2").href=L.repo;
 var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")+"/main/";
 var WIN=/Win/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent||"");
@@ -272,11 +272,13 @@ function applyUI(){var d=document.documentElement,en=UL==="en";d.lang=en?LC:"ar"
  $("#q").placeholder=T("search");$("#lg2").placeholder=T("langph");$("#lgbtn").textContent=en?"عربي":"EN";
  fillLangs();if(!$("#lg").querySelector('option[value="'+(LANGV||"").replace(/"/g,"")+'"]')&&LANGV&&LANGV!=="العربية")$("#lg").value="__other";
  try{localStorage.setItem("pf-ul",UL);localStorage.setItem("pf-lv",LANGV||"")}catch(e){}
- refresh();lib()}
+ refresh();lib();fitHd()}
+function fitHd(){var h=$(".hd"),n=$("nav.links");function ov(){return h.scrollWidth>h.clientWidth+1||(n.offsetParent&&n.scrollWidth>n.clientWidth+1)}h.classList.remove("t1","t2");if(ov())h.classList.add("t1");if(ov()){h.classList.remove("t1");h.classList.add("t2")}if(ov())h.classList.add("t3")}
+window.addEventListener("resize",fitHd);
 function setUL(u){UL=u;applyUI()}
 $("#lgbtn").onclick=function(){var u=UL==="en"?"ar":"en";LANGV=u==="ar"?"العربية":"English";LC="en";$("#lg").value=LANGV;$("#lg2").hidden=true;setUL(u)};
 var th=$("#th");th.onclick=function(){var d=document.documentElement,cur=d.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");d.dataset.theme=cur==="dark"?"light":"dark"};
-if(UL==="en"){try{LANGV=localStorage.getItem("pf-lv")||"English"}catch(e){LANGV="English"}if(!LANGV||LANGV==="العربية"||!$$("#lg option").length&&0)LANGV="English";LC=CODES[LANGV]||"en"}fillLangs();$("#lg").value=LANGV;if(UL==="en")applyUI();
+if(UL==="en"){try{LANGV=localStorage.getItem("pf-lv")||"English"}catch(e){LANGV="English"}if(!LANGV||LANGV==="العربية"||!$$("#lg option").length&&0)LANGV="English";LC=CODES[LANGV]||"en"}fillLangs();$("#lg").value=LANGV;if(UL==="en")applyUI();fitHd();
 })();
 
 (function(){var els=document.querySelectorAll("section .gl, section h2, section .sub");els.forEach(function(e){e.classList.add("rv")});
