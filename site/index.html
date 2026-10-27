@@ -211,19 +211,23 @@ function code(t){var ar=/[\u0600-\u06FF]/.test(t);return'<pre class="code'+(ar?'
 function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">نسخ</button></div>'}
 $("#gh").href=$("#gh2").href=L.repo;
 var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")+"/main/";
-var WIN=/Win/i.test(navigator.platform||navigator.userAgent||"");
+var WIN=/Win/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent||"");
 var SH='curl -fsSL '+RAW+'install.sh | bash';
 var PS='irm '+RAW+'install.ps1 | iex';
 var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge';
-$(".quick").innerHTML='<p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(WIN?"الصق هذا السطر في PowerShell":"الصق هذا السطر في Terminal")+'</p>'+codeCopy(WIN?PS:SH);
+var OSI=WIN?1:0;
 var INST=[
  ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",SH],
  ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",PS],
  ["لمن يستعمل Git ويريد التحديث بأمر git pull.",CLONE+"\n\n# للتحديث لاحقًا\ngit pull"]
 ];
+function quick(){var w=OSI===1;
+ $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(w?"الصق هذا السطر في PowerShell":"الصق هذا السطر في Terminal")+'</p>'+codeCopy(w?PS:SH);
+ bindCopy($(".quick"));$$(".qos").forEach(function(b){b.onclick=function(){setOS(+b.dataset.i)}})}
 function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST[i][0])+'</p>'+codeCopy(INST[i][1]);bindCopy($("#inst"))}
-$$(".os .tab").forEach(function(b){b.onclick=function(){$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(+b.dataset.i)}});
-inst(0);
+function setOS(i){OSI=i;quick();inst(i);$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",+x.dataset.i===i)})}
+$$(".os .tab").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;if(i<2){setOS(i)}else{$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(2)}}});
+setOS(OSI);
 var T="cli";
 function lib(){var q=$("#q").value.trim().toLowerCase(),h="";
  L[T].filter(function(x){return!q||(x.n+" "+x.d+" "+x.c).toLowerCase().indexOf(q)>=0}).forEach(function(x){
