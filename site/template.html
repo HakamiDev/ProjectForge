@@ -122,6 +122,7 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 <header class="top"><div class="gl hd">
   <div class="brand"><i></i>Project Forge</div>
   <nav class="links" aria-label="الأقسام"><a class="h" href="#features">المميزات</a><a class="h" href="#metrics">المؤشرات</a><a class="h" href="#how">كيف يعمل</a><a href="#install">التثبيت</a><a href="#library">المكتبة</a></nav>
+  <button class="btn sm" id="lgbtn" type="button" aria-label="Language">EN</button>
   <button class="btn sm" id="th" type="button" aria-label="تبديل السمة">الوضع</button>
   <a class="btn sm p" id="gh" href="#">GitHub</a>
 </div></header>
@@ -132,8 +133,8 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
   <h1>نظام تشغيل لفريق <em>وكلاء</em> الذكاء الاصطناعي</h1>
   <p class="lead">أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف واحد.</p>
   <div class="cta"><a class="btn p" href="#install">ابدأ التثبيت</a><a class="btn" href="#library">تصفّح المكتبة</a></div>
-  <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button></div></div>
-  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
+  <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button><button class="tab pl" role="tab" data-p="Grok" aria-selected="false" type="button">Grok</button><button class="tab pl" role="tab" data-p="Gemini" aria-selected="false" type="button">Gemini</button></div></div>
+  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
   <p>اللغة المفضلة هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير. تُضمَّن في أمر التثبيت وتُختار مسبقًا في المعالج، وتستطيع تغييرها هناك. يمكن لكل موظف أن يعمل على منصة مختلفة.</p></div>
   <div class="quick"></div>
 </div>
@@ -149,7 +150,7 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
     <div class="gl card"><div class="ico">🧾</div><h3>أثر تدقيق كامل</h3><p>كل كتابة في اللوحة تُسجَّل: من، ومتى، وماذا. وكل تغيّر حالة يُحفظ لحساب زمن الدورة.</p></div>
     <div class="gl card"><div class="ico">🔐</div><h3>سياسة بيانات مضمّنة</h3><p>تصنيف البيانات والأدوات المعتمدة ملف ملزم لكل وكيل: لا بيانات شخصية في أداة غير معتمدة.</p></div>
     <div class="gl card"><div class="ico">🖥️</div><h3>موقع إدارة من ملف واحد</h3><p>مركز الصباح والمهام والفريق والمخطط والأوامر القادمة، يعمل بلا خادم في الفاتح والداكن والجوال.</p></div>
-    <div class="gl card"><div class="ico">🧩</div><h3>80 تخصصًا و22 مهارة</h3><p>من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.</p></div>
+    <div class="gl card"><div class="ico">🧩</div><h3>80 تخصصًا و@@NSK@@ مهارة</h3><p>من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.</p></div>
     <div class="gl card"><div class="ico">🔒</div><h3>آمن بالتصميم</h3><p>لا يكتب فوق ملف موجود، والكتابة ذرّية، وكتابة اللوحة محروسة ببصمة تمنع التعارض بين وكيلين.</p></div>
   </div>
 </section>
@@ -209,14 +210,17 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 (function(){
 "use strict";
 var L=@@LIB@@;
+var EN=@@EN@@,LANGS=@@LANGS@@;
+var UL="ar";try{UL=localStorage.getItem("pf-ul")==="en"?"en":"ar"}catch(e){}
+function T(k){var d=EN.dyn[k];return d?d[UL==="en"?1:0]:k}
 var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return[].slice.call((r||document).querySelectorAll(s))};
 function E(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function toast(t){var e=$("#toast");e.textContent=t||"تم النسخ";e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("show")},1600)}
-function copy(t,btn){function ok(){toast();if(btn){btn.classList.add("ok");btn.textContent="نُسخ";setTimeout(function(){btn.classList.remove("ok");btn.textContent="نسخ"},1400)}}
+function toast(t){var e=$("#toast");e.textContent=t||T("toast");e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("show")},1600)}
+function copy(t,btn){function ok(){toast();if(btn){btn.classList.add("ok");btn.textContent=T("copied");setTimeout(function(){btn.classList.remove("ok");btn.textContent=T("copy")},1400)}}
  try{navigator.clipboard.writeText(t).then(ok,function(){fb(t,ok)})}catch(e){fb(t,ok)}}
-function fb(t,ok){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast("تعذّر النسخ")}a.remove()}
+function fb(t,ok){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast(T("copyfail"))}a.remove()}
 function code(t){var ar=/[\u0600-\u06FF]/.test(t);return'<pre class="code'+(ar?' ar':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+E(t)+'</pre>'}
-function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">نسخ</button></div>'}
+function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">'+T("copy")+'</button></div>'}
 $("#gh").href=$("#gh2").href=L.repo;
 var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")+"/main/";
 var WIN=/Win/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent||"");
@@ -227,12 +231,12 @@ function psCmd(){var e=envs().map(function(x){return'$env:'+x[0]+'="'+x[1]+'"; '
 var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge';
 var OSI=WIN?1:0;
 function INST(i){return[
- ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",shCmd()],
- ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",psCmd()],
- ["لمن يستعمل Git ويريد التحديث بأمر git pull.",CLONE+"\n\n# للتحديث لاحقًا\ngit pull"]
+ [T("i0"),shCmd()],
+ [T("i1"),psCmd()],
+ [T("i2"),CLONE+"\n\n"+T("upd")+"\ngit pull"]
 ][i]}
 function quick(){var w=OSI===1;
- $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(w?"الصق هذا السطر في <bdi>PowerShell</bdi>":"الصق هذا السطر في <bdi>Terminal</bdi>")+'</p>'+codeCopy(w?psCmd():shCmd())+'<div class="gl note" style="margin-top:12px;text-align:start;line-height:1.9">'+(w?"<b><bdi>PowerShell</bdi></b> نافذة مدمجة في <bdi>Windows</bdi> تكتب فيها الأوامر بدل النقر، وهي آمنة ولا تحتاج صلاحيات خاصة هنا. <b>لفتحها:</b> اضغط زر <bdi>Windows</bdi> على لوحة المفاتيح، واكتب <bdi>PowerShell</bdi>، ثم اضغط <bdi>Enter</bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بزر الفأرة الأيمن أو <bdi>Ctrl+V</bdi>، ثم اضغط <bdi>Enter</bdi>.":"<b><bdi>Terminal</bdi></b> تطبيق مدمج في <bdi>Mac</bdi> تكتب فيه الأوامر بدل النقر، وهو آمن ولا يحتاج صلاحيات خاصة هنا. <b>لفتحه:</b> اضغط <bdi>⌘ + Space</bdi>، واكتب <bdi>Terminal</bdi>، ثم اضغط <bdi>Enter</bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بـ <bdi>⌘ + V</bdi>، ثم اضغط <bdi>Enter</bdi>.")+' يعمل السطر فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك.</div>';
+ $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+T(w?"pastePS":"pasteT")+'</p>'+codeCopy(w?psCmd():shCmd())+'<div class="gl note" style="margin-top:12px;text-align:start;line-height:1.9">'+T(w?"noteW":"noteM")+'</div>';
  bindCopy($(".quick"));$$(".qos").forEach(function(b){b.onclick=function(){setOS(+b.dataset.i)}})}
 function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST(i)[0])+'</p>'+codeCopy(INST(i)[1]);bindCopy($("#inst"))}
 $$(".os .tab").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;if(i<2){setOS(i)}else{CUR=2;$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(2)}}});
@@ -240,19 +244,36 @@ var CUR=0;
 function refresh(){quick();inst(CUR)}
 function setOS(i){OSI=i;CUR=i;quick();inst(i);$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",+x.dataset.i===i)})}
 $$(".pl").forEach(function(b){b.onclick=function(){PLAT=b.dataset.p;$$(".pl").forEach(function(x){x.setAttribute("aria-selected",x===b)});refresh()}});
-$("#lg").onchange=function(){var o=$("#lg").value==="__other";$("#lg2").hidden=!o;LANGV=o?($("#lg2").value.trim()||"العربية"):$("#lg").value;refresh();if(o)$("#lg2").focus()};
-$("#lg2").oninput=function(){LANGV=$("#lg2").value.trim().replace(/["`$\\<>]/g,"")||"العربية";refresh()};
+$("#lg").onchange=function(){var o=$("#lg").value==="__other";$("#lg2").hidden=!o;LANGV=o?($("#lg2").value.trim()||"English"):$("#lg").value;var nu=LANGV==="العربية"?"ar":"en";if(nu!==UL)setUL(nu);else refresh();if(o)$("#lg2").focus()};
+$("#lg2").oninput=function(){LANGV=$("#lg2").value.trim().replace(/["`$\\<>]/g,"")||"English";refresh()};
 setOS(OSI);
-var T="cli";
+var TAB="cli";
+function LI(kind){var a=L[kind];if(UL!=="en")return a;
+ if(kind==="cli")return a.map(function(x){return{n:x.n,d:EN.cli[x.n]||x.d,c:(EN.cliCmd&&EN.cliCmd[x.n])||x.c}});
+ if(kind==="agents")return a.map(function(x,i){var e=EN.agents[i];return e?{n:e[0],d:e[1],c:e[2]}:x});
+ return a.map(function(x){return{n:x.n,d:EN.tools[x.n]||x.d,c:x.c,s:x.s==="جاهز"?"Ready":x.s}})}
 function lib(){var q=$("#q").value.trim().toLowerCase(),h="";
- L[T].filter(function(x){return!q||(x.n+" "+x.d+" "+x.c).toLowerCase().indexOf(q)>=0}).forEach(function(x){
+ LI(TAB).filter(function(x){return!q||(x.n+" "+x.d+" "+x.c).toLowerCase().indexOf(q)>=0}).forEach(function(x){
   h+='<div class="gl item"><div class="top"><h3>'+E(x.n)+'</h3>'+(x.s?'<span class="tag">'+E(x.s)+'</span>':"")+'</div><p>'+E(x.d)+'</p>'+codeCopy(x.c)+'</div>'});
- $("#lib").innerHTML=h||'<div class="gl none">لا نتائج</div>';bindCopy($("#lib"))}
+ $("#lib").innerHTML=h||'<div class="gl none">'+T("none")+'</div>';bindCopy($("#lib"))}
 function bindCopy(r){$$(".copy",r).forEach(function(b){b.onclick=function(){copy(decodeURIComponent(b.dataset.c),b)}})}
 bindCopy(document);
-$$("#library .tabs .tab").forEach(function(b){b.onclick=function(){T=b.dataset.t;$$("#library .tabs .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});lib()}});
+$$("#library .tabs .tab").forEach(function(b){b.onclick=function(){TAB=b.dataset.t;$$("#library .tabs .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});lib()}});
 $("#q").oninput=lib;lib();
+
+/* تعدد اللغات: كل نص ثابت يُستبدل بمقابله من EN.ui، والنصوص الديناميكية تمر عبر T() */
+var NODES=[];(function(){var all=[].slice.call(document.body.querySelectorAll("*"));all.forEach(function(el){if(el.tagName==="SCRIPT"||el.tagName==="STYLE")return;var k=el.innerHTML.trim();if(EN.ui[k]&&!NODES.some(function(n){return n.el.contains(el)}))NODES.push({el:el,k:k})})})();
+function fillLangs(){var sel=$("#lg"),cur=sel.value||"العربية";sel.innerHTML=LANGS.map(function(x){var nm=UL==="en"?x[3]:x[2];return'<option value="'+E(x[0])+'">'+E(x[1]===nm?x[1]:x[1]+" — "+nm)+"</option>"}).join("")+'<option value="__other">'+T("other")+"</option>";sel.value=cur}
+function applyUI(){var d=document.documentElement,en=UL==="en";d.lang=en?"en":"ar";d.dir=en?"ltr":"rtl";document.title=T("title");
+ NODES.forEach(function(n){n.el.innerHTML=en?EN.ui[n.k]:n.k});
+ $("#q").placeholder=T("search");$("#lg2").placeholder=T("langph");$("#lgbtn").textContent=en?"عربي":"EN";
+ fillLangs();if(!$("#lg").querySelector('option[value="'+(LANGV||"").replace(/"/g,"")+'"]')&&LANGV&&LANGV!=="العربية")$("#lg").value="__other";
+ try{localStorage.setItem("pf-ul",UL)}catch(e){}
+ refresh();lib()}
+function setUL(u){UL=u;applyUI()}
+$("#lgbtn").onclick=function(){var u=UL==="en"?"ar":"en";LANGV=u==="ar"?"العربية":"English";$("#lg").value=LANGV;$("#lg2").hidden=true;setUL(u)};
 var th=$("#th");th.onclick=function(){var d=document.documentElement,cur=d.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");d.dataset.theme=cur==="dark"?"light":"dark"};
+if(UL==="en"){LANGV="English"}fillLangs();$("#lg").value=LANGV;if(UL==="en")applyUI();
 })();
 
 (function(){var els=document.querySelectorAll("section .gl, section h2, section .sub");els.forEach(function(e){e.classList.add("rv")});

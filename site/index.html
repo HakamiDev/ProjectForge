@@ -122,6 +122,7 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 <header class="top"><div class="gl hd">
   <div class="brand"><i></i>Project Forge</div>
   <nav class="links" aria-label="الأقسام"><a class="h" href="#features">المميزات</a><a class="h" href="#metrics">المؤشرات</a><a class="h" href="#how">كيف يعمل</a><a href="#install">التثبيت</a><a href="#library">المكتبة</a></nav>
+  <button class="btn sm" id="lgbtn" type="button" aria-label="Language">EN</button>
   <button class="btn sm" id="th" type="button" aria-label="تبديل السمة">الوضع</button>
   <a class="btn sm p" id="gh" href="#">GitHub</a>
 </div></header>
@@ -132,8 +133,8 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
   <h1>نظام تشغيل لفريق <em>وكلاء</em> الذكاء الاصطناعي</h1>
   <p class="lead">أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف واحد.</p>
   <div class="cta"><a class="btn p" href="#install">ابدأ التثبيت</a><a class="btn" href="#library">تصفّح المكتبة</a></div>
-  <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button></div></div>
-  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
+  <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button><button class="tab pl" role="tab" data-p="Grok" aria-selected="false" type="button">Grok</button><button class="tab pl" role="tab" data-p="Gemini" aria-selected="false" type="button">Gemini</button></div></div>
+  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
   <p>اللغة المفضلة هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير. تُضمَّن في أمر التثبيت وتُختار مسبقًا في المعالج، وتستطيع تغييرها هناك. يمكن لكل موظف أن يعمل على منصة مختلفة.</p></div>
   <div class="quick"></div>
 </div>
@@ -149,7 +150,7 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
     <div class="gl card"><div class="ico">🧾</div><h3>أثر تدقيق كامل</h3><p>كل كتابة في اللوحة تُسجَّل: من، ومتى، وماذا. وكل تغيّر حالة يُحفظ لحساب زمن الدورة.</p></div>
     <div class="gl card"><div class="ico">🔐</div><h3>سياسة بيانات مضمّنة</h3><p>تصنيف البيانات والأدوات المعتمدة ملف ملزم لكل وكيل: لا بيانات شخصية في أداة غير معتمدة.</p></div>
     <div class="gl card"><div class="ico">🖥️</div><h3>موقع إدارة من ملف واحد</h3><p>مركز الصباح والمهام والفريق والمخطط والأوامر القادمة، يعمل بلا خادم في الفاتح والداكن والجوال.</p></div>
-    <div class="gl card"><div class="ico">🧩</div><h3>80 تخصصًا و22 مهارة</h3><p>من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.</p></div>
+    <div class="gl card"><div class="ico">🧩</div><h3>80 تخصصًا و82 مهارة</h3><p>من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.</p></div>
     <div class="gl card"><div class="ico">🔒</div><h3>آمن بالتصميم</h3><p>لا يكتب فوق ملف موجود، والكتابة ذرّية، وكتابة اللوحة محروسة ببصمة تمنع التعارض بين وكيلين.</p></div>
   </div>
 </section>
@@ -209,14 +210,227 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 (function(){
 "use strict";
 var L={"repo": "https://github.com/HakamiDev/ProjectForge", "tool": "Project Forge 1.py", "cli": [{"n": "new", "d": "ينشئ مشروعًا كاملًا: المجلدات والقواعد واللوحة وملفات الأدوار وأوامر البدء وموقع الإدارة.", "c": "python3 -I \"Project Forge 1.py\" new \"اسم المشروع\" --goal \"هدف المشروع\" --owner \"الرئيس\" --preset transformation --yes"}, {"n": "build", "d": "يعيد بناء موقع الإدارة من اللوحة. أضف --open لفتحه.", "c": "python3 -I \"Project Forge 1.py\" build --open"}, {"n": "watch", "d": "يعيد البناء تلقائيًا كلما تغيّرت اللوحة أو الفريق أو سجل القرارات.", "c": "python3 -I \"Project Forge 1.py\" watch"}, {"n": "rows", "d": "يعرض الصفوف الجاهزة للبدء لدور معيّن (التي اكتملت متطلباتها).", "c": "python3 -I \"Project Forge 1.py\" rows \"رئيس المنتج\""}, {"n": "add-row", "d": "يضيف صفًا إلى اللوحة بأمان: رقم تلقائي، ومنع للتعارض، وسقف للمفتوح.", "c": "python3 -I \"Project Forge 1.py\" add-row --from \"البوصلة\" --to \"رئيس المنتج\" --task \"كتابة المرجع\" --inputs \"—\" --output \"`Outputs/Reference.md`\""}, {"n": "set-status", "d": "يغيّر حالة صف. «معتمدة» و«ملغاة» تشترطان --owner-order أي أمر صاحب المشروع.", "c": "python3 -I \"Project Forge 1.py\" set-status 3 \"مسلّمة\" --note \"تم\""}, {"n": "add-role", "d": "يضيف دورًا جديدًا ويحدّث القواعد والأوامر والموقع.", "c": "python3 -I \"Project Forge 1.py\" add-role \"المحلل\" --title \"تحليل البيانات\" --scope \"التحليل والتقارير\""}, {"n": "decide", "d": "يسجّل قرارًا في سجل القرارات بترقيم تلقائي.", "c": "python3 -I \"Project Forge 1.py\" decide \"اعتماد النسخة الأولى\" --tag \"قابل للتراجع\""}, {"n": "report", "d": "تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل على الأدوار والقرارات المتأخرة. يُحفظ في Docs/Reports.", "c": "python3 -I \"Project Forge 1.py\" report"}, {"n": "export", "d": "يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV (UTF-8 مع BOM) جاهزة لـ Power BI وExcel.", "c": "python3 -I \"Project Forge 1.py\" export"}, {"n": "check", "d": "يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.", "c": "python3 -I \"Project Forge 1.py\" check"}, {"n": "register", "d": "يسجّل المشروع في سجل مركز البوصلات (Registry.md).", "c": "python3 -I \"Project Forge 1.py\" register"}, {"n": "selftest", "d": "يختبر الأداة على مشروع مؤقت ويبلغ بنجاح كل خطوة.", "c": "python3 -I \"Project Forge 1.py\" selftest"}], "agents": [{"n": "بدء محادثة موظف", "d": "الصقه في محادثة جديدة. يعرّف الموظف بدوره ويحيله إلى ملف أمر التكليف.", "c": "أنت «1. رئيس المنتج: المرجع والقرارات والخطة». اقرأ Agents/Roles/رئيس المنتج.md ثم تابع."}, {"n": "تشغيل محادثة قائمة", "d": "كلمة واحدة تجعل الموظف يقرأ اللوحة وينفّذ صفوفه الجاهزة.", "c": "تابع"}, {"n": "أمر الإغلاق", "d": "قبل إغلاق محادثة طالت: يحفظ كل شيء في المجلد ويكتب ملف تسليم.", "c": "سأغلق هذه المحادثة وأفتح بدلها محادثة جديدة لك تكمل العمل نفسه. المحادثة الجديدة لن ترى شيئًا من هنا؛ مرجعها المجلد وحده، فكل ما لا تكتبه الآن في المجلد يضيع. نفّذ بالترتيب دون أن تسألني:\n\n1. أوقف أي عمل جارٍ عند أقرب نقطة سليمة، واحفظ كل مخرج ناقص في مساره باسم يدل على أنه مسودة. لا يبقى شيء في المحادثة وحدها.\n2. اكتب ملف التسليم `Agents/Handoffs/[اسم دورك] [رقم].md`، وفيه: ما أنجزته بمسار كل ملف، والعمل الجاري (رقم الصف والخطوة التالية بالضبط)، وما قاله صاحب المشروع في هذه المحادثة ولم يُكتب بعد، وما جرّبته ففشل ولماذا، والأسئلة المفتوحة، وما يجب أن تقرأه المحادثة الجديدة أولًا.\n3. ما كان قاعدة دائمة فاكتبه صفًا إلى البوصلة، وما يحتاج قرار صاحب المشروع فسطرًا في القسم 1 من اللوحة.\n4. حدّث «للتالي» في كل صف مفتوح باسمك، وحدّث صفك في «حالة الفريق».\n5. تحقق بقراءة الملفات من القرص أن كل ما سبق محفوظ فعلًا.\n6. ردّك سطران: مسار ملف التسليم، ثم «آمن للإغلاق» أو ما يمنعه. وإن لم يكن المجلد موصولًا فاكتب «غير آمن للإغلاق: المجلد غير موصول»."}, {"n": "أمر الاستئناف", "d": "في محادثة جديدة بدل المغلقة: يكمل من حيث توقف السلف.", "c": "أنت «[اسم المحادثة كاملًا كما في جدول الفريق]»، تستأنف عمل محادثة سابقة لك أُغلقت. لا ترى تلك المحادثة؛ مرجعك المجلد وحده. نفّذ بالترتيب دون أن تسألني:\n\n1. اقرأ `CLAUDE.md`.\n2. اقرأ `Agents/Roles/[اسم دورك].md`، وثوابته نافذة طوال المحادثة.\n3. اقرأ أحدث ملف لك في `Agents/Handoffs/` كاملًا، ثم ما يسمّيه فقط.\n4. اقرأ صفوفك في `Agents/Board.md` و«للتالي» فيها، وآخر تعميمين في القسم 2.\n5. إن تعارض ملف التسليم مع اللوحة فاللوحة أحدث وهي النافذة، ونبّهني في سطر.\n6. أكمل العمل الجاري من «الخطوة التالية» دون إعادة ما أُنجز، ثم بقية صفوفك الجاهزة بترتيب أرقامها.\n7. إن لم يكن المجلد موصولًا فقل ذلك في سطر، ولا تدّعِ أنك قرأت شيئًا.\n\nردّك: سطر يؤكد من أين تستأنف، ثم ثلاثة أسطر: ما نفّذت، وما ينتظر غيرك، وما تحتاجه مني."}, {"n": "طلب حكم الجودة", "d": "يطلب من رئيس ضمان الجودة حكمًا مستقلًا: يمر أو لا يمر.", "c": "أنت «رئيس ضمان الجودة». افحص مخرج الصف [رقم] من المسار المذكور في اللوحة بمعايير القبول في المرجع، واكتب حكمك في Docs/QA/ بصيغة: يمر / لا يمر مع الأسباب مرتبة بالخطورة، ثم حدّث حالة الصف."}, {"n": "أول طلب إلى البوصلة", "d": "بعد إنشاء المشروع: ابدأ بالبوصلة وحدها وهي توزع العمل.", "c": "أنت «البوصلة: التوجيه العام». اقرأ CLAUDE.md ثم Agents/Board.md. هدفنا: [الهدف]. حوّله إلى صفوف مكتملة في اللوحة، واحدًا لكل مختص، وأخبرني برقم كل صف ومن أبدأ معه أولًا."}, {"n": "قياس قبل وبعد الأتمتة", "d": "لمحلل العمليات: يقيس الإجراء قبل الأتمتة ليُقارن بعدها.", "c": "أنت «محلل العمليات». اختر الإجراء المتكرر المذكور في صفك، وارسمه خطوة خطوة، وقِس لكل خطوة: الزمن، ومن ينفذها، وعدد مرات التكرار أسبوعيًا، والأخطاء الشائعة. احفظ النتيجة في Data/Before.csv بالأعمدة: step, owner, minutes, weekly runs, errors. ثم اكتب في «للتالي» الخطوات المرشحة للأتمتة بترتيب الأثر."}, {"n": "تصميم وكيل لإجراء", "d": "لمهندس الأتمتة: يصمم الوكيل قبل بنائه بمواصفة تُراجَع.", "c": "أنت «مهندس الأتمتة». صمّم وكيلًا للإجراء في صفك بمواصفة من ستة بنود: المدخلات ومصدرها، والمخرجات وشكلها، والقواعد التي لا يتجاوزها، ونقاط تدخّل الإنسان، وطريقة القياس بعد التشغيل، والأدوات المعتمدة من Docs/Data Policy.md. احفظها في Outputs/ وأحِل الصف إلى رئيس ضمان الجودة بحالة «بانتظار التدقيق»."}, {"n": "تقرير نهاية اليوم", "d": "يلخص الحالة ويعرض ما ينتظر قرار صاحب المشروع.", "c": "اقرأ Agents/Board.md وقدّم لي في خمسة أسطر: ما سُلّم اليوم، وما ينتظر التدقيق، وما ينتظر قراري مع توصيتك لكل قرار، وأهم عائق."}], "tools": [{"n": "Project Forge", "d": "الأداة الأم: ملف بايثون واحد بلا مكتبات خارجية، يبني المشروع وفريقه وموقعه.", "c": "python3 -I \"Project Forge 1.py\" new", "s": "جاهز"}, {"n": "Project Office", "d": "موقع إدارة يُولَّد لكل مشروع في ملف HTML واحد: الرئيسية والمتابعة والمهام والفريق والمخطط والأوامر والإعدادات.", "c": "python3 -I \"Project Forge 1.py\" build --open", "s": "جاهز"}, {"n": "Start Office", "d": "سكربت تشغيل يفتح الموقع ويبقيه محدّثًا تلقائيًا (macOS).", "c": "Tools/Start Office.command", "s": "جاهز"}, {"n": "Report", "d": "تقرير أداء دوري من اللوحة وتاريخ الحالات: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات.", "c": "python3 -I \"Project Forge 1.py\" report", "s": "جاهز"}, {"n": "Export to Power BI", "d": "أربعة ملفات CSV جاهزة لنموذج بيانات في Power BI أو Excel.", "c": "python3 -I \"Project Forge 1.py\" export", "s": "جاهز"}, {"n": "Smoke test", "d": "اختبار متصفح (Playwright) يفحص كل صفحة وتبويب في الفاتح والداكن والجوال.", "c": "NODE_PATH=$(npm root -g) node tests/smoke.js \"Office/Project Office.html\" shots", "s": "جاهز"}]};
+var EN={
+ "ui": {
+  "المميزات": "Features",
+  "المؤشرات": "Metrics",
+  "كيف يعمل": "How it works",
+  "التثبيت": "Install",
+  "المكتبة": "Library",
+  "الوضع": "Theme",
+  "مفتوح المصدر · بايثون وحده · بلا خادم ولا مكتبات": "Open source · Python only · No server, no dependencies",
+  "نظام تشغيل لفريق <em>وكلاء<\/em> الذكاء الاصطناعي": "An operating system for a team of <em>AI agents<\/em>",
+  "أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف واحد.": "One command turns an ordinary folder into a disciplined office: a single board every agent works from, an independent quality gate, decision governance, performance indicators that export to Power BI, and a management site that runs from one file.",
+  "ابدأ التثبيت": "Start installing",
+  "تصفّح المكتبة": "Browse the library",
+  "منصتك": "Your platform",
+  "اللغة المفضلة": "Preferred language",
+  "اللغة المفضلة هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير. تُضمَّن في أمر التثبيت وتُختار مسبقًا في المعالج، وتستطيع تغييرها هناك. يمكن لكل موظف أن يعمل على منصة مختلفة.": "The preferred language is the language for managing the entire system, and it is the one used with the employees: the team addresses you in it and writes outputs and reports in it. It is included in the install command and preselected in the wizard, where you can change it. Each employee can work on a different platform.",
+  "ما الذي يحله": "What it solves",
+  "المحادثات مع الذكاء الاصطناعي تنسى، وتتعارض، ولا تُقاس. Project Forge يجعل المجلد هو الذاكرة، واللوحة هي العقل المشترك، والأرقام هي الحكم.": "AI chats forget, contradict one another, and are never measured. Project Forge makes the folder the memory, the board the shared mind, and the numbers the judge.",
+  "لوحة واحدة لكل الوكلاء": "One board for every agent",
+  "صفوف مرقمة بحالاتها ومتطلباتها ومواعيدها. كل وكيل يقرأ اللوحة ويعدّل صفوفه فقط، على أي منصة.": "Numbered rows with their statuses, requirements and deadlines. Each agent reads the board and edits only its own rows, on any platform.",
+  "بوابة جودة مستقلة": "An independent quality gate",
+  "رئيس ضمان الجودة يحكم «يمر أو لا يمر» قبل أن يصل أي مخرج إليك. ونسبة المرور مؤشر يُقاس.": "The Head of Quality Assurance rules \"pass or fail\" before any output reaches you. The pass rate is a measured indicator.",
+  "حوكمة القرارات": "Decision governance",
+  "سقف خمسة قرارات مفتوحة، ومهلة 48 ساعة تؤخذ بعدها التوصية، وسجل قرارات موسوم: قابل للتراجع أو لا.": "A cap of five open decisions, a 48-hour window after which the recommendation is taken, and a tagged decision log: reversible or not.",
+  "مؤشرات أداء جاهزة": "Ready-made performance indicators",
+  "أمر <code>report<\/code> يعطيك نسبة التسليم وزمن الدورة والحمل على كل دور، و<code>export<\/code> يصدّرها CSV إلى Power BI.": "The <code>report<\/code> command gives you the delivery rate, cycle time and load per role, and <code>export<\/code> sends them as CSV to Power BI.",
+  "أثر تدقيق كامل": "A complete audit trail",
+  "كل كتابة في اللوحة تُسجَّل: من، ومتى، وماذا. وكل تغيّر حالة يُحفظ لحساب زمن الدورة.": "Every write to the board is logged: who, when and what. Every status change is kept to calculate cycle time.",
+  "سياسة بيانات مضمّنة": "Built-in data policy",
+  "تصنيف البيانات والأدوات المعتمدة ملف ملزم لكل وكيل: لا بيانات شخصية في أداة غير معتمدة.": "Data classification and approved tools form a binding file for every agent: no personal data in an unapproved tool.",
+  "موقع إدارة من ملف واحد": "A management site in one file",
+  "مركز الصباح والمهام والفريق والمخطط والأوامر القادمة، يعمل بلا خادم في الفاتح والداكن والجوال.": "Morning center, tasks, team, diagram and upcoming commands, running with no server in light, dark and on mobile.",
+  "80 تخصصًا و82 مهارة": "80 specialisations and 82 skills",
+  "من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.": "From strategy to restaurants, real estate, Hajj and Umrah, and university theses. Describe your project in a sentence and the tool suggests the closest match, with more than 330 roles you add in one click and ready-made skills.",
+  "آمن بالتصميم": "Secure by design",
+  "لا يكتب فوق ملف موجود، والكتابة ذرّية، وكتابة اللوحة محروسة ببصمة تمنع التعارض بين وكيلين.": "It never overwrites an existing file, writes are atomic, and board writes are guarded by a fingerprint that prevents two agents from colliding.",
+  "ما الذي يقيسه": "What it measures",
+  "كل مشروع يولّد تقريرًا يمكن الدفاع عنه أمام الإدارة، لا انطباعًا.": "Every project produces a report you can defend in front of management, not an impression.",
+  "نسبة التسليم": "Delivery rate",
+  "المسلّم والمعتمد من كل المهام، والمسلّم في آخر سبعة أيام.": "Delivered and approved tasks out of all tasks, and what was delivered in the last seven days.",
+  "زمن الدورة": "Cycle time",
+  "متوسط الزمن من إحالة الصف إلى تسليمه، من تاريخ الحالات الفعلي.": "Average time from a row being assigned to being delivered, from the real status history.",
+  "مرور الجودة": "Quality pass rate",
+  "ما مرّ من بوابة ضمان الجودة مقابل ما أُعيد للتعديل.": "What passed the quality gate versus what was sent back for revision.",
+  "الحمل على الأدوار": "Load per role",
+  "الصفوف المفتوحة لكل دور، وتنبيه عند تجاوز السقف.": "Open rows per role, with an alert when the cap is exceeded.",
+  "تأخر القرارات": "Decision delay",
+  "عمر كل قرار معلق، وتنبيه عند تجاوز 48 ساعة.": "The age of each pending decision, with an alert past 48 hours.",
+  "تصدير إلى Power BI": "Export to Power BI",
+  "أربعة ملفات CSV: اللوحة والفريق والقرارات والمؤشرات، بتواريخ الإحالة والتسليم.": "Four CSV files: the board, the team, the decisions and the indicators, with assignment and delivery dates.",
+  "ثلاث خطوات، ثم يستمر العمل من اللوحة.": "Three steps, then the work continues from the board.",
+  "أنشئ المشروع": "Create the project",
+  "أربعة أسئلة: الاسم، والهدف، وكيف تُخاطَب، وتصف مشروعك بجملة فتقترح الأداة أقرب تخصص من 80، وتعدّل الأدوار والمهارات بالنقر، مع شرح لكل خطوة.": "Four questions: the name, the goal, how you want to be addressed, and a one-sentence description of your project. The tool suggests the closest of 80 specialisations, and you adjust roles and skills by clicking, with an explanation at every step.",
+  "افتح محادثة لكل موظف": "Open a chat for each employee",
+  "انسخ أمر البدء من الموقع أو من المكتبة. الموظف يقرأ دوره من المجلد ويعمل على اللوحة.": "Copy the start command from the site or the library. The employee reads its role from the folder and works on the board.",
+  "تابع وقِس": "Follow and measure",
+  "موقع الإدارة يعرض ما ينتظرك ومن يعمل الآن. وفي نهاية الأسبوع: <code>report<\/code> للتقرير و<code>export<\/code> للوحة Power BI.": "The management site shows what is waiting for you and who is working now. At the end of the week: <code>report<\/code> for the report and <code>export<\/code> for the Power BI board.",
+  "سطر واحد تلصقه فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك. وفي المرات التالية يكفي السطر نفسه. إن لم يوجد Python على جهازك فسيُطلب تثبيته تلقائيًا.": "One line you paste downloads the tool and opens the creation page in your browser. Next time, the same line is enough. If Python is not on your machine, you will be prompted to install it automatically.",
+  "للمطورين": "For developers",
+  "أوامر الأداة، وأوامر ومهارات الوكلاء، والأدوات المرافقة. اضغط «نسخ» وألصق.": "The tool's commands, the agents' commands and skills, and the companion tools. Press \"Copy\" and paste.",
+  "أوامر الأداة": "Tool commands",
+  "أوامر الوكلاء": "Agent commands",
+  "الأدوات": "Tools",
+  "المستودع": "Repository",
+  "تم النسخ": "Copied",
+  "بعد الإنشاء افتح <b>Office/Project Office.html<\/b> ثم كلّم البوصلة وحدها، وهي توزع العمل على الفريق.": "After creation, open <b>Office/Project Office.html<\/b>, then talk to the Compass alone; it distributes the work across the team."
+ },
+ "dyn": {
+  "copy": [
+   "نسخ",
+   "Copy"
+  ],
+  "copied": [
+   "نُسخ",
+   "Copied"
+  ],
+  "toast": [
+   "تم النسخ",
+   "Copied"
+  ],
+  "copyfail": [
+   "تعذّر النسخ",
+   "Copy failed"
+  ],
+  "none": [
+   "لا نتائج",
+   "No results"
+  ],
+  "search": [
+   "ابحث في المكتبة",
+   "Search the library"
+  ],
+  "other": [
+   "لغة أخرى…",
+   "Other language…"
+  ],
+  "langph": [
+   "اكتب اسم اللغة",
+   "Type the language name"
+  ],
+  "pastePS": [
+   "الصق هذا السطر في <bdi>PowerShell<\/bdi>",
+   "Paste this line into <bdi>PowerShell<\/bdi>"
+  ],
+  "pasteT": [
+   "الصق هذا السطر في <bdi>Terminal<\/bdi>",
+   "Paste this line into <bdi>Terminal<\/bdi>"
+  ],
+  "noteW": [
+   "<b><bdi>PowerShell<\/bdi><\/b> نافذة مدمجة في <bdi>Windows<\/bdi> تكتب فيها الأوامر بدل النقر، وهي آمنة ولا تحتاج صلاحيات خاصة هنا. <b>لفتحها:<\/b> اضغط زر <bdi>Windows<\/bdi> على لوحة المفاتيح، واكتب <bdi>PowerShell<\/bdi>، ثم اضغط <bdi>Enter<\/bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بزر الفأرة الأيمن أو <bdi>Ctrl+V<\/bdi>، ثم اضغط <bdi>Enter<\/bdi>. يعمل السطر فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك.",
+   "<b><bdi>PowerShell<\/bdi><\/b> is a window built into <bdi>Windows<\/bdi> where you type commands instead of clicking. It is safe and needs no special permissions here. <b>To open it:<\/b> press the <bdi>Windows<\/bdi> key, type <bdi>PowerShell<\/bdi>, then press <bdi>Enter<\/bdi>. Copy the line above, paste it into the window with a right-click or <bdi>Ctrl+V<\/bdi>, then press <bdi>Enter<\/bdi>. The line downloads the tool and opens the creation page in your browser."
+  ],
+  "noteM": [
+   "<b><bdi>Terminal<\/bdi><\/b> تطبيق مدمج في <bdi>Mac<\/bdi> تكتب فيه الأوامر بدل النقر، وهو آمن ولا يحتاج صلاحيات خاصة هنا. <b>لفتحه:<\/b> اضغط <bdi>⌘ + Space<\/bdi>، واكتب <bdi>Terminal<\/bdi>، ثم اضغط <bdi>Enter<\/bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بـ <bdi>⌘ + V<\/bdi>، ثم اضغط <bdi>Enter<\/bdi>. يعمل السطر فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك.",
+   "<b><bdi>Terminal<\/bdi><\/b> is an app built into <bdi>Mac<\/bdi> where you type commands instead of clicking. It is safe and needs no special permissions here. <b>To open it:<\/b> press <bdi>⌘ + Space<\/bdi>, type <bdi>Terminal<\/bdi>, then press <bdi>Enter<\/bdi>. Copy the line above, paste it into the window with <bdi>⌘ + V<\/bdi>, then press <bdi>Enter<\/bdi>. The line downloads the tool and opens the creation page in your browser."
+  ],
+  "i0": [
+   "افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",
+   "Open the Terminal app (press ⌘ and Space, then type Terminal), paste the line, then press Enter."
+  ],
+  "i1": [
+   "افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",
+   "Open PowerShell (Start menu, then type PowerShell), paste the line, then press Enter."
+  ],
+  "i2": [
+   "لمن يستعمل Git ويريد التحديث بأمر git pull.",
+   "For those who use Git and want to update with git pull."
+  ],
+  "upd": [
+   "# للتحديث لاحقًا",
+   "# To update later"
+  ],
+  "title": [
+   "Project Forge | نظام تشغيل لفريق وكلاء الذكاء الاصطناعي",
+   "Project Forge | An operating system for a team of AI agents"
+  ]
+ },
+ "cli": {
+  "new": "Creates a complete project: folders, rules, board, role files, start commands and the management site.",
+  "build": "Rebuilds the management site from the board. Add --open to open it.",
+  "watch": "Rebuilds automatically whenever the board, the team or the decision log changes.",
+  "rows": "Shows the rows ready to start for a given role (those whose requirements are complete).",
+  "add-row": "Adds a row to the board safely: automatic number, collision prevention, and a cap on open rows.",
+  "set-status": "Changes a row's status. The statuses «معتمدة» (approved) and «ملغاة» (cancelled) require --owner-order, the project owner's order.",
+  "add-role": "Adds a new role and updates the rules, the commands and the site.",
+  "decide": "Records a decision in the decision log with automatic numbering.",
+  "report": "Performance report: delivery rate, cycle time, quality pass rate, load per role and overdue decisions. Saved in Docs/Reports.",
+  "export": "Exports the board, team, decisions and indicators to CSV (UTF-8 with BOM), ready for Power BI and Excel.",
+  "check": "Checks the project: naming, numbering, board integrity, decision deadlines and the presence of a Head of Quality Assurance.",
+  "register": "Registers the project in the Compass hub registry (Registry.md).",
+  "selftest": "Tests the tool on a temporary project and reports whether each step passed."
+ },
+ "tools": {
+  "Project Forge": "The parent tool: a single Python file with no external libraries, which builds the project, its team and its site.",
+  "Project Office": "A management site generated for every project in a single HTML file: home, follow-up, tasks, team, diagram, commands and settings.",
+  "Start Office": "A launch script that opens the site and keeps it updated automatically (macOS).",
+  "Report": "A periodic performance report from the board and status history: delivery, cycle time, quality pass, load and decisions.",
+  "Export to Power BI": "Four CSV files ready for a Power BI or Excel data model.",
+  "Smoke test": "A browser test (Playwright) that checks every page and tab in light, dark and mobile."
+ },
+ "agents": [
+  [
+   "Start an employee chat",
+   "Paste it into a new chat. It introduces the employee to its role and points it to its assignment file.",
+   "You are \"1. Product Lead: reference, decisions and plan\". Read Agents/Roles/رئيس المنتج.md, then continue."
+  ],
+  [
+   "Run an existing chat",
+   "One word makes the employee read the board and carry out its ready rows.",
+   "continue"
+  ],
+  [
+   "Closing command",
+   "Before closing a long chat: saves everything to the folder and writes a handoff file.",
+   "I am closing this chat and opening a new one for you to continue the same work. The new chat will see nothing from here; its only reference is the folder, so anything you do not write into the folder now is lost. Carry out these steps in order without asking me:\n\n1. Stop any running work at the nearest safe point, and save every incomplete output at its path under a name that marks it as a draft. Nothing stays only in the chat.\n2. Write the handoff file `Agents/Handoffs/[your role name] [number].md`, containing: what you completed with the path of each file, the work in progress (the row number and the exact next step), what the project owner said in this chat that is not yet written down, what you tried that failed and why, the open questions, and what the new chat must read first.\n3. Anything that is a standing rule, write as a row to the Compass; anything that needs the project owner's decision, write as a line in section 1 of the board.\n4. Update \"next\" in every open row under your name, and update your row in \"team status\".\n5. Verify by reading the files from disk that all of the above is actually saved.\n6. Your reply is two lines: the path of the handoff file, then \"safe to close\" or what prevents it. If the folder is not connected, write \"not safe to close: the folder is not connected\"."
+  ],
+  [
+   "Resume command",
+   "In a new chat in place of the closed one: continues from where the predecessor stopped.",
+   "You are \"[full chat name as in the team table]\", resuming the work of a previous chat of yours that was closed. You cannot see that chat; your only reference is the folder. Carry out these steps in order without asking me:\n\n1. Read `CLAUDE.md`.\n2. Read `Agents/Roles/[your role name].md`; its constants apply throughout the chat.\n3. Read your latest file in `Agents/Handoffs/` in full, then only what it names.\n4. Read your rows in `Agents/Board.md` and their \"next\", and the last two circulars in section 2.\n5. If the handoff file conflicts with the board, the board is newer and prevails; flag it to me in one line.\n6. Continue the work in progress from \"next step\" without redoing what is done, then the rest of your ready rows in order of their numbers.\n7. If the folder is not connected, say so in one line, and do not claim to have read anything.\n\nYour reply: one line confirming where you are resuming from, then three lines: what you did, what awaits others, and what you need from me."
+  ],
+  [
+   "Quality verdict request",
+   "Asks the Head of Quality Assurance for an independent verdict: pass or fail.",
+   "You are the \"Head of Quality Assurance\". Review the output of row [number] at the path stated on the board against the acceptance criteria in the reference, write your verdict in Docs/QA/ in the form: pass / fail with the reasons ordered by severity, then update the row status."
+  ],
+  [
+   "First request to the Compass",
+   "After creating the project: start with the Compass alone and it distributes the work.",
+   "You are \"Compass: general direction\". Read CLAUDE.md, then Agents/Board.md. Our goal: [goal]. Turn it into complete rows on the board, one per specialist, and tell me each row number and whom to start with first."
+  ],
+  [
+   "Before and after automation",
+   "For the process analyst: measures the process before automation so it can be compared after.",
+   "You are the \"Process Analyst\". Choose the recurring process named in your row, draw it step by step, and measure for each step: the time, who performs it, how many times it repeats weekly, and the common errors. Save the result in Data/Before.csv with the columns: step, owner, minutes, weekly runs, errors. Then write in \"next\" the steps that are candidates for automation, ordered by impact."
+  ],
+  [
+   "Design an agent for a process",
+   "For the automation engineer: designs the agent before building it, with a specification to review.",
+   "You are the \"Automation Engineer\". Design an agent for the process in your row with a six-part specification: the inputs and their source, the outputs and their form, the rules it never breaks, the points of human intervention, how it is measured after launch, and the approved tools from Docs/Data Policy.md. Save it in Outputs/ and hand the row to the Head of Quality Assurance with the status \"بانتظار التدقيق\"."
+  ],
+  [
+   "End-of-day report",
+   "Summarises the state and shows what awaits the project owner's decision.",
+   "Read Agents/Board.md and give me in five lines: what was delivered today, what awaits review, what awaits my decision with your recommendation for each, and the main blocker."
+  ]
+ ],
+ "cliCmd": {
+  "new": "python3 -I \"Project Forge 1.py\" new \"Project name\" --goal \"Project goal\" --owner \"The Chairman\" --preset transformation --language English --yes"
+ }
+},LANGS=[["العربية", "العربية", "العربية", "Arabic"], ["English", "English", "الإنجليزية", "English"], ["Français", "Français", "الفرنسية", "French"], ["Español", "Español", "الإسبانية", "Spanish"], ["Deutsch", "Deutsch", "الألمانية", "German"], ["Italiano", "Italiano", "الإيطالية", "Italian"], ["Português", "Português", "البرتغالية", "Portuguese"], ["Nederlands", "Nederlands", "الهولندية", "Dutch"], ["Türkçe", "Türkçe", "التركية", "Turkish"], ["Русский (Russian)", "Русский", "الروسية", "Russian"], ["Українська (Ukrainian)", "Українська", "الأوكرانية", "Ukrainian"], ["Македонски (Macedonian)", "Македонски", "المقدونية", "Macedonian"], ["Српски (Serbian)", "Српски", "الصربية", "Serbian"], ["Hrvatski", "Hrvatski", "الكرواتية", "Croatian"], ["Bosanski", "Bosanski", "البوسنية", "Bosnian"], ["Shqip", "Shqip", "الألبانية", "Albanian"], ["Български (Bulgarian)", "Български", "البلغارية", "Bulgarian"], ["Polski", "Polski", "البولندية", "Polish"], ["Română", "Română", "الرومانية", "Romanian"], ["Ελληνικά (Greek)", "Ελληνικά", "اليونانية", "Greek"], ["فارسی (Persian)", "فارسی", "الفارسية", "Persian"], ["اردو (Urdu)", "اردو", "الأردية", "Urdu"], ["עברית (Hebrew)", "עברית", "العبرية", "Hebrew"], ["हिन्दी (Hindi)", "हिन्दी", "الهندية", "Hindi"], ["বাংলা (Bengali)", "বাংলা", "البنغالية", "Bengali"], ["Bahasa Indonesia", "Bahasa Indonesia", "الإندونيسية", "Indonesian"], ["Bahasa Melayu", "Bahasa Melayu", "الملايوية", "Malay"], ["Tiếng Việt", "Tiếng Việt", "الفيتنامية", "Vietnamese"], ["ไทย (Thai)", "ไทย", "التايلندية", "Thai"], ["中文 (Chinese)", "中文", "الصينية", "Chinese"], ["日本語 (Japanese)", "日本語", "اليابانية", "Japanese"], ["한국어 (Korean)", "한국어", "الكورية", "Korean"], ["Kiswahili", "Kiswahili", "السواحيلية", "Swahili"]];
+var UL="ar";try{UL=localStorage.getItem("pf-ul")==="en"?"en":"ar"}catch(e){}
+function T(k){var d=EN.dyn[k];return d?d[UL==="en"?1:0]:k}
 var $=function(s,r){return(r||document).querySelector(s)},$$=function(s,r){return[].slice.call((r||document).querySelectorAll(s))};
 function E(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function toast(t){var e=$("#toast");e.textContent=t||"تم النسخ";e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("show")},1600)}
-function copy(t,btn){function ok(){toast();if(btn){btn.classList.add("ok");btn.textContent="نُسخ";setTimeout(function(){btn.classList.remove("ok");btn.textContent="نسخ"},1400)}}
+function toast(t){var e=$("#toast");e.textContent=t||T("toast");e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("show")},1600)}
+function copy(t,btn){function ok(){toast();if(btn){btn.classList.add("ok");btn.textContent=T("copied");setTimeout(function(){btn.classList.remove("ok");btn.textContent=T("copy")},1400)}}
  try{navigator.clipboard.writeText(t).then(ok,function(){fb(t,ok)})}catch(e){fb(t,ok)}}
-function fb(t,ok){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast("تعذّر النسخ")}a.remove()}
+function fb(t,ok){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(e){toast(T("copyfail"))}a.remove()}
 function code(t){var ar=/[\u0600-\u06FF]/.test(t);return'<pre class="code'+(ar?' ar':'')+'" dir="'+(ar?'rtl':'ltr')+'">'+E(t)+'</pre>'}
-function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">نسخ</button></div>'}
+function codeCopy(t){return'<div style="position:relative">'+code(t)+'<button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">'+T("copy")+'</button></div>'}
 $("#gh").href=$("#gh2").href=L.repo;
 var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")+"/main/";
 var WIN=/Win/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent||"");
@@ -227,12 +441,12 @@ function psCmd(){var e=envs().map(function(x){return'$env:'+x[0]+'="'+x[1]+'"; '
 var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge';
 var OSI=WIN?1:0;
 function INST(i){return[
- ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",shCmd()],
- ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",psCmd()],
- ["لمن يستعمل Git ويريد التحديث بأمر git pull.",CLONE+"\n\n# للتحديث لاحقًا\ngit pull"]
+ [T("i0"),shCmd()],
+ [T("i1"),psCmd()],
+ [T("i2"),CLONE+"\n\n"+T("upd")+"\ngit pull"]
 ][i]}
 function quick(){var w=OSI===1;
- $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(w?"الصق هذا السطر في <bdi>PowerShell</bdi>":"الصق هذا السطر في <bdi>Terminal</bdi>")+'</p>'+codeCopy(w?psCmd():shCmd())+'<div class="gl note" style="margin-top:12px;text-align:start;line-height:1.9">'+(w?"<b><bdi>PowerShell</bdi></b> نافذة مدمجة في <bdi>Windows</bdi> تكتب فيها الأوامر بدل النقر، وهي آمنة ولا تحتاج صلاحيات خاصة هنا. <b>لفتحها:</b> اضغط زر <bdi>Windows</bdi> على لوحة المفاتيح، واكتب <bdi>PowerShell</bdi>، ثم اضغط <bdi>Enter</bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بزر الفأرة الأيمن أو <bdi>Ctrl+V</bdi>، ثم اضغط <bdi>Enter</bdi>.":"<b><bdi>Terminal</bdi></b> تطبيق مدمج في <bdi>Mac</bdi> تكتب فيه الأوامر بدل النقر، وهو آمن ولا يحتاج صلاحيات خاصة هنا. <b>لفتحه:</b> اضغط <bdi>⌘ + Space</bdi>، واكتب <bdi>Terminal</bdi>، ثم اضغط <bdi>Enter</bdi>. بعدها انسخ السطر أعلاه، والصقه في النافذة بـ <bdi>⌘ + V</bdi>، ثم اضغط <bdi>Enter</bdi>.")+' يعمل السطر فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك.</div>';
+ $(".quick").innerHTML='<div class="tabs" role="tablist" aria-label="نظام التشغيل" style="justify-content:center;margin-bottom:10px"><button class="tab qos" role="tab" data-i="0" aria-selected="'+(!w)+'" type="button">Mac</button><button class="tab qos" role="tab" data-i="1" aria-selected="'+w+'" type="button">Windows</button></div><p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+T(w?"pastePS":"pasteT")+'</p>'+codeCopy(w?psCmd():shCmd())+'<div class="gl note" style="margin-top:12px;text-align:start;line-height:1.9">'+T(w?"noteW":"noteM")+'</div>';
  bindCopy($(".quick"));$$(".qos").forEach(function(b){b.onclick=function(){setOS(+b.dataset.i)}})}
 function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST(i)[0])+'</p>'+codeCopy(INST(i)[1]);bindCopy($("#inst"))}
 $$(".os .tab").forEach(function(b){b.onclick=function(){var i=+b.dataset.i;if(i<2){setOS(i)}else{CUR=2;$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});inst(2)}}});
@@ -240,19 +454,36 @@ var CUR=0;
 function refresh(){quick();inst(CUR)}
 function setOS(i){OSI=i;CUR=i;quick();inst(i);$$(".os .tab").forEach(function(x){x.setAttribute("aria-selected",+x.dataset.i===i)})}
 $$(".pl").forEach(function(b){b.onclick=function(){PLAT=b.dataset.p;$$(".pl").forEach(function(x){x.setAttribute("aria-selected",x===b)});refresh()}});
-$("#lg").onchange=function(){var o=$("#lg").value==="__other";$("#lg2").hidden=!o;LANGV=o?($("#lg2").value.trim()||"العربية"):$("#lg").value;refresh();if(o)$("#lg2").focus()};
-$("#lg2").oninput=function(){LANGV=$("#lg2").value.trim().replace(/["`$\\<>]/g,"")||"العربية";refresh()};
+$("#lg").onchange=function(){var o=$("#lg").value==="__other";$("#lg2").hidden=!o;LANGV=o?($("#lg2").value.trim()||"English"):$("#lg").value;var nu=LANGV==="العربية"?"ar":"en";if(nu!==UL)setUL(nu);else refresh();if(o)$("#lg2").focus()};
+$("#lg2").oninput=function(){LANGV=$("#lg2").value.trim().replace(/["`$\\<>]/g,"")||"English";refresh()};
 setOS(OSI);
-var T="cli";
+var TAB="cli";
+function LI(kind){var a=L[kind];if(UL!=="en")return a;
+ if(kind==="cli")return a.map(function(x){return{n:x.n,d:EN.cli[x.n]||x.d,c:(EN.cliCmd&&EN.cliCmd[x.n])||x.c}});
+ if(kind==="agents")return a.map(function(x,i){var e=EN.agents[i];return e?{n:e[0],d:e[1],c:e[2]}:x});
+ return a.map(function(x){return{n:x.n,d:EN.tools[x.n]||x.d,c:x.c,s:x.s==="جاهز"?"Ready":x.s}})}
 function lib(){var q=$("#q").value.trim().toLowerCase(),h="";
- L[T].filter(function(x){return!q||(x.n+" "+x.d+" "+x.c).toLowerCase().indexOf(q)>=0}).forEach(function(x){
+ LI(TAB).filter(function(x){return!q||(x.n+" "+x.d+" "+x.c).toLowerCase().indexOf(q)>=0}).forEach(function(x){
   h+='<div class="gl item"><div class="top"><h3>'+E(x.n)+'</h3>'+(x.s?'<span class="tag">'+E(x.s)+'</span>':"")+'</div><p>'+E(x.d)+'</p>'+codeCopy(x.c)+'</div>'});
- $("#lib").innerHTML=h||'<div class="gl none">لا نتائج</div>';bindCopy($("#lib"))}
+ $("#lib").innerHTML=h||'<div class="gl none">'+T("none")+'</div>';bindCopy($("#lib"))}
 function bindCopy(r){$$(".copy",r).forEach(function(b){b.onclick=function(){copy(decodeURIComponent(b.dataset.c),b)}})}
 bindCopy(document);
-$$("#library .tabs .tab").forEach(function(b){b.onclick=function(){T=b.dataset.t;$$("#library .tabs .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});lib()}});
+$$("#library .tabs .tab").forEach(function(b){b.onclick=function(){TAB=b.dataset.t;$$("#library .tabs .tab").forEach(function(x){x.setAttribute("aria-selected",x===b)});lib()}});
 $("#q").oninput=lib;lib();
+
+/* تعدد اللغات: كل نص ثابت يُستبدل بمقابله من EN.ui، والنصوص الديناميكية تمر عبر T() */
+var NODES=[];(function(){var all=[].slice.call(document.body.querySelectorAll("*"));all.forEach(function(el){if(el.tagName==="SCRIPT"||el.tagName==="STYLE")return;var k=el.innerHTML.trim();if(EN.ui[k]&&!NODES.some(function(n){return n.el.contains(el)}))NODES.push({el:el,k:k})})})();
+function fillLangs(){var sel=$("#lg"),cur=sel.value||"العربية";sel.innerHTML=LANGS.map(function(x){var nm=UL==="en"?x[3]:x[2];return'<option value="'+E(x[0])+'">'+E(x[1]===nm?x[1]:x[1]+" — "+nm)+"</option>"}).join("")+'<option value="__other">'+T("other")+"</option>";sel.value=cur}
+function applyUI(){var d=document.documentElement,en=UL==="en";d.lang=en?"en":"ar";d.dir=en?"ltr":"rtl";document.title=T("title");
+ NODES.forEach(function(n){n.el.innerHTML=en?EN.ui[n.k]:n.k});
+ $("#q").placeholder=T("search");$("#lg2").placeholder=T("langph");$("#lgbtn").textContent=en?"عربي":"EN";
+ fillLangs();if(!$("#lg").querySelector('option[value="'+(LANGV||"").replace(/"/g,"")+'"]')&&LANGV&&LANGV!=="العربية")$("#lg").value="__other";
+ try{localStorage.setItem("pf-ul",UL)}catch(e){}
+ refresh();lib()}
+function setUL(u){UL=u;applyUI()}
+$("#lgbtn").onclick=function(){var u=UL==="en"?"ar":"en";LANGV=u==="ar"?"العربية":"English";$("#lg").value=LANGV;$("#lg2").hidden=true;setUL(u)};
 var th=$("#th");th.onclick=function(){var d=document.documentElement,cur=d.dataset.theme||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");d.dataset.theme=cur==="dark"?"light":"dark"};
+if(UL==="en"){LANGV="English"}fillLangs();$("#lg").value=LANGV;if(UL==="en")applyUI();
 })();
 
 (function(){var els=document.querySelectorAll("section .gl, section h2, section .sub");els.forEach(function(e){e.classList.add("rv")});

@@ -212,6 +212,14 @@ class ForgeTests(unittest.TestCase):
         self.assertEqual(core.check_project(root), [])
         self.assertEqual(core.norm_platform("chatgpt"), "ChatGPT")
         self.assertEqual(core.norm_platform(None), "Claude")
+        for raw, want in (("grok", "Grok"), ("غروك", "Grok"), ("Gemini", "Gemini"), ("Google Gemini", "Gemini"), ("جيميناي", "Gemini"), ("xyz", "Claude")):
+            self.assertEqual(core.norm_platform(raw), want)
+        roles2 = core.customize_roles([("مدير", "إدارة", "إدارة", "Grok"), ("كاتب", "كتابة", "كتابة", "Gemini")], [], [])
+        root2 = core.create_project(self.tmp, "منصات", "هدف", "الرئيس", "blank", roles2, None, [], None, "Gemini", "English")
+        plat = {r["name"]: r["platform"] for r in json.loads((root2 / "Agents" / "Team.json").read_text(encoding="utf-8"))["roster"]}
+        self.assertEqual((plat["مدير"], plat["كاتب"]), ("Grok", "Gemini"))
+        self.assertEqual(core.check_project(root2), [])
+        self.assertTrue(all(d["plat"] in core.PLATFORMS for d in core.site_data(root2)["team"]))
         self.assertIn("العربية", core.lang_note(""))
 
     def test_single_file_build(self):

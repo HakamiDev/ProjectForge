@@ -67,5 +67,8 @@ html = (root / "site" / "template.html").read_text(encoding="utf-8")
 payload = json.dumps(lib, ensure_ascii=False).replace("</", "<\\/")
 out = root / "site" / "index.html"
 site_url = (sys.argv[2] if len(sys.argv) > 2 else "").rstrip("/") + ("/" if len(sys.argv) > 2 else "")
+en = (root / "site" / "en.json").read_text(encoding="utf-8")
+langs = json.dumps([list(x) for x in core.LANGUAGES], ensure_ascii=False)
+html = html.replace("@@EN@@", en.replace("</", "<\\/")).replace("@@LANGS@@", langs).replace("@@NSK@@", str(len(core.SKILLS)))
 out.write_text(html.replace("@@LIB@@", payload).replace("@@SITEURL@@", site_url), encoding="utf-8")
 print("بُني", out, out.stat().st_size, "بايت")
