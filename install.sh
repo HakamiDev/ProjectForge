@@ -20,10 +20,4 @@ if ! curl -fsSL -o "$FILE" "$URL"; then
 fi
 cd "$DIR" || exit 1
 export PYTHONUTF8=1
-if [ -t 0 ]; then
-  python3 -I "$FILE" new "$@"
-elif ( : </dev/tty ) 2>/dev/null; then
-  python3 -I "$FILE" new "$@" </dev/tty
-else
-  python3 -I "$FILE" new "$@"
-fi
+python3 -I "$FILE" "$@"

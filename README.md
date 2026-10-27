@@ -22,7 +22,7 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1 | iex
 ```
 
-أو نزّل `Project Forge.zip` من صفحة الإصدارات وانقر مرتين على `Project Forge.command` (Mac) أو `Project Forge.bat` (Windows). المشاريع تُنشأ في `Documents/Project Forge`.
+أو نزّل `Project Forge.zip` من صفحة الإصدارات وانقر مرتين على `Project Forge.command` (Mac) أو `Project Forge.bat` (Windows). تفتح الأداة صفحة بسيطة في المتصفح: تكتب اسم مشروعك وهدفه، وتختار فريقك وتعدّل أدواره بالنقر، ثم تضغط «أنشئ المشروع». لا حاجة إلى Terminal بعد التثبيت. المشاريع تُنشأ في `Documents/Project Forge`.
 
 ## ما الذي يحله
 
@@ -74,7 +74,7 @@ irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1
 ```
 git clone https://github.com/hakami-bros/project-forge.git
 cd project-forge
-python3 -m forge new
+python3 -m forge
 python3 -I tests/testforge.py
 python3 -I tools/build-single.py
 ```

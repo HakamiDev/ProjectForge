@@ -188,7 +188,7 @@ var RAW=L.repo.replace("https://github.com","https://raw.githubusercontent.com")
 var WIN=/Win/i.test(navigator.platform||navigator.userAgent||"");
 var SH='curl -fsSL '+RAW+'install.sh | bash';
 var PS='irm '+RAW+'install.ps1 | iex';
-var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge new';
+var CLONE='git clone '+L.repo+'.git\ncd '+L.repo.split("/").pop()+'\npython3 -m forge';
 $(".quick").innerHTML='<p style="margin:0 0 8px;color:var(--muted);font-size:.92rem;text-align:center">'+(WIN?"الصق هذا السطر في PowerShell":"الصق هذا السطر في Terminal")+'</p>'+codeCopy(WIN?PS:SH);
 var INST=[
  ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",SH],

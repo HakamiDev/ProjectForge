@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Forge</title>
+<style>
+:root{--bg:#f4f3fa;--card:rgba(255,255,255,.78);--ink:#17172b;--mut:#6b6b85;--line:rgba(23,23,43,.1);--acc:#5b4bf0;--acc2:#8a7dff;--accInk:#fff;--ok:#12a066;--bad:#d6334a;--chip:#ecebfb;--sh:0 10px 40px rgba(60,50,150,.12)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e0e18;--card:rgba(28,28,44,.78);--ink:#f1f0fb;--mut:#9a99b8;--line:rgba(255,255,255,.09);--acc:#8a7dff;--acc2:#5b4bf0;--accInk:#0e0e18;--ok:#34d399;--bad:#ff6b81;--chip:#25253d;--sh:0 10px 40px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(1200px 600px at 85% -10%,rgba(138,125,255,.25),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(91,75,240,.18),transparent 60%),var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI","SF Arabic","Geeza Pro",Tahoma,sans-serif;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto;padding:28px 18px 60px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;box-shadow:var(--sh)}
+.logo svg{width:24px;height:24px;stroke:var(--accInk);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+header b{font-size:19px;letter-spacing:.2px}
+header span{color:var(--mut);font-size:13px;display:block;margin-top:-4px}
+.steps{display:flex;gap:8px;margin-bottom:18px}
+.steps i{flex:1;height:5px;border-radius:9px;background:var(--line);transition:.3s}
+.steps i.on{background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.card{background:var(--card);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:var(--sh)}
+h1{font-size:26px;margin:0 0 4px}
+p.sub{color:var(--mut);margin:0 0 20px}
+label{display:block;font-weight:600;font-size:14px;margin:16px 0 6px}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none;transition:.2s}
+input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(138,125,255,.2)}
+textarea{min-height:84px;resize:vertical}
+.hint{color:var(--mut);font-size:13px;margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:6px}
+.opt{border:1.5px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;cursor:pointer;text-align:right;font:inherit;color:inherit;transition:.2s}
+.opt:hover{transform:translateY(-2px);border-color:var(--acc2)}
+.opt.sel{border-color:var(--acc);background:var(--chip);box-shadow:0 0 0 3px rgba(138,125,255,.22)}
+.opt b{display:block;font-size:15px}
+.opt small{color:var(--mut);font-size:12.5px;line-height:1.5;display:block;margin-top:3px}
+.roles{display:grid;gap:10px;margin-top:8px}
+.role{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 14px}
+.role .n{width:30px;height:30px;border-radius:9px;background:var(--chip);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--acc);flex:none}
+.role .t{flex:1;min-width:0}
+.role .t b{display:block;font-size:15px}
+.role .t small{color:var(--mut);font-size:12.5px}
+.role button{border:0;background:transparent;color:var(--bad);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px;border-radius:8px}
+.role button:hover{background:rgba(214,51,74,.12)}
+.role .lock{color:var(--mut);font-size:12px;padding:0 8px}
+.add{display:grid;grid-template-columns:1fr 1.3fr auto;gap:8px;margin-top:12px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:12px 22px;cursor:pointer;transition:.2s}
+.btn.pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--accInk);box-shadow:0 8px 24px rgba(91,75,240,.35)}
+.btn.pri:hover{transform:translateY(-1px)}
+.btn.pri:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sec{background:var(--chip);color:var(--ink)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px}
+.sum{display:grid;grid-template-columns:110px 1fr;gap:8px 14px;font-size:15px;margin:6px 0 4px}
+.sum dt{color:var(--mut)}.sum dd{margin:0;font-weight:600;word-break:break-word}
+.err{background:rgba(214,51,74,.12);color:var(--bad);border-radius:12px;padding:10px 14px;margin-top:14px;display:none;font-size:14px}
+.done{text-align:center}
+.done .ok{width:64px;height:64px;border-radius:50%;background:rgba(18,160,102,.15);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px;font-size:32px}
+.cmd{direction:rtl;text-align:right;background:var(--bg);border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin:12px 0;font-size:15px;user-select:all}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+ol.next{text-align:right;color:var(--mut);padding-inline-start:22px;margin:14px 0 0}
+ol.next li{margin:4px 0}
+.path{color:var(--mut);font-size:13px;direction:ltr;word-break:break-all}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:12px;opacity:0;transition:.25s;font-size:14px;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.hide{display:none!important}
+@media(max-width:560px){.add{grid-template-columns:1fr}.card{padding:18px}.sum{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div></header>
+<div class="steps" id="steps"><i class="on"></i><i></i><i></i></div>
+
+<section class="card" id="s1">
+<h1>ما مشروعك؟</h1><p class="sub">ثلاث إجابات قصيرة، وتبني الأداة كل شيء.</p>
+<label for="name">اسم المشروع</label><input id="name" placeholder="مثال: أتمتة الإجراءات" autocomplete="off">
+<label for="goal">هدف المشروع بجملة واحدة</label><textarea id="goal" placeholder="مثال: نظام وكلاء يؤتمت إجراءً متكررًا مع قياس الزمن والأخطاء قبل الأتمتة وبعدها."></textarea>
+<label for="owner">كيف تحب أن يخاطبك الفريق؟</label><input id="owner" value="الرئيس" autocomplete="off">
+<div class="err" id="e1"></div>
+<div class="nav"><span></span><button class="btn pri" id="n1">التالي</button></div>
+</section>
+
+<section class="card hide" id="s2">
+<h1>اختر فريقك</h1><p class="sub">ابدأ بنوع قريب من مشروعك، ثم عدّل الأدوار كما تشاء.</p>
+<div class="grid" id="types"></div>
+<label style="margin-top:22px">الأدوار</label>
+<div class="roles" id="roles"></div>
+<div class="add"><input id="rn" placeholder="اسم دور جديد"><input id="rt" placeholder="مجاله (اختياري)"><button class="btn sec" id="ra">أضف</button></div>
+<div class="hint">«البوصلة» مدير المكتب وتُضاف تلقائيًا. دور «رئيس ضمان الجودة» ثابت لأنه يختبر كل مخرج باستقلال.</div>
+<div class="err" id="e2"></div>
+<div class="nav"><button class="btn sec" id="b2">السابق</button><button class="btn pri" id="n2">التالي</button></div>
+</section>
+
+<section class="card hide" id="s3">
+<h1>المراجعة والإنشاء</h1><p class="sub">تأكد من التفاصيل ثم أنشئ المشروع.</p>
+<dl class="sum" id="sum"></dl>
+<label for="dest">مكان الحفظ</label><input id="dest" dir="ltr" autocomplete="off">
+<div class="hint">يُنشأ داخله مجلد باسم المشروع، ولا يُستبدل أي ملف موجود.</div>
+<div class="err" id="e3"></div>
+<div class="nav"><button class="btn sec" id="b3">السابق</button><button class="btn pri" id="go">أنشئ المشروع</button></div>
+</section>
+
+<section class="card done hide" id="s4">
+<div class="ok">✓</div>
+<h1>تم إنشاء مشروعك</h1>
+<div class="path" id="where"></div>
+<p class="sub" style="margin-top:14px">افتح محادثة جديدة في Claude وأرفق مجلد المشروع، ثم ألصق هذا الأمر لتبدأ مع البوصلة:</p>
+<div class="cmd" id="cmd"></div>
+<div class="row"><button class="btn pri" id="cp">انسخ الأمر</button><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button></div>
+<ol class="next"><li>أعطِ البوصلة هدفك بلغتك الطبيعية، وهي توزع العمل على الفريق.</li><li>لكل دور آخر محادثة مستقلة: انسخ أمر بدئه من صفحة «الأوامر» في موقع الإدارة.</li><li>يمكنك إغلاق هذه الصفحة؛ تتوقف الأداة تلقائيًا.</li></ol>
+</section>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var TOKEN="@@TOKEN@@";
+var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],dest:"",presets:[],qa:"رئيس ضمان الجودة"};
+var $=function(i){return document.getElementById(i)};
+function api(path,body){return fetch(path,{method:body===undefined?"GET":"POST",headers:{"X-Token":TOKEN,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)}).then(function(r){return r.json()})}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},1800)}
+function show(n){for(var i=1;i<=4;i++)$("s"+i).classList.toggle("hide",i!==n);var b=$("steps").children;for(i=0;i<3;i++)b[i].classList.toggle("on",i<Math.min(n,3));$("steps").classList.toggle("hide",n===4);window.scrollTo({top:0,behavior:"smooth"})}
+function err(id,m){var e=$(id);e.textContent=m||"";e.style.display=m?"block":"none"}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
+function renderTypes(){var g=$("types");g.innerHTML="";S.presets.forEach(function(p){var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("b","",p.label));b.appendChild(el("small","",p.blurb));b.onclick=function(){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});renderTypes();renderRoles()};g.appendChild(b)})}
+function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل"));c.appendChild(t);c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
+S.roles.forEach(function(r,i){var d=el("div","role");d.appendChild(el("div","n",String(i+1)));var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title||""));d.appendChild(t);
+if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles()};d.appendChild(x)}box.appendChild(d)})}
+$("ra").onclick=function(){var n=$("rn").value.trim(),t=$("rt").value.trim();if(!n){err("e2","اكتب اسم الدور.");return}
+if(S.roles.some(function(r){return r.name===n})){err("e2","هذا الدور موجود.");return}err("e2","");S.roles.push({name:n,title:t||n,scope:t||n});$("rn").value="";$("rt").value="";renderRoles()};
+$("rn").onkeydown=$("rt").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("ra").onclick()}};
+$("n1").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
+if(!S.name){err("e1","اكتب اسم المشروع.");return}if(!S.goal){err("e1","اكتب هدف المشروع.");return}err("e1","");show(2)};
+$("b2").onclick=function(){show(1)};
+$("n2").onclick=function(){if(!S.preset){err("e2","اختر نوع الفريق أولًا.");return}if(S.roles.length<1){err("e2","أضف دورًا واحدًا على الأقل.");return}err("e2","");
+var d=$("sum");d.innerHTML="";var rows=[["المشروع",S.name],["الهدف",S.goal],["يخاطبك الفريق",S.owner],["الفريق","البوصلة، "+S.roles.map(function(r){return r.name}).join("، ")]];
+rows.forEach(function(r){d.appendChild(el("dt","",r[0]));d.appendChild(el("dd","",r[1]))});$("dest").value=S.dest;show(3)};
+$("b3").onclick=function(){show(2)};
+$("go").onclick=function(){var b=$("go");b.disabled=true;b.textContent="جارٍ الإنشاء…";err("e3","");
+api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles,dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
+if(!r.ok){err("e3",r.error||"تعذّر الإنشاء.");return}$("where").textContent=r.root;$("cmd").textContent=r.cmd;show(4)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e3","انقطع الاتصال بالأداة. أعد تشغيلها.")})};
+$("cp").onclick=function(){var t=$("cmd").textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("نُسخ الأمر")},function(){var r=document.createRange();r.selectNodeContents($("cmd"));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("حدّدت الأمر، اضغط ⌘C أو Ctrl+C")})};
+$("oo").onclick=function(){api("/api/open",{what:"office"})};
+$("of").onclick=function(){api("/api/open",{what:"folder"})};
+api("/api/presets").then(function(r){S.presets=r.presets;S.dest=r.dest;S.qa=r.qa;renderTypes();$("name").focus()});
+setInterval(function(){api("/api/ping",{})},4000);api("/api/ping",{});
+</script>
+</body>
+</html>

@@ -117,10 +117,17 @@ class ForgeTests(unittest.TestCase):
         r2 = core.customize_roles([("أ", "أ", "", "Claude")], [], [])
         self.assertIn(core.QA_NAME, [x[0] for x in r2])
 
+    def test_wizard_template_and_defaults(self):
+        w = core.load_wizard()
+        self.assertIn("@@TOKEN@@", w)
+        self.assertEqual(set(core.PRESET_LABELS), set(core.PRESETS))
+        self.assertEqual(set(core.PRESET_BLURBS), set(core.PRESETS))
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)
         self.assertGreater(len(src), 100000)
+        self.assertIn('_WIZARD_Z = """', src)
         compile(src, "single", "exec")
 
 

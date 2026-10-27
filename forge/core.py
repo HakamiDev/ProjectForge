@@ -95,6 +95,16 @@ PRESETS = {
     ],
 }
 
+PRESET_LABELS = {"general": "عام", "software": "برمجي", "transformation": "تحول بالذكاء الاصطناعي", "operations": "عمليات وأداء", "data": "بيانات وذكاء أعمال", "content": "محتوى"}
+PRESET_BLURBS = {
+    "general": "مشروع متعدد الأغراض بفريق متوازن.",
+    "software": "تطبيقات ومواقع: واجهات وخلفية وتجربة ونشر.",
+    "transformation": "أتمتة وتحول رقمي: عمليات وبيانات وامتثال وتبنٍّ.",
+    "operations": "إجراءات ومؤشرات أداء وأتمتة العمل المتكرر.",
+    "data": "نماذج بيانات ولوحات Power BI وجودة البيانات.",
+    "content": "كتابة وبحث وتصميم ونشر ومتابعة الأثر.",
+}
+
 # ---------------------------------------------------------------- مساعدات
 
 
@@ -743,6 +753,7 @@ def create_project(parent, name, goal, owner, preset, roles, accent, report):
 # ---------------------------------------------------------------- موقع الإدارة
 # القالب شيفرة موقع الإدارة الأصلي حرفيًا (التصميم والإعدادات والحركة)، وتُحقن فيه بيانات المشروع.
 _TEMPLATE_Z = None  # تملؤه tools/build-single.py في نسخة الملف الواحد
+_WIZARD_Z = None  # واجهة الإنشاء الرسومية، تملؤها tools/build-single.py أيضًا
 
 
 def load_template():
@@ -756,19 +767,34 @@ def load_template():
     die("قالب الموقع غير موجود")
 
 
+def load_wizard():
+    p = Path(__file__).resolve().parent / "templates" / "wizard.html"
+    if p.is_file():
+        return p.read_text(encoding="utf-8")
+    if _WIZARD_Z:
+        import base64
+        import zlib
+        return zlib.decompress(base64.b64decode(_WIZARD_Z)).decode("utf-8")
+    die("واجهة الإنشاء غير موجودة")
+
+
 def single_source():
-    """نص الأداة كملف واحد مكتفٍ بنفسه (القالب مضغوط بداخله)."""
+    """نص الأداة كملف واحد مكتفٍ بنفسه (القالبان مضغوطان بداخله)."""
     src = Path(__file__).resolve().read_text(encoding="utf-8")
     if _TEMPLATE_Z:
-        return src
-    marker = "_TEMPLATE_Z = None" + "  # تملؤه tools/build-single.py في نسخة الملف الواحد"
-    if marker not in src:
         return src
     import base64
     import textwrap
     import zlib
-    z = base64.b64encode(zlib.compress(load_template().encode("utf-8"), 9)).decode("ascii")
-    return src.replace(marker, '_TEMPLATE_Z = """\n%s\n"""' % "\n".join(textwrap.wrap(z, 110)), 1)
+    for var, loader in (("_TEMPLATE_Z", load_template), ("_WIZARD_Z", load_wizard)):
+        marker = var + " = None"
+        i = src.find(marker)
+        if i < 0:
+            continue
+        j = src.index("\n", i)
+        z = base64.b64encode(zlib.compress(loader().encode("utf-8"), 9)).decode("ascii")
+        src = src[:i] + '%s = """\n%s\n"""' % (var, "\n".join(textwrap.wrap(z, 110))) + src[j:]
+    return src
 
 
 CLOSE_T = ("سأغلق هذه المحادثة وأفتح بدلها محادثة جديدة لك تكمل العمل نفسه. المحادثة الجديدة لن ترى شيئًا من هنا؛ مرجعها المجلد وحده، "
@@ -1059,7 +1085,7 @@ def cmd_new(a):
     preset = a.preset
     if not preset:
         names = list(PRESETS)
-        labels = {"general": "عام", "software": "برمجي", "transformation": "تحول بالذكاء الاصطناعي", "operations": "عمليات وأداء", "data": "بيانات وذكاء أعمال", "content": "محتوى"}
+        labels = PRESET_LABELS
         if interactive:
             print("نوع الفريق:  " + "   ".join("%d) %s" % (i, labels.get(k, k)) for i, k in enumerate(names, 1)))
             pick = ask("اختر الرقم", "1")
@@ -1106,6 +1132,141 @@ def cmd_new(a):
             webbrowser.open((root / "Office" / OFFICE_FILE).as_uri())
         except Exception:
             pass
+
+
+def cmd_gui(a):
+    """واجهة رسومية محلية لإنشاء المشروع: خادم على 127.0.0.1 وصفحة في المتصفح."""
+    import contextlib
+    import http.server
+    import io
+    import secrets
+    import subprocess
+    import threading
+    import time
+    import webbrowser
+
+    token = secrets.token_urlsafe(24)
+    state = {"root": None, "ping": None, "start": time.time(), "port": 0}
+    default_dest = str(Path.home() / "Documents" / "Project Forge")
+    page = load_wizard().replace("@@TOKEN@@", token)
+
+    def presets_payload():
+        return {"presets": [{"key": k, "label": PRESET_LABELS.get(k, k), "blurb": PRESET_BLURBS.get(k, ""),
+                             "roles": [{"name": r[0], "title": r[1], "scope": r[2]} for r in PRESETS[k]]} for k in PRESETS],
+                "dest": default_dest, "qa": QA_NAME}
+
+    def create(d):
+        name, goal = clean_name(d.get("name", "")), str(d.get("goal", "")).strip()
+        if not name or not goal:
+            return {"ok": False, "error": "الاسم والهدف مطلوبان."}
+        preset = d.get("preset")
+        if preset not in PRESETS:
+            return {"ok": False, "error": "نوع الفريق غير معروف."}
+        owner = str(d.get("owner", "")).strip() or "الرئيس"
+        roles = []
+        for r in d.get("roles") or []:
+            n = clean_name(str(r.get("name", "")))
+            if n and all(role_key(n) != role_key(x[0]) for x in roles):
+                title = str(r.get("title") or n).strip()
+                roles.append((n, title, str(r.get("scope") or title).strip(), "Claude"))
+        roles = customize_roles(roles, [], [])
+        parent = os.path.expanduser(str(d.get("dest", "")).strip() or default_dest)
+        err = io.StringIO()
+        report = []
+        try:
+            with contextlib.redirect_stderr(err):
+                root = create_project(parent, name, goal, owner, preset, roles, None, report)
+        except SystemExit:
+            return {"ok": False, "error": err.getvalue().strip() or "تعذّر الإنشاء."}
+        except OSError as e:
+            return {"ok": False, "error": "تعذّر الكتابة في المكان المحدد: %s" % e}
+        state["root"] = root
+        compass = next(r for r in load_team(root)["roster"] if r["id"] == "compass")
+        return {"ok": True, "root": str(root), "cmd": start_cmd(compass)}
+
+    def open_path(what):
+        root = state["root"]
+        if not root:
+            return
+        if what == "office":
+            webbrowser.open((root / "Office" / OFFICE_FILE).as_uri())
+        elif sys.platform == "darwin":
+            subprocess.Popen(["open", str(root)])
+        elif os.name == "nt":
+            os.startfile(str(root))  # noqa: S606
+        else:
+            subprocess.Popen(["xdg-open", str(root)])
+
+    class H(http.server.BaseHTTPRequestHandler):
+        def log_message(self, *x):
+            pass
+
+        def _host_ok(self):
+            return self.headers.get("Host", "") in ("127.0.0.1:%d" % state["port"], "localhost:%d" % state["port"])
+
+        def _send(self, code, body, ctype="application/json; charset=utf-8"):
+            b = body if isinstance(body, bytes) else body.encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(len(b)))
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.end_headers()
+            self.wfile.write(b)
+
+        def do_GET(self):
+            if not self._host_ok():
+                return self._send(403, "{}")
+            if self.path.split("?")[0] == "/":
+                return self._send(200, page, "text/html; charset=utf-8")
+            if self.path == "/api/presets" and self.headers.get("X-Token") == token:
+                return self._send(200, json.dumps(presets_payload(), ensure_ascii=False))
+            self._send(404, "{}")
+
+        def do_POST(self):
+            if not self._host_ok() or self.headers.get("X-Token") != token:
+                return self._send(403, "{}")
+            try:
+                n = int(self.headers.get("Content-Length") or 0)
+                d = json.loads(self.rfile.read(min(n, 1 << 20)).decode("utf-8") or "{}")
+            except (ValueError, UnicodeDecodeError):
+                return self._send(400, "{}")
+            if self.path == "/api/ping":
+                state["ping"] = time.time()
+                return self._send(200, "{}")
+            if self.path == "/api/create":
+                return self._send(200, json.dumps(create(d), ensure_ascii=False))
+            if self.path == "/api/open":
+                open_path(d.get("what"))
+                return self._send(200, "{}")
+            self._send(404, "{}")
+
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", a.port), H)
+    state["port"] = srv.server_address[1]
+    url = "http://127.0.0.1:%d/" % state["port"]
+
+    def watchdog():
+        while True:
+            time.sleep(2)
+            last = state["ping"]
+            if (last is None and time.time() - state["start"] > 180) or (last and time.time() - last > 25):
+                srv.shutdown()
+                return
+
+    threading.Thread(target=watchdog, daemon=True).start()
+    print("Project Forge يعمل الآن. إن لم تُفتح الصفحة تلقائيًا فافتح هذا الرابط:\n\n    %s\n" % url)
+    print("تتوقف الأداة وحدها عند إغلاق الصفحة. (للإيقاف الفوري: Ctrl+C)")
+    if not a.no_browser:
+        try:
+            webbrowser.open(url)
+        except Exception:
+            pass
+    try:
+        srv.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    srv.server_close()
+    print("تم الإغلاق.")
 
 
 def cmd_build(a):
@@ -1615,7 +1776,7 @@ def cmd_selftest(a):
 def main(argv=None):
     ap = argparse.ArgumentParser(prog=TOOL_NAME, description="Project Forge: أداة بناء مشروع بفريق ذكاء اصطناعي وموقع إدارته")
     ap.add_argument("--root", help="جذر المشروع (يُكتشف تلقائيًا)")
-    sp = ap.add_subparsers(dest="cmd", required=True)
+    sp = ap.add_subparsers(dest="cmd")
 
     p = sp.add_parser("new", help="إنشاء مشروع كامل")
     p.add_argument("name", nargs="?")
@@ -1631,6 +1792,11 @@ def main(argv=None):
     p.add_argument("--registry", help="مسار Registry.md")
     p.add_argument("--yes", action="store_true", help="بلا أسئلة")
     p.set_defaults(fn=cmd_new)
+
+    p = sp.add_parser("gui", help="واجهة رسومية لإنشاء المشروع (الافتراضي عند التشغيل بلا أوامر)")
+    p.add_argument("--no-browser", action="store_true")
+    p.add_argument("--port", type=int, default=0)
+    p.set_defaults(fn=cmd_gui)
 
     p = sp.add_parser("build", help="بناء موقع الإدارة")
     p.add_argument("--open", action="store_true")
@@ -1685,6 +1851,8 @@ def main(argv=None):
     sp.add_parser("selftest", help="اختبار ذاتي").set_defaults(fn=cmd_selftest)
 
     a = ap.parse_args(argv)
+    if not getattr(a, "cmd", None):
+        a.fn, a.no_browser, a.port = cmd_gui, False, 0
     a.fn(a)
 
 
