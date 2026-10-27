@@ -90,7 +90,7 @@ irm https://raw.githubusercontent.com/HakamiDevelopment/ProjectForge/main/instal
 
 ```
 git clone https://github.com/HakamiDevelopment/ProjectForge.git
-cd project-forge
+cd ProjectForge
 python3 -m forge
 python3 -I tests/testforge.py
 python3 -I tools/build-single.py
