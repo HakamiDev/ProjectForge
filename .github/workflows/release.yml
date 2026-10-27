@@ -16,8 +16,7 @@ jobs:
       - run: python3 -I tools/build-single.py
       - run: |
           mkdir -p "dist/Project Forge"
-          cp "dist/Project Forge 1.py" "launchers/Project Forge.command" "launchers/Project Forge.bat" "dist/Project Forge/"
-          chmod +x "dist/Project Forge/Project Forge.command"
+          cp "dist/Project Forge 1.py" "dist/Project Forge/"
           cd dist && zip -qr "Project Forge.zip" "Project Forge"
       - uses: softprops/action-gh-release@v2
         with:

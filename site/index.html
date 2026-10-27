@@ -171,12 +171,11 @@ h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 
 <section id="install">
   <h2>التثبيت</h2>
-  <p class="sub">سطر واحد تلصقه فيُنزّل الأداة ويشغّلها ويسألك أربعة أسئلة، ثم يفتح موقع إدارتك. إن لم يوجد Python على جهازك فسيُطلب تثبيته تلقائيًا.</p>
+  <p class="sub">سطر واحد تلصقه فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك. وفي المرات التالية يكفي السطر نفسه. إن لم يوجد Python على جهازك فسيُطلب تثبيته تلقائيًا.</p>
   <div class="os" role="tablist" aria-label="طريقة التثبيت">
     <button class="tab" role="tab" data-i="0" aria-selected="true" type="button">Mac</button>
     <button class="tab" role="tab" data-i="1" aria-selected="false" type="button">Windows</button>
-    <button class="tab" role="tab" data-i="2" aria-selected="false" type="button">بنقرتين</button>
-    <button class="tab" role="tab" data-i="3" aria-selected="false" type="button">للمطورين</button>
+    <button class="tab" role="tab" data-i="2" aria-selected="false" type="button">للمطورين</button>
   </div>
   <div id="inst"></div>
   <div class="gl note" style="margin-top:14px">بعد الإنشاء افتح <b>Office/Project Office.html</b> ثم كلّم البوصلة وحدها، وهي توزع العمل على الفريق.</div>
@@ -220,7 +219,6 @@ $(".quick").innerHTML='<p style="margin:0 0 8px;color:var(--muted);font-size:.92
 var INST=[
  ["افتح تطبيق Terminal (اضغط ⌘ ومسافة واكتب Terminal)، والصق السطر ثم Enter.",SH],
  ["افتح PowerShell (قائمة ابدأ ثم اكتب PowerShell)، والصق السطر ثم Enter.",PS],
- ["نزّل الملف المضغوط من صفحة الإصدارات، فُكّه، ثم انقر مرتين على الملف المناسب لنظامك: Project Forge.command على Mac، أو Project Forge.bat على Windows. على Mac في المرة الأولى: زر الفأرة الأيمن ثم «فتح».",L.repo+"/releases/latest"],
  ["لمن يستعمل Git ويريد التحديث بأمر git pull.",CLONE+"\n\n# للتحديث لاحقًا\ngit pull"]
 ];
 function inst(i){$("#inst").innerHTML='<p style="color:var(--muted);margin:0 0 10px">'+E(INST[i][0])+'</p>'+codeCopy(INST[i][1]);bindCopy($("#inst"))}

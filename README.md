@@ -22,7 +22,7 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1 | iex
 ```
 
-أو نزّل `Project Forge.zip` من صفحة الإصدارات وانقر مرتين على `Project Forge.command` (Mac) أو `Project Forge.bat` (Windows). تفتح الأداة صفحة بسيطة في المتصفح: تكتب اسم مشروعك وهدفه، وتختار فريقك وتعدّل أدواره بالنقر، ثم تضغط «أنشئ المشروع». لا حاجة إلى Terminal بعد التثبيت. المشاريع تُنشأ في `Documents/Project Forge`.
+أو نزّل `Project Forge 1.py` من صفحة الإصدارات وشغّله: `python3 -I "Project Forge 1.py"`. تفتح الأداة صفحة بسيطة في المتصفح: تكتب اسم مشروعك وهدفه، وتختار فريقك وتعدّل أدواره بالنقر، ثم تضغط «أنشئ المشروع». المشاريع تُنشأ في `Documents/Project Forge`.
 
 ## ما الذي يحله
 
@@ -75,7 +75,6 @@ irm https://raw.githubusercontent.com/hakami-bros/project-forge/main/install.ps1
 | `add-role` | يضيف دورًا ويحدّث القواعد والأوامر والموقع |
 | `skills` | يعرض المهارات الجاهزة وما أُضيف منها |
 | `add-skill` | يضيف مهارة جاهزة أو أكثر: `add-skill measure,deck` |
-| `shortcut` | أيقونة على سطح المكتب تفتح الواجهة بنقرتين |
 | `decide` | يسجّل قرارًا موسومًا في سجل القرارات |
 | `report` | تقرير أداء: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة |
 | `export` | يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI وExcel |
@@ -99,7 +98,6 @@ tools/build-single.py يبني ملف الأداة الواحد المكتفي �
 tools/build-site.py   يبني الموقع التعريفي site/index.html
 tests/                اختبارات الوحدة واختبار المتصفح (Playwright)
 site/                 الموقع التعريفي ومكتبة الأوامر وصورة المعاينة
-launchers/            مشغّلات بنقرتين لـ Mac وWindows
 ```
 
 الموقع يُنشر تلقائيًا على GitHub Pages عند الدفع إلى `main` (فعّل Pages من Settings ثم Source: GitHub Actions)، ووسم `v1.0.0` يرفع ملف الأداة الواحد و`Project Forge.zip` إلى صفحة الإصدارات.

@@ -26,4 +26,4 @@ New-Item -ItemType Directory -Force -Path $Dir | Out-Null
 Write-Host "جارٍ تنزيل الأداة..."
 Invoke-WebRequest -Uri $Url -OutFile $File -UseBasicParsing
 Set-Location $Dir
-if ($py -eq "py") { & py -3 -I $File shortcut | Out-Null; & py -3 -I $File @args } else { & $py -I $File shortcut | Out-Null; & $py -I $File @args }
+if ($py -eq "py") { & py -3 -I $File @args } else { & $py -I $File @args }
