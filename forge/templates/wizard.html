@@ -144,12 +144,13 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 .logo{animation:float 6s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){.aurora i,.card,.logo,.done .ok{animation:none!important}}
+.hl{margin-inline-start:auto;display:flex;align-items:center;gap:6px}.hl select{width:auto;min-width:0;padding:7px 10px;font-size:13px;border-radius:12px}.hl input{width:120px;padding:7px 10px;font-size:13px;border-radius:12px}@media (max-width:520px){header{flex-wrap:wrap}.hl{flex:1 1 100%;margin:0}.hl select{flex:1}.hl input{flex:1;width:auto}}
 </style>
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="wrap">
-<header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div></header>
+<header><div class="logo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><div><b>Project Forge</b><span>مكتب إدارة لفريق وكلاء الذكاء الاصطناعي</span></div><div class="hl" title="لغة العمل: بها يخاطبك الفريق وتُكتب المخرجات والتقارير"><em aria-hidden="true" style="font-style:normal">🌐</em><select id="lang" aria-label="لغة العمل"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select><input id="lang2" class="hide" placeholder="اكتب اسم اللغة" autocomplete="off" aria-label="اسم اللغة"></div></header>
 <div class="steps hide" id="steps"><div><i></i>التخصص</div><div><i></i>التفاصيل</div><div><i></i>الفريق</div><div><i></i>المهارات</div><div><i></i>المراجعة</div></div>
 
 <section class="card welcome" id="s0">
@@ -187,10 +188,7 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 <label>أين ستعمل مع الفريق؟</label>
 <div class="chips" id="plat"><button type="button" class="chip on" data-p="Claude">Claude</button><button type="button" class="chip" data-p="ChatGPT">ChatGPT</button></div>
 <div class="hint">هذه المنصة الافتراضية للجميع. وفي خطوة الفريق تختار منصة كل موظف على حدة (مثلًا: الكاتب في ChatGPT والمحلل في Claude).</div>
-<label for="lang">لغة العمل</label>
-<select id="lang"><option>العربية</option><option>English</option><option>Français</option><option>Español</option><option>Deutsch</option><option>Türkçe</option><option>Português</option><option>Italiano</option><option value="Македонски (Macedonian)">Македонски</option><option>Русский</option><option>اردو</option><option>हिन्दी</option><option>Bahasa Indonesia</option><option>中文</option><option>日本語</option><option>한국어</option><option value="__other">لغة أخرى…</option></select>
-<input id="lang2" class="hide" placeholder="اكتب اسم اللغة" autocomplete="off" style="margin-top:8px">
-<div class="hint">بها يخاطبك الفريق وتُكتب المخرجات والتقارير. أسماء الملفات والأوامر تبقى كما هي.</div>
+<div class="hint">لغة العمل تُختار من القائمة أعلى الصفحة (الرمز 🌐)، وبها يخاطبك الفريق وتُكتب المخرجات والتقارير.</div>
 <details class="why"><summary>لماذا الهدف مهم إلى هذا الحد؟</summary><div>الهدف يُكتب في أعلى كل ملف يقرؤه الموظفون، ويُقاس به كل مخرج. جملة واضحة الآن توفّر عشرات التصحيحات لاحقًا.</div></details>
 <div class="err" id="e2"></div>
 <div class="nav"><button class="btn sec" id="b2">السابق</button><button class="btn pri" id="n2">التالي</button></div>
