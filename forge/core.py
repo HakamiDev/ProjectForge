@@ -2519,8 +2519,11 @@ def cmd_gui(a):
                 except OSError as e:
                     return self._send(200, json.dumps({"ok": False, "error": str(e)}, ensure_ascii=False))
             if self.path == "/api/open":
-                open_path(d.get("what"))
-                return self._send(200, "{}")
+                try:
+                    open_path(d.get("what"))
+                    return self._send(200, '{"ok": true}')
+                except Exception as e:
+                    return self._send(200, json.dumps({"ok": False, "error": str(e)}, ensure_ascii=False))
             self._send(404, "{}")
 
     try:
@@ -2537,7 +2540,8 @@ def cmd_gui(a):
         while True:
             time.sleep(2)
             last = state["ping"]
-            if (last is None and time.time() - state["start"] > 180) or (last and time.time() - last > 25):
+            grace = 3600 if state["root"] else 120  # المتصفح يبطّئ التبويبات الخلفية، فلا نغلق الخادم بعد الإنشاء
+            if (last is None and time.time() - state["start"] > 180) or (last and time.time() - last > grace):
                 srv.shutdown()
                 return
 

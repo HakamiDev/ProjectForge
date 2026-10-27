@@ -96,7 +96,9 @@ select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(-
 .sum{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:15px;margin:6px 0 4px}
 .sum dt{color:var(--mut)}.sum dd{margin:0;font-weight:600;word-break:break-word}
 .err{background:rgba(214,51,74,.12);color:var(--bad);border-radius:12px;padding:10px 14px;margin-top:14px;display:none;font-size:14px}
-.done .pname{font-size:clamp(30px,6vw,46px);font-weight:900;line-height:1.25;color:#e5484d;margin:2px 0 8px;word-break:break-word;text-shadow:0 2px 24px rgba(229,72,77,.28)}
+.done .pname{font-size:clamp(30px,6vw,46px);font-weight:900;line-height:1.2;color:#00b85c;margin:4px 0 10px;word-break:break-word;text-shadow:0 0 18px rgba(0,255,136,.55),0 0 42px rgba(0,255,136,.35)}
+.done .path{font-size:clamp(14px,2.1vw,17px);font-weight:800;color:#00b85c;text-shadow:0 0 14px rgba(0,255,136,.45);line-height:1.5}
+@media (prefers-color-scheme:dark){.done .pname,.done .path{color:#39ff88;text-shadow:0 0 16px rgba(57,255,136,.75),0 0 38px rgba(57,255,136,.45)}}
 .done .ok{width:64px;height:64px;border-radius:50%;background:rgba(18,160,102,.15);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px;font-size:32px}
 .center{text-align:center}
 .cmd{direction:rtl;text-align:right;background:var(--bg);border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin:10px 0;font-size:15px;white-space:pre-wrap;word-break:break-word}
@@ -316,9 +318,10 @@ $("lang").onchange=function(){$("lang2").classList.toggle("hide",$("lang").value
 function renderLibrary(lib){var box=$("t3");box.innerHTML="";lib.forEach(function(g,gi){if(gi===0)return;box.appendChild(el("h3","",g.title));if(g.hint)box.appendChild(el("div","h",g.hint));g.items.forEach(function(it){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",it.label));t.appendChild(pre(it.text));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(it.text)};d.appendChild(c);box.appendChild(d)})})}
 Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(b){b.onclick=function(){Array.prototype.forEach.call(document.querySelectorAll(".tabs button"),function(x){x.classList.toggle("on",x===b)});["t1","t2","t3"].forEach(function(id){$(id).classList.toggle("hide",id!==b.getAttribute("data-t"))})}});
 $("cp").onclick=function(){copy($("cmd").textContent,"نُسخ أمر البوصلة")};
-$("sc").onclick=function(){api("/api/shortcut",{}).then(function(r){toast(r.ok?"تمت إضافة الأيقونة إلى سطح المكتب":(r.error||"تعذّر إنشاء الأيقونة"))})};
-$("oo").onclick=function(){api("/api/open",{what:"office"})};
-$("of").onclick=function(){api("/api/open",{what:"folder"})};
+function dead(){toast("انتهت جلسة الأداة. أعد فتحها من الأيقونة أو بالأمر gui، فمشروعك محفوظ في مكانه.")}
+$("sc").onclick=function(){api("/api/shortcut",{}).then(function(r){toast(r.ok?"تمت إضافة الأيقونة إلى سطح المكتب":(r.error||"تعذّر إنشاء الأيقونة"))}).catch(dead)};
+$("oo").onclick=function(){api("/api/open",{what:"office"}).catch(dead)};
+$("of").onclick=function(){api("/api/open",{what:"folder"}).catch(dead)};
 api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;S.examples=r.examples||{};S.skillList=r.skills||[];S.skillGroups=r.skillGroups||[];S.recommended=r.recommended||{};renderGroups();renderTypes()}).catch(function(){err("e1","تعذّر الاتصال بالأداة. أغلق الصفحة وشغّلها من جديد.");show(1)});
 setInterval(function(){api("/api/ping",{}).catch(function(){})},4000);api("/api/ping",{}).catch(function(){});
 </script>
