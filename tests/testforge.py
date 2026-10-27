@@ -187,6 +187,18 @@ class ForgeTests(unittest.TestCase):
         ref = (root / "فريق ثلاثي Project Reference.md").read_text(encoding="utf-8")
         self.assertIn("مدير المنتج والهندسة وحده", ref)
 
+    def test_demo_tasks_never_reach_agents(self):
+        root = new_project(self.tmp)
+        html = (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8")
+        self.assertIn("var DEMO=0", html)
+        self.assertEqual(html.count("D.nt>3"), 1)
+        for f in (root / "Agents").rglob("*"):
+            if f.is_file():
+                self.assertNotIn("مثال: ", f.read_text(encoding="utf-8", errors="ignore"), f.name)
+        d = core.site_data(root)
+        self.assertFalse([t for t in d["tasks"] if "مثال" in t["task"]])
+        self.assertFalse([r for r in d["q"]["rows"] if "مثال" in r["task"]])
+
     def test_platform_and_language(self):
         roles = [("مدير", "إدارة", "إدارة", "ChatGPT"), ("كاتب", "كتابة", "كتابة", "Claude")]
         roles = core.customize_roles(roles, [], [])
