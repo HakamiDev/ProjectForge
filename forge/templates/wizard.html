@@ -93,6 +93,7 @@ textarea{min-height:84px;resize:vertical}
 .sum{display:grid;grid-template-columns:120px 1fr;gap:8px 14px;font-size:15px;margin:6px 0 4px}
 .sum dt{color:var(--mut)}.sum dd{margin:0;font-weight:600;word-break:break-word}
 .err{background:rgba(214,51,74,.12);color:var(--bad);border-radius:12px;padding:10px 14px;margin-top:14px;display:none;font-size:14px}
+.done .pname{font-size:clamp(30px,6vw,46px);font-weight:900;line-height:1.25;color:#e5484d;margin:2px 0 8px;word-break:break-word;text-shadow:0 2px 24px rgba(229,72,77,.28)}
 .done .ok{width:64px;height:64px;border-radius:50%;background:rgba(18,160,102,.15);color:var(--ok);display:grid;place-items:center;margin:0 auto 12px;font-size:32px}
 .center{text-align:center}
 .cmd{direction:rtl;text-align:right;background:var(--bg);border:1px dashed var(--acc2);border-radius:14px;padding:14px;margin:10px 0;font-size:15px;white-space:pre-wrap;word-break:break-word}
@@ -212,7 +213,7 @@ textarea{min-height:84px;resize:vertical}
 </section>
 
 <section class="card done hide" id="s6">
-<div class="center"><div class="ok">✓</div><h1>تم إنشاء مشروعك</h1><div class="path" id="where"></div></div>
+<div class="center"><div class="ok">✓</div><h1>تم إنشاء مشروعك</h1><div class="pname" id="pname"></div><div class="path" id="where"></div></div>
 <div class="row"><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button><button class="btn sec" id="sc">أيقونة على سطح المكتب</button></div>
 <div class="tabs"><button class="on" data-t="t1">الخطوات التالية</button><button data-t="t2">أوامر الفريق</button><button data-t="t3">مكتبة الأوامر</button></div>
 <div id="t1" class="guide">
@@ -290,7 +291,7 @@ rows.forEach(function(r){d.appendChild(el("dt","",r[0]));d.appendChild(el("dd","
 $("b5").onclick=function(){show(4)};
 $("go").onclick=function(){var b=$("go");b.disabled=true;b.textContent="جارٍ الإنشاء…";err("e5","");
 api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S.roles,skills:Object.keys(S.skills),dest:$("dest").value.trim()}).then(function(r){b.disabled=false;b.textContent="أنشئ المشروع";
-if(!r.ok){err("e5",r.error||"تعذّر الإنشاء.");return}$("where").textContent=r.root+"  ("+r.files+" ملفًا)";$("cmd").textContent=r.cmd;renderTeam(r.team);renderLibrary(r.library);show(6)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e5","انقطع الاتصال بالأداة. أغلق الصفحة وشغّل Project Forge من جديد.")})};
+if(!r.ok){err("e5",r.error||"تعذّر الإنشاء.");return}var pn=String(r.root).replace(/[\\\/]+$/,"").split(/[\\\/]/).pop();$("pname").textContent=pn;$("where").textContent=r.root+"  ("+r.files+" ملفًا)";$("cmd").textContent=r.cmd;renderTeam(r.team);renderLibrary(r.library);show(6)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e5","انقطع الاتصال بالأداة. أغلق الصفحة وشغّل Project Forge من جديد.")})};
 function renderTeam(team){var box=$("t2");box.innerHTML="";box.appendChild(el("div","h","لكل موظف محادثة مستقلة. انسخ أمره، وألصقه في محادثة جديدة، ثم اكتب «تابع»."));team.forEach(function(r){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",r.name+": "+r.title));t.appendChild(pre(r.cmd));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(r.cmd,"نُسخ أمر "+r.name)};d.appendChild(c);box.appendChild(d)})}
 function pre(txt){var p=el("pre","",txt);if(!/[\u0600-\u06FF]/.test(txt)){p.dir="ltr";p.style.textAlign="left";p.style.fontFamily="ui-monospace,Menlo,Consolas,monospace"}return p}
 function renderLibrary(lib){var box=$("t3");box.innerHTML="";lib.forEach(function(g,gi){if(gi===0)return;box.appendChild(el("h3","",g.title));if(g.hint)box.appendChild(el("div","h",g.hint));g.items.forEach(function(it){var d=el("div","ci");var t=el("div","t");t.appendChild(el("b","",it.label));t.appendChild(pre(it.text));d.appendChild(t);var c=el("button","btn sec sm","انسخ");c.onclick=function(){copy(it.text)};d.appendChild(c);box.appendChild(d)})})}
