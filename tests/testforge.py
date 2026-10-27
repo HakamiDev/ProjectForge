@@ -123,6 +123,15 @@ class ForgeTests(unittest.TestCase):
         self.assertEqual(set(core.PRESET_LABELS), set(core.PRESETS))
         self.assertEqual(set(core.PRESET_BLURBS), set(core.PRESETS))
 
+    def test_specializations_and_library(self):
+        self.assertGreaterEqual(len(core.PRESETS), 30)
+        lib = core.role_library()
+        self.assertGreaterEqual(len(lib), 100)
+        for k, roles in core.PRESETS.items():
+            self.assertIn(core.QA_NAME, [r[0] for r in roles], k)
+            self.assertTrue(all("_" not in r[0] for r in roles), k)
+            self.assertIn(core.PRESET_META[k][3], core.PRESET_GROUPS, k)
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)

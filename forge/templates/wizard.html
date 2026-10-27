@@ -27,12 +27,26 @@ input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);bor
 input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 4px rgba(138,125,255,.2)}
 textarea{min-height:84px;resize:vertical}
 .hint{color:var(--mut);font-size:13px;margin-top:5px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:6px}
 .opt{border:1.5px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;cursor:pointer;text-align:right;font:inherit;color:inherit;transition:.2s}
 .opt:hover{transform:translateY(-2px);border-color:var(--acc2)}
 .opt.sel{border-color:var(--acc);background:var(--chip);box-shadow:0 0 0 3px rgba(138,125,255,.22)}
 .opt b{display:block;font-size:15px}
 .opt small{color:var(--mut);font-size:12.5px;line-height:1.5;display:block;margin-top:3px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tools input{flex:1;min-width:180px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;padding:6px 13px;border-radius:99px;cursor:pointer;transition:.2s}
+.chip.on{background:var(--acc);color:var(--accInk);border-color:var(--acc)}
+.opt .em{font-size:22px;display:block;margin-bottom:2px}
+.lib{margin-top:14px;border:1px dashed var(--line);border-radius:16px;padding:14px;max-height:340px;overflow:auto}
+.lib .it{display:flex;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line)}
+.lib .it:last-child{border:0}
+.lib .it .t{flex:1;min-width:0}.lib .it b{font-size:14px}.lib .it small{display:block;color:var(--mut);font-size:12px}
+.lib .it .fr{font-size:11px;color:var(--acc);background:var(--chip);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.lib button{border:0;background:var(--chip);color:var(--acc);font:inherit;font-weight:700;border-radius:10px;padding:4px 12px;cursor:pointer}
+.lib button:disabled{opacity:.4;cursor:default}
+.empty{color:var(--mut);text-align:center;padding:14px}
 .roles{display:grid;gap:10px;margin-top:8px}
 .role{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:11px 14px}
 .role .n{width:30px;height:30px;border-radius:9px;background:var(--chip);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--acc);flex:none}
@@ -81,9 +95,13 @@ ol.next li{margin:4px 0}
 
 <section class="card hide" id="s2">
 <h1>اختر فريقك</h1><p class="sub">ابدأ بنوع قريب من مشروعك، ثم عدّل الأدوار كما تشاء.</p>
+<div class="tools"><input id="q" placeholder="ابحث عن تخصصك: تسويق، مطاعم، مالية، تعليم…" autocomplete="off"></div>
+<div class="chips" id="groups"></div>
 <div class="grid" id="types"></div>
 <label style="margin-top:22px">الأدوار</label>
 <div class="roles" id="roles"></div>
+<div class="row" style="justify-content:flex-start;margin:12px 0 0"><button class="btn sec" id="lb">+ مكتبة الأدوار الجاهزة</button></div>
+<div class="lib hide" id="lib"><div class="tools"><input id="lq" placeholder="ابحث في الأدوار: محلل، كاتب، مسؤول…" autocomplete="off"></div><div id="ll"></div></div>
 <div class="add"><input id="rn" placeholder="اسم دور جديد"><input id="rt" placeholder="مجاله (اختياري)"><button class="btn sec" id="ra">أضف</button></div>
 <div class="hint">«البوصلة» مدير المكتب وتُضاف تلقائيًا. دور «رئيس ضمان الجودة» ثابت لأنه يختبر كل مخرج باستقلال.</div>
 <div class="err" id="e2"></div>
@@ -112,19 +130,34 @@ ol.next li{margin:4px 0}
 <div class="toast" id="toast"></div>
 <script>
 var TOKEN="@@TOKEN@@";
-var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],dest:"",presets:[],qa:"رئيس ضمان الجودة"};
+var S={name:"",goal:"",owner:"الرئيس",preset:null,roles:[],dest:"",presets:[],groups:[],library:[],qa:"رئيس ضمان الجودة"};
 var $=function(i){return document.getElementById(i)};
 function api(path,body){return fetch(path,{method:body===undefined?"GET":"POST",headers:{"X-Token":TOKEN,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)}).then(function(r){return r.json()})}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(function(){e.classList.remove("on")},1800)}
 function show(n){for(var i=1;i<=4;i++)$("s"+i).classList.toggle("hide",i!==n);var b=$("steps").children;for(i=0;i<3;i++)b[i].classList.toggle("on",i<Math.min(n,3));$("steps").classList.toggle("hide",n===4);window.scrollTo({top:0,behavior:"smooth"})}
 function err(id,m){var e=$(id);e.textContent=m||"";e.style.display=m?"block":"none"}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e}
-function renderTypes(){var g=$("types");g.innerHTML="";S.presets.forEach(function(p){var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("b","",p.label));b.appendChild(el("small","",p.blurb));b.onclick=function(){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});renderTypes();renderRoles()};g.appendChild(b)})}
+S.group="الكل";S.q="";
+function renderGroups(){var g=$("groups");g.innerHTML="";["الكل"].concat(S.groups).forEach(function(n){var c=el("button","chip"+(S.group===n?" on":""),n);c.onclick=function(){S.group=n;renderGroups();renderTypes()};g.appendChild(c)})}
+function renderTypes(){var g=$("types");g.innerHTML="";var q=S.q.trim(),n=0;S.presets.forEach(function(p){
+if(S.group!=="الكل"&&p.group!==S.group&&S.preset!==p.key)return;
+if(q&&(p.label+" "+p.blurb+" "+p.roles.map(function(r){return r.name+" "+r.title}).join(" ")).indexOf(q)<0)return;n++;
+var b=el("button","opt"+(S.preset===p.key?" sel":""));b.appendChild(el("span","em",p.icon));b.appendChild(el("b","",p.label));b.appendChild(el("small","",p.blurb));
+b.onclick=function(){S.preset=p.key;S.roles=p.roles.map(function(r){return{name:r.name,title:r.title,scope:r.scope}});renderTypes();renderRoles();renderLib()};g.appendChild(b)});
+if(!n)g.appendChild(el("div","empty","لا يوجد تخصص مطابق. اختر «فريق من الصفر» وأضف أدوارك من المكتبة."))}
+function renderLib(){var box=$("ll");box.innerHTML="";var q=$("lq").value.trim(),have={};S.roles.forEach(function(r){have[r.name]=1});var n=0;
+S.library.forEach(function(r){if(q&&(r.name+" "+r.title+" "+r.scope+" "+r.from).indexOf(q)<0)return;n++;if(n>60)return;
+var d=el("div","it");var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title));d.appendChild(t);d.appendChild(el("span","fr",r.from));
+var b=el("button","",have[r.name]?"مضاف":"أضف");b.disabled=!!have[r.name];b.onclick=function(){S.roles.push({name:r.name,title:r.title,scope:r.scope});renderRoles();renderLib()};d.appendChild(b);box.appendChild(d)});
+if(!n)box.appendChild(el("div","empty","لا نتائج."))}
+$("q").oninput=function(){S.q=this.value;renderTypes()};
+$("lq").oninput=renderLib;
+$("lb").onclick=function(){var l=$("lib");l.classList.toggle("hide");if(!l.classList.contains("hide"))renderLib()};
 function renderRoles(){var box=$("roles");box.innerHTML="";var c=el("div","role");c.appendChild(el("div","n","0"));var t=el("div","t");t.appendChild(el("b","","البوصلة"));t.appendChild(el("small","","مدير المكتب: تستقبل طلباتك وتوزع العمل"));c.appendChild(t);c.appendChild(el("span","lock","تلقائي"));box.appendChild(c);
 S.roles.forEach(function(r,i){var d=el("div","role");d.appendChild(el("div","n",String(i+1)));var t=el("div","t");t.appendChild(el("b","",r.name));t.appendChild(el("small","",r.title||""));d.appendChild(t);
-if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles()};d.appendChild(x)}box.appendChild(d)})}
+if(r.name===S.qa){d.appendChild(el("span","lock","ثابت"))}else{var x=el("button","","×");x.title="حذف";x.onclick=function(){S.roles.splice(i,1);renderRoles();renderLib()};d.appendChild(x)}box.appendChild(d)})}
 $("ra").onclick=function(){var n=$("rn").value.trim(),t=$("rt").value.trim();if(!n){err("e2","اكتب اسم الدور.");return}
-if(S.roles.some(function(r){return r.name===n})){err("e2","هذا الدور موجود.");return}err("e2","");S.roles.push({name:n,title:t||n,scope:t||n});$("rn").value="";$("rt").value="";renderRoles()};
+if(S.roles.some(function(r){return r.name===n})){err("e2","هذا الدور موجود.");return}err("e2","");S.roles.push({name:n,title:t||n,scope:t||n});$("rn").value="";$("rt").value="";renderRoles();renderLib()};
 $("rn").onkeydown=$("rt").onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();$("ra").onclick()}};
 $("n1").onclick=function(){S.name=$("name").value.trim();S.goal=$("goal").value.trim();S.owner=$("owner").value.trim()||"الرئيس";
 if(!S.name){err("e1","اكتب اسم المشروع.");return}if(!S.goal){err("e1","اكتب هدف المشروع.");return}err("e1","");show(2)};
@@ -139,7 +172,7 @@ if(!r.ok){err("e3",r.error||"تعذّر الإنشاء.");return}$("where").text
 $("cp").onclick=function(){var t=$("cmd").textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("نُسخ الأمر")},function(){var r=document.createRange();r.selectNodeContents($("cmd"));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("حدّدت الأمر، اضغط ⌘C أو Ctrl+C")})};
 $("oo").onclick=function(){api("/api/open",{what:"office"})};
 $("of").onclick=function(){api("/api/open",{what:"folder"})};
-api("/api/presets").then(function(r){S.presets=r.presets;S.dest=r.dest;S.qa=r.qa;renderTypes();$("name").focus()});
+api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;renderGroups();renderTypes();$("name").focus()});
 setInterval(function(){api("/api/ping",{})},4000);api("/api/ping",{});
 </script>
 </body>
