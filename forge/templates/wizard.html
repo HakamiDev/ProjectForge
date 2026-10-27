@@ -124,6 +124,7 @@ ol.next li{margin:4px 0}
 <p class="sub" style="margin-top:14px">افتح محادثة جديدة في Claude وأرفق مجلد المشروع، ثم ألصق هذا الأمر لتبدأ مع البوصلة:</p>
 <div class="cmd" id="cmd"></div>
 <div class="row"><button class="btn pri" id="cp">انسخ الأمر</button><button class="btn sec" id="oo">افتح موقع الإدارة</button><button class="btn sec" id="of">افتح المجلد</button></div>
+<div class="row"><button class="btn sec" id="sc">ضع أيقونة Project Forge على سطح المكتب</button></div>
 <ol class="next"><li>أعطِ البوصلة هدفك بلغتك الطبيعية، وهي توزع العمل على الفريق.</li><li>لكل دور آخر محادثة مستقلة: انسخ أمر بدئه من صفحة «الأوامر» في موقع الإدارة.</li><li>يمكنك إغلاق هذه الصفحة؛ تتوقف الأداة تلقائيًا.</li></ol>
 </section>
 </div>
@@ -171,6 +172,7 @@ api("/api/create",{name:S.name,goal:S.goal,owner:S.owner,preset:S.preset,roles:S
 if(!r.ok){err("e3",r.error||"تعذّر الإنشاء.");return}$("where").textContent=r.root;$("cmd").textContent=r.cmd;show(4)}).catch(function(){b.disabled=false;b.textContent="أنشئ المشروع";err("e3","انقطع الاتصال بالأداة. أعد تشغيلها.")})};
 $("cp").onclick=function(){var t=$("cmd").textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast("نُسخ الأمر")},function(){var r=document.createRange();r.selectNodeContents($("cmd"));var s=getSelection();s.removeAllRanges();s.addRange(r);toast("حدّدت الأمر، اضغط ⌘C أو Ctrl+C")})};
 $("oo").onclick=function(){api("/api/open",{what:"office"})};
+$("sc").onclick=function(){api("/api/shortcut",{}).then(function(r){toast(r.ok?"تمت إضافة الأيقونة إلى سطح المكتب":(r.error||"تعذّر إنشاء الأيقونة"))})};
 $("of").onclick=function(){api("/api/open",{what:"folder"})};
 api("/api/presets").then(function(r){S.presets=r.presets;S.groups=r.groups;S.library=r.library;S.dest=r.dest;S.qa=r.qa;renderGroups();renderTypes();$("name").focus()});
 setInterval(function(){api("/api/ping",{})},4000);api("/api/ping",{});

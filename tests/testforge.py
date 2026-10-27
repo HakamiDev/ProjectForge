@@ -132,6 +132,27 @@ class ForgeTests(unittest.TestCase):
             self.assertTrue(all("_" not in r[0] for r in roles), k)
             self.assertIn(core.PRESET_META[k][3], core.PRESET_GROUPS, k)
 
+    def test_shortcut_bundle(self):
+        import os
+        import plistlib
+        from unittest import mock
+        home = Path(self.tmp) / "home"
+        (home / "Desktop").mkdir(parents=True)
+        with mock.patch.dict(os.environ, {"HOME": str(home), "USERPROFILE": str(home)}), \
+                mock.patch.object(core.sys, "platform", "darwin"), mock.patch.object(core.Path, "home", return_value=home):
+            app = core.install_shortcut()
+        self.assertTrue(app.name.endswith(".app"))
+        run = app / "Contents" / "MacOS" / "ProjectForge"
+        self.assertTrue(os.access(run, os.X_OK))
+        info = plistlib.loads((app / "Contents" / "Info.plist").read_bytes())
+        self.assertEqual(info["CFBundleExecutable"], "ProjectForge")
+        icns = (app / "Contents" / "Resources" / "AppIcon.icns").read_bytes()
+        self.assertEqual(icns[:4], b"icns")
+        self.assertEqual(int.from_bytes(icns[4:8], "big"), len(icns))
+        self.assertIn(b"\x89PNG", icns[:40])
+        tool = home / "Library" / "Application Support" / "Project Forge" / core.TOOL_NAME
+        compile(tool.read_text(encoding="utf-8"), "tool", "exec")
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)

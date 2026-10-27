@@ -20,4 +20,5 @@ if ! curl -fsSL -o "$FILE" "$URL"; then
 fi
 cd "$DIR" || exit 1
 export PYTHONUTF8=1
+python3 -I "$FILE" shortcut >/dev/null 2>&1 && echo "أضفنا أيقونة «Project Forge» إلى سطح المكتب: افتحها بنقرتين في أي وقت."
 python3 -I "$FILE" "$@"
