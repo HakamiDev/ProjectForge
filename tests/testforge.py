@@ -254,6 +254,20 @@ class ForgeTests(unittest.TestCase):
         self.assertEqual(cm.exception.code, 2)
         core.cmd_status(argparse.Namespace(root=str(root), json=True, strict=False))
 
+    def test_no_private_traces(self):
+        """المستودع عام: لا يجوز أن تتسرب أسماء ملفات أو مسارات أو قرارات داخلية إلى القوالب."""
+        import re
+        bad = ["مرسال", "Mersal", "Shared Assets", "Hyperiux", "Brand Tokens", "UI Motion Kit",
+               "Glass Button 1", "Glass Extras", "Office Glass Element", "Framer Components", "رقم 1\\\""]
+        pat = re.compile(r"القرار \d+(?![\d ]*ساعة)|Templates/")
+        d = Path(core.__file__).parent / "templates"
+        for f in d.iterdir():
+            if f.suffix in (".html", ".css"):
+                t = f.read_text(encoding="utf-8")
+                for b in bad:
+                    self.assertNotIn(b, t, (f.name, b))
+                self.assertIsNone(pat.search(t), f.name)
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)

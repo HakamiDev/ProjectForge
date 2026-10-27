@@ -1,29 +1,11 @@
-/* ===== سبيكة: هوية Project Forge الجديدة للموقع العام ===== */
-html:not([data-skin="classic"]){--font:"Forge Sans","IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;--bg:#F3F4F7;--bg2:#F3F4F7;--ink:#141824;--muted:#566075;--line:rgba(20,24,36,.11);--card:#FFFFFF;--accent:#4640D6;--accent-ink:#FFFFFF;--glow:#4640D6;--ok:#0A7F66;--code:#0E1118;--shd:rgba(18,24,40,.2)}
-@media (prefers-color-scheme:dark){
-html:not([data-skin="classic"]):not([data-theme="light"]){--bg:#0C0F14;--bg2:#0C0F14;--ink:#E7EBF3;--muted:#93A0B6;--line:rgba(255,255,255,.09);--card:#141820;--accent:#6366F1;--glow:#A9ACFF;--ok:#4CD3A8;--code:#080A0F}
-}
-html:not([data-skin="classic"])[data-theme="dark"]{--bg:#0C0F14;--bg2:#0C0F14;--ink:#E7EBF3;--muted:#93A0B6;--line:rgba(255,255,255,.09);--card:#141820;--accent:#6366F1;--glow:#A9ACFF;--ok:#4CD3A8;--code:#080A0F}
-html:not([data-skin="classic"]) body{background:var(--bg)!important;font-size:16px}
-html:not([data-skin="classic"]) .aurora{display:none!important}
-html:not([data-skin="classic"]) .gl{background:var(--card)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-radius:12px;box-shadow:0 1px 2px rgba(18,24,40,.06)}
-html:not([data-skin="classic"]) header.top{top:12px}
-html:not([data-skin="classic"]) .hd{border-radius:12px}
-html:not([data-skin="classic"]) nav.links a{border-radius:8px;font-weight:500}
-html:not([data-skin="classic"]) .btn{border-radius:9px;font-weight:600;background:var(--card)}
-html:not([data-skin="classic"]) .btn:hover{transform:none;box-shadow:none;background:color-mix(in srgb,var(--ink) 5%,var(--card))}
-html:not([data-skin="classic"]) .btn.p{background:var(--accent);color:var(--accent-ink)}
-html:not([data-skin="classic"]) .btn.p:hover{filter:brightness(1.08);background:var(--accent)}
-html:not([data-skin="classic"]) .eyebrow{border-radius:7px;background:var(--card)}
-html:not([data-skin="classic"]) h1{font-weight:700;letter-spacing:-.015em}
-html:not([data-skin="classic"]) h1 em{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--accent)}
-html:not([data-skin="classic"]) .code{border-radius:10px}
-html:not([data-skin="classic"]) .copy{border-radius:7px}
-html:not([data-skin="classic"]) .ico{border-radius:10px;background:color-mix(in srgb,var(--accent) 12%,transparent)}
-html:not([data-skin="classic"]) .step:before{border-radius:9px;border-width:1.5px}
-html:not([data-skin="classic"]) .tab,html:not([data-skin="classic"]) .search{border-radius:9px}
-html:not([data-skin="classic"]) .tab[aria-selected="true"]{background:var(--accent)}
-html:not([data-skin="classic"]) .tag{border-radius:6px;border:0;background:color-mix(in srgb,var(--ok) 13%,transparent)}
-html:not([data-skin="classic"]) .card,html:not([data-skin="classic"]) .item,html:not([data-skin="classic"]) .step,html:not([data-skin="classic"]) .note{box-shadow:none}
-html:not([data-skin="classic"]) .card:hover,html:not([data-skin="classic"]) .item:hover{border-color:color-mix(in srgb,var(--ink) 22%,transparent)}
-html:not([data-skin="classic"]) .brand i{border-radius:8px}
+/* ===== زجاج سائل للموقع العام: الهوية الأصلية مع زجاج أخف ===== */
+html{--font:"Forge Sans","IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif}
+html body{font-size:16px}
+html .gl{-webkit-backdrop-filter:blur(4px) saturate(1);backdrop-filter:blur(4px) saturate(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 10px 30px -18px var(--shd)}
+html .btn,html .tab{-webkit-backdrop-filter:blur(2.5px);backdrop-filter:blur(2.5px)}
+html .btn.p{box-shadow:0 12px 28px -12px var(--accent)}
+html .brand i{border-radius:10px}
+html{--bg:#E6E9F0;--bg2:#DFE4EE;--accent:#6200F5;--glow:#8E7CFF}
+html[data-theme="dark"]{--bg:#15191E;--bg2:#10131A;--accent:#6200F5;--glow:#8FB4FF}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#15191E;--bg2:#10131A;--accent:#6200F5;--glow:#8FB4FF}}
+html:not([data-theme="dark"]) .aurora i{opacity:.22}
