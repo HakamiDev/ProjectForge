@@ -75,5 +75,5 @@ html[data-skin="glass"] .hot:hover,html[data-skin="glass"] .kpi:hover,html[data-
 html[data-skin="glass"] .mrow:hover,html[data-skin="glass"] .circ:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
 html[data-skin="glass"] .pill{border-color:var(--line)}
 html[data-skin="glass"] .hero h2,html[data-skin="glass"] .hero h1{font-weight:700}
-html[data-skin="glass"] select{-webkit-appearance:none;appearance:none;padding-inline:16px 40px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%238E9AB6%27%20stroke-width=%272.4%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27M6%209l6%206%206-6%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-size:14px;line-height:1.4}
-html[dir="rtl"][data-skin="glass"] select{background-position:left 16px center}
+html[data-skin="glass"] select{-webkit-appearance:none;appearance:none;padding-inline:22px 46px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%238E9AB6%27%20stroke-width=%272.4%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27M6%209l6%206%206-6%27/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 22px center;background-size:14px;line-height:1.4}
+html[dir="rtl"][data-skin="glass"] select{background-position:left 22px center}
