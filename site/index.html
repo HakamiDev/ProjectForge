@@ -102,7 +102,7 @@ footer a{color:inherit}
 h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
 @keyframes shimmer{to{background-position:200% 0}}
 /* اتجاه اللون المتحرك يتبع اتجاه اللغة: يبدأ من اليسار في اللغات اليسارية ومن اليمين في اليمينية */
-html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7B4DFF);animation-name:shimmerr}
+html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7B4DFF);animation-name:shimmer}
 @keyframes shimmerr{to{background-position:-200% 0}}
 .btn.p{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--glow)))}
 .btn.p:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
