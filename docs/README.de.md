@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · **Deutsch** · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · **Deutsch** · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ Auf der Website können Sie außerdem vorab Ihre Plattform und Ihre bevorzugte S
 - **80 Spezialisierungen** (Strategie, Gastronomie, Immobilien, Software, Personalwesen, Bildung und mehr) mit mehr als 330 fertigen Rollen, die Sie mit einem Klick hinzufügen.
 - **130 fertige Skills in 18 Gruppen.** Ein Skill ist eine kurze Datei, die beschreibt, wann er einzusetzen ist, welche Schritte er umfasst, was er liefert und nach welchem Abnahmekriterium er bewertet wird, sodass ein Mitarbeiter ihn anwendet, statt zu improvisieren.
 - **Vier Plattformen:** Claude, ChatGPT, Grok und Gemini. Jeder Mitarbeiter kann auf einer anderen Plattform arbeiten.
-- **27 Oberflächensprachen** auf der Website und im Assistenten. Die bevorzugte Sprache ist die Sprache für die Verwaltung des gesamten Systems und die Sprache im Umgang mit den Mitarbeitern.
+- **13 Oberflächensprachen** auf der Website und im Assistenten. Die bevorzugte Sprache ist die Sprache für die Verwaltung des gesamten Systems und die Sprache im Umgang mit den Mitarbeitern.
 - **Eine Verwaltungsseite** aus einer einzigen HTML-Datei: Board, Team, Entscheidungen, Kennzahlen, eine Bibliothek fertiger Befehle und eine Aufmerksamkeits-Engine, die meldet, was überfällig ist oder auf Sie wartet.
 
 ## Befehle
@@ -67,7 +67,7 @@ Laden Sie die Dateien aus dem Projektordner an seinem ursprünglichen Speicheror
 
 ## Aktuelle Einschränkungen
 
-- Der Assistent und die Website erscheinen in 27 Sprachen, die generierten Projektdateien (Regeln, Rollenbeschreibungen, Board) und die Verwaltungsseite sind derzeit jedoch auf Arabisch verfasst. Die Mitarbeiter erhalten die Anweisung, in welcher Sprache sie arbeiten, und antworten Ihnen in dieser Sprache.
+- Der Assistent und die Website erscheinen in 13 Sprachen, die generierten Projektdateien (Regeln, Rollenbeschreibungen, Board) und die Verwaltungsseite sind derzeit jedoch auf Arabisch verfasst. Die Mitarbeiter erhalten die Anweisung, in welcher Sprache sie arbeiten, und antworten Ihnen in dieser Sprache.
 - Dateinamen, Befehle und die Statusbegriffe des Boards bleiben Arabisch, da das Werkzeug sie wörtlich liest.
 - Die Installation unter Windows wurde noch nicht auf einem echten Rechner getestet.
 

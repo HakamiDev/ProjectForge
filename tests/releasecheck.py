@@ -45,7 +45,7 @@ class ReleaseChecks(unittest.TestCase):
         document = (ROOT / "Language Coverage.md").read_text(encoding="utf-8")
         for row in core.LANGUAGES:
             self.assertIn("| " + row[0] + " |", document)
-        self.assertEqual(len(core.LANGUAGES), 27)
+        self.assertEqual(len(core.LANGUAGES), 13)
         self.assertEqual((len(core.PRESETS), len(core.role_library()), len(core.SKILLS), len(core.SKILL_GROUPS)), (80, 334, 130, 18))
 
 

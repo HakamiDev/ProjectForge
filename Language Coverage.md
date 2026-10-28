@@ -2,7 +2,7 @@
 
 Updated: 28 October 2026. Local candidate: 1.1.0.
 
-The public site and creation wizard offer **27 languages**: Arabic, English, and 25 translated interfaces. Both selectors are generated from `forge/core.py: LANGUAGES`. CI checks that every listed language has translation data on both surfaces and that distributed artifacts match source.
+The public site and creation wizard offer **13 languages**: Arabic, English, and 11 translated interfaces. Both selectors are generated from `forge/core.py: LANGUAGES`. CI checks that every listed language has translation data on both surfaces and that distributed artifacts match source.
 
 | Language value | Code | Site | Wizard |
 | --- | --- | --- | --- |
@@ -11,28 +11,14 @@ The public site and creation wizard offer **27 languages**: Arabic, English, and
 | Français | fr | Available | Available |
 | Español | es | Available | Available |
 | Deutsch | de | Available | Available |
-| Italiano | it | Available | Available |
 | Português | pt | Available | Available |
-| Nederlands | nl | Available | Available |
 | Türkçe | tr | Available | Available |
 | Русский (Russian) | ru | Available | Available |
-| Українська (Ukrainian) | uk | Available | Available |
 | Македонски (Macedonian) | mk | Available | Available |
-| Polski | pl | Available | Available |
-| Română | ro | Available | Available |
-| Ελληνικά (Greek) | el | Available | Available |
-| فارسی (Persian) | fa | Available | Available |
-| اردو (Urdu) | ur | Available | Available |
 | हिन्दी (Hindi) | hi | Available | Available |
-| বাংলা (Bengali) | bn | Available | Available |
 | Bahasa Indonesia | id | Available | Available |
-| Bahasa Melayu | ms | Available | Available |
-| Tiếng Việt | vi | Available | Available |
-| ไทย (Thai) | th | Available | Available |
 | 中文 (Chinese) | zh | Available | Available |
 | 日本語 (Japanese) | ja | Available | Available |
-| 한국어 (Korean) | ko | Available | Available |
-| Kiswahili | sw | Available | Available |
 
 ## Scope and review limits
 

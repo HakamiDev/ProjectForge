@@ -314,7 +314,7 @@ class ForgeTests(unittest.TestCase):
             translations = js_json(surface, "TR")
             self.assertEqual(choices, {"العربية", "English"} | set(codes))
             self.assertEqual(set(codes.values()), set(translations))
-            self.assertEqual(len(choices), 27)
+            self.assertEqual(len(choices), 13)
             self.assertNotIn("he", translations)
             self.assertNotIn("Hebrew", surface)
             keys = set(next(iter(translations.values())))
@@ -345,7 +345,7 @@ class ForgeTests(unittest.TestCase):
     def test_readme_languages(self):
         root = Path(__file__).resolve().parent.parent
         files = [root / "README.md"] + sorted((root / "docs").glob("README.*.md"))
-        self.assertEqual(len(files), 27)
+        self.assertEqual(len(files), 13)
         for f in files:
             t = f.read_text(encoding="utf-8")
             self.assertIn("install.sh | bash", t, f.name)

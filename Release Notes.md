@@ -1,5 +1,6 @@
-# v1.1.8 — Site copy and dropdown alignment
+# v1.1.9 — Site copy and dropdown alignment
 
+- Interface languages reduced to 13 across the site, wizard and README (Arabic, English, French, Spanish, German, Portuguese, Turkish, Russian, Macedonian, Hindi, Indonesian, Chinese, Japanese); the others were removed so that every listed language can be completed in full.
 - The generated project office now follows the working language: for any non-Arabic project it displays in English, left to right (about 1,000 interface phrases translated). Arabic projects are unchanged. Names of preset roles and project data stay as written.
 - The desktop-icon button shows a clear bilingual message when macOS blocks updating an existing icon.
 - Public homepage leads with the unified agent-team promise, followed by six concrete capabilities in Arabic and English.

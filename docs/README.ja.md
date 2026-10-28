@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · **日本語** · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · **日本語**
 
 </p>
 
@@ -47,7 +47,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 - **80 の専門分野**（戦略、飲食、不動産、ソフトウェア、人事、教育など）と、ワンクリックで追加できる 330 以上の用意済みロール。
 - **18 グループ、130 の用意済みスキル。** スキルとは、使うべき場面、手順、成果物、受け入れ基準を記した短いファイルで、従業員は場当たり的に対応せず、これに従って作業します。
 - **4 つのプラットフォーム:** Claude、ChatGPT、Grok、Gemini。従業員ごとに異なるプラットフォームを使えます。
-- Web サイトとウィザードは **27 の表示言語**に対応。優先言語は、システム全体の管理と従業員とのやり取りに使われる言語です。
+- Web サイトとウィザードは **13 の表示言語**に対応。優先言語は、システム全体の管理と従業員とのやり取りに使われる言語です。
 - 単一の HTML ファイルで動く**管理サイト**: ボード、チーム、意思決定、指標、用意済みコマンドのライブラリ、そして遅延している項目やあなたの対応待ちの項目を知らせるアテンションエンジン。
 
 ## コマンド
@@ -67,7 +67,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 
 ## 現在の制限
 
-- ウィザードと Web サイトは 27 言語で表示されますが、生成されるプロジェクトファイル（ルール、ロール説明書、ボード）と管理サイトは、現時点ではアラビア語で書かれます。従業員には作業に使う言語が伝えられ、その言語で返答します。
+- ウィザードと Web サイトは 13 言語で表示されますが、生成されるプロジェクトファイル（ルール、ロール説明書、ボード）と管理サイトは、現時点ではアラビア語で書かれます。従業員には作業に使う言語が伝えられ、その言語で返答します。
 - ファイル名、コマンド、ボードのステータス語は、ツールが文字どおりに読み取るため、アラビア語のままです。
 - Windows でのインストールは、まだ実機でテストされていません。
 

@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · **中文** · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · **中文** · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 - **80 个专业领域**（战略、餐饮、房地产、软件、人力资源、教育等），以及 330 多个现成角色，一键即可添加。
 - **18 个分组中的 130 项现成技能。** 技能是一个简短的文件，描述其适用时机、步骤、产出和验收标准，让员工按此执行，而不是临场发挥。
 - **四个平台：**Claude、ChatGPT、Grok 和 Gemini。每位员工可以使用不同的平台。
-- 网站和向导提供 **27 种界面语言**。首选语言即管理整个系统所用的语言，也是与员工沟通所用的语言。
+- 网站和向导提供 **13 种界面语言**。首选语言即管理整个系统所用的语言，也是与员工沟通所用的语言。
 - 由单个 HTML 文件构成的**管理站点**：看板、团队、决策、指标、现成命令库，以及一个注意力引擎，用于标示哪些事项已逾期或正在等待您处理。
 
 ## 命令
@@ -67,7 +67,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 
 ## 当前限制
 
-- 向导和网站提供 27 种语言，但生成的项目文件（规则、角色说明、看板）和管理站点目前以阿拉伯语书写。员工会被告知应使用哪种语言工作，并用该语言回复您。
+- 向导和网站提供 13 种语言，但生成的项目文件（规则、角色说明、看板）和管理站点目前以阿拉伯语书写。员工会被告知应使用哪种语言工作，并用该语言回复您。
 - 文件名、命令和看板的状态词保持为阿拉伯语，因为工具是按字面读取它们的。
 - Windows 安装尚未在真实机器上测试。
 

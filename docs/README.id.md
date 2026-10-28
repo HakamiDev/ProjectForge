@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · **Bahasa Indonesia** · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · **Bahasa Indonesia** · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ Di situs, Anda juga dapat memilih platform dan bahasa pilihan terlebih dahulu; k
 - **80 spesialisasi** (strategi, restoran, properti, perangkat lunak, SDM, pendidikan, dan lainnya) dengan lebih dari 330 peran siap pakai yang dapat ditambahkan dengan satu klik.
 - **130 skill siap pakai dalam 18 kelompok.** Skill adalah berkas singkat yang menjelaskan kapan digunakan, langkah-langkahnya, keluarannya, dan kriteria penerimaannya, sehingga karyawan menerapkannya alih-alih berimprovisasi.
 - **Empat platform:** Claude, ChatGPT, Grok, dan Gemini. Setiap karyawan dapat bekerja di platform yang berbeda.
-- **27 bahasa antarmuka** di situs web dan wizard. Bahasa pilihan adalah bahasa untuk mengelola seluruh sistem dan yang digunakan bersama karyawan.
+- **13 bahasa antarmuka** di situs web dan wizard. Bahasa pilihan adalah bahasa untuk mengelola seluruh sistem dan yang digunakan bersama karyawan.
 - **Situs manajemen** dari satu berkas HTML: papan, tim, keputusan, metrik, pustaka perintah siap pakai, dan mesin perhatian yang menandai apa yang terlambat atau menunggu Anda.
 
 ## Perintah
@@ -67,7 +67,7 @@ Unggah berkas dari folder proyek di lokasi aslinya dan unggah ulang berkas yang 
 
 ## Batasan saat ini
 
-- Wizard dan situs web tampil dalam 27 bahasa, tetapi berkas proyek yang dihasilkan (aturan, arahan peran, papan) dan situs manajemen untuk sementara ditulis dalam bahasa Arab. Karyawan diberi tahu bahasa yang harus dipakai bekerja dan menjawab Anda dalam bahasa itu.
+- Wizard dan situs web tampil dalam 13 bahasa, tetapi berkas proyek yang dihasilkan (aturan, arahan peran, papan) dan situs manajemen untuk sementara ditulis dalam bahasa Arab. Karyawan diberi tahu bahasa yang harus dipakai bekerja dan menjawab Anda dalam bahasa itu.
 - Nama berkas, perintah, dan kata status pada papan tetap dalam bahasa Arab karena alat ini membacanya apa adanya.
 - Instalasi di Windows belum diuji pada mesin sungguhan.
 

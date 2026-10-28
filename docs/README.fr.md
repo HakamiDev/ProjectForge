@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · **Français** · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · **Français** · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ Le site vous permet aussi de choisir d'abord votre plateforme et votre langue pr
 - **80 spécialisations** (stratégie, restauration, immobilier, logiciel, RH, éducation et bien d'autres) avec plus de 330 rôles prêts à l'emploi que vous ajoutez en un clic.
 - **130 compétences prêtes à l'emploi réparties en 18 groupes.** Une compétence est un court fichier qui décrit quand l'utiliser, ses étapes, son résultat et son critère d'acceptation, afin qu'un employé l'applique au lieu d'improviser.
 - **Quatre plateformes :** Claude, ChatGPT, Grok et Gemini. Chaque employé peut travailler sur une plateforme différente.
-- **27 langues d'interface** sur le site web et dans l'assistant. La langue préférée est celle de la gestion de l'ensemble du système et celle utilisée avec les employés.
+- **13 langues d'interface** sur le site web et dans l'assistant. La langue préférée est celle de la gestion de l'ensemble du système et celle utilisée avec les employés.
 - **Un site de gestion** à partir d'un seul fichier HTML : tableau, équipe, décisions, indicateurs, une bibliothèque de commandes prêtes à l'emploi, et un moteur d'attention qui signale ce qui est en retard ou en attente de votre part.
 
 ## Commandes
@@ -67,7 +67,7 @@ Téléversez les fichiers depuis le dossier du projet à son emplacement d'origi
 
 ## Limites actuelles
 
-- L'assistant et le site web sont disponibles en 27 langues, mais les fichiers générés du projet (règles, fiches de rôle, tableau) et le site de gestion sont pour l'instant rédigés en arabe. Les employés reçoivent la consigne de la langue de travail et vous répondent dans cette langue.
+- L'assistant et le site web sont disponibles en 13 langues, mais les fichiers générés du projet (règles, fiches de rôle, tableau) et le site de gestion sont pour l'instant rédigés en arabe. Les employés reçoivent la consigne de la langue de travail et vous répondent dans cette langue.
 - Les noms de fichiers, les commandes et les termes de statut du tableau restent en arabe, car l'outil les lit littéralement.
 - L'installation sous Windows n'a pas encore été testée sur une machine réelle.
 

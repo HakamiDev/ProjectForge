@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · **Español** · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · **Español** · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ El sitio también permite elegir primero la plataforma y el idioma preferido; am
 - **80 especializaciones** (estrategia, restauración, bienes raíces, software, RR. HH., educación y más) con más de 330 roles listos que se añaden con un clic.
 - **130 habilidades listas en 18 grupos.** Una habilidad es un archivo breve que describe cuándo usarla, sus pasos, su resultado y su criterio de aceptación, de modo que un empleado la aplica en lugar de improvisar.
 - **Cuatro plataformas:** Claude, ChatGPT, Grok y Gemini. Cada empleado puede trabajar en una plataforma distinta.
-- **27 idiomas de interfaz** en el sitio web y en el asistente. El idioma preferido es el de la gestión de todo el sistema y el que se usa con los empleados.
+- **13 idiomas de interfaz** en el sitio web y en el asistente. El idioma preferido es el de la gestión de todo el sistema y el que se usa con los empleados.
 - **Un sitio de gestión** desde un solo archivo HTML: tablero, equipo, decisiones, métricas, una biblioteca de comandos listos y un motor de atención que señala lo que está atrasado o a la espera de usted.
 
 ## Comandos
@@ -67,7 +67,7 @@ Suba los archivos desde la carpeta del proyecto en su ubicación original y vuel
 
 ## Limitaciones actuales
 
-- El asistente y el sitio web aparecen en 27 idiomas, pero los archivos generados del proyecto (reglas, fichas de rol, tablero) y el sitio de gestión están escritos por ahora en árabe. A los empleados se les indica en qué idioma trabajar y le responden en él.
+- El asistente y el sitio web aparecen en 13 idiomas, pero los archivos generados del proyecto (reglas, fichas de rol, tablero) y el sitio de gestión están escritos por ahora en árabe. A los empleados se les indica en qué idioma trabajar y le responden en él.
 - Los nombres de archivo, los comandos y los términos de estado del tablero se mantienen en árabe, porque la herramienta los lee literalmente.
 - La instalación en Windows aún no se ha probado en una máquina real.
 

@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · **Português** · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · **Português** · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ O site também permite escolher antes a plataforma e o idioma preferido; ambos s
 - **80 especializações** (estratégia, restaurantes, imóveis, software, RH, educação e mais) com mais de 330 papéis prontos que você adiciona com um clique.
 - **130 habilidades prontas em 18 grupos.** Uma habilidade é um arquivo curto que descreve quando usá-la, as etapas, o resultado e o critério de aceitação, para que o colaborador a aplique em vez de improvisar.
 - **Quatro plataformas:** Claude, ChatGPT, Grok e Gemini. Cada colaborador pode trabalhar em uma plataforma diferente.
-- **27 idiomas de interface** no site e no assistente. O idioma preferido é o idioma de gestão de todo o sistema e o usado com os colaboradores.
+- **13 idiomas de interface** no site e no assistente. O idioma preferido é o idioma de gestão de todo o sistema e o usado com os colaboradores.
 - **Um site de gestão** a partir de um único arquivo HTML: quadro, equipe, decisões, métricas, uma biblioteca de comandos prontos e um mecanismo de atenção que sinaliza o que está atrasado ou aguardando você.
 
 ## Comandos
@@ -67,7 +67,7 @@ Envie os arquivos da pasta do projeto a partir do local original e reenvie o que
 
 ## Limites atuais
 
-- O assistente e o site aparecem em 27 idiomas, mas os arquivos gerados do projeto (regras, descrições dos papéis, quadro) e o site de gestão são escritos em árabe por enquanto. Os colaboradores são informados do idioma em que devem trabalhar e respondem a você nele.
+- O assistente e o site aparecem em 13 idiomas, mas os arquivos gerados do projeto (regras, descrições dos papéis, quadro) e o site de gestão são escritos em árabe por enquanto. Os colaboradores são informados do idioma em que devem trabalhar e respondem a você nele.
 - Os nomes de arquivos, os comandos e os termos de status do quadro permanecem em árabe porque a ferramenta os lê literalmente.
 - A instalação no Windows ainda não foi testada em uma máquina real.
 

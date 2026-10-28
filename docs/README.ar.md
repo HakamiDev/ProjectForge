@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · **العربية** · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · **العربية** · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · [Türkçe](README.tr.md) · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -87,7 +87,7 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 
 في كل المنصات ارفع الملفات من مجلد المشروع في مكانه الأصلي ولا تستخدم نسخة أخرى، وأعد رفع ما تغيّر. وعلى حد علمنا لا تكتب Grok وGemini في المجلد مباشرة، فانقل مخرجاتهما إلى المجلد بنفسك.
 
-واجهة المعالج والموقع العام متاحان بـ**27 لغة**: العربية والإنجليزية و25 لغة مترجمة. وتشمل ترجمة المعالج مكتبة الأوامر الظاهرة فيه وأوامر بدء المحادثات. أسماء الأدوار والتخصصات والمهارات تظهر بالإنجليزية عند اختيار لغة واجهة غير العربية.
+واجهة المعالج والموقع العام متاحان بـ**13 لغة**: العربية والإنجليزية و11 لغة مترجمة. وتشمل ترجمة المعالج مكتبة الأوامر الظاهرة فيه وأوامر بدء المحادثات. أسماء الأدوار والتخصصات والمهارات تظهر بالإنجليزية عند اختيار لغة واجهة غير العربية.
 
 **حدود التعريب:** موقع الإدارة والملفات المولّدة على القرص، ومنها مكتبة الأوامر واللوحة وملفات التعليمات، ما زالت أساسًا بالعربية، مع توجيه الوكلاء إلى الكتابة بلغة العمل المختارة. أسماء الملفات والأوامر وقيم حالات اللوحة تبقى كما هي لأن الأداة تقرؤها حرفيًا. لا يعني اختيار لغة العمل أن جميع الملفات أو موقع الإدارة مترجمة إليها.
 
@@ -124,7 +124,7 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 
 ## حالة النسخة
 
-مرشح الإصدار **v1.1.8** يجمع نص الموقع المحدّث ومحاذاة قوائم الاختيار مع الحزمة الموحدة. تجربة Windows الفعلية لم تكتمل بعد. نتائج التحقق المحلي في `Verification Results.json`، وتفاصيل النسخة في `Release Notes.md`.
+مرشح الإصدار **v1.1.9** يجمع نص الموقع المحدّث ومحاذاة قوائم الاختيار مع الحزمة الموحدة. تجربة Windows الفعلية لم تكتمل بعد. نتائج التحقق المحلي في `Verification Results.json`، وتفاصيل النسخة في `Release Notes.md`.
 
 ## للمطورين
 

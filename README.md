@@ -4,7 +4,7 @@
 
 <p align="center">
 
-**English** · [العربية](docs/README.ar.md) · [Français](docs/README.fr.md) · [Español](docs/README.es.md) · [Deutsch](docs/README.de.md) · [Italiano](docs/README.it.md) · [Português](docs/README.pt.md) · [Nederlands](docs/README.nl.md) · [Türkçe](docs/README.tr.md) · [Русский](docs/README.ru.md) · [Українська](docs/README.uk.md) · [Македонски](docs/README.mk.md) · [Polski](docs/README.pl.md) · [Română](docs/README.ro.md) · [Ελληνικά](docs/README.el.md) · [فارسی](docs/README.fa.md) · [اردو](docs/README.ur.md) · [हिन्दी](docs/README.hi.md) · [বাংলা](docs/README.bn.md) · [Bahasa Indonesia](docs/README.id.md) · [Bahasa Melayu](docs/README.ms.md) · [Tiếng Việt](docs/README.vi.md) · [ไทย](docs/README.th.md) · [中文](docs/README.zh.md) · [日本語](docs/README.ja.md) · [한국어](docs/README.ko.md) · [Kiswahili](docs/README.sw.md)
+**English** · [العربية](docs/README.ar.md) · [Français](docs/README.fr.md) · [Español](docs/README.es.md) · [Deutsch](docs/README.de.md) · [Português](docs/README.pt.md) · [Türkçe](docs/README.tr.md) · [Русский](docs/README.ru.md) · [Македонски](docs/README.mk.md) · [हिन्दी](docs/README.hi.md) · [Bahasa Indonesia](docs/README.id.md) · [中文](docs/README.zh.md) · [日本語](docs/README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ The site also lets you pick your platform and preferred language first; both are
 - **80 specialisations** (strategy, restaurants, real estate, software, HR, education and more) with more than 330 ready roles you add in one click.
 - **130 ready skills in 18 groups.** A skill is a short file describing when to use it, its steps, its output and its acceptance criterion, so an employee applies it instead of improvising.
 - **Four platforms:** Claude, ChatGPT, Grok and Gemini. Each employee can work on a different platform.
-- **27 interface languages** on the website and in the wizard. The preferred language is the language for managing the whole system and the one used with the employees.
+- **13 interface languages** on the website and in the wizard. The preferred language is the language for managing the whole system and the one used with the employees.
 - **A management site** from one HTML file: board, team, decisions, metrics, a library of ready commands, and an attention engine that flags what is late or waiting on you.
 
 ## Commands
@@ -67,7 +67,7 @@ Upload the files from the project folder in its original location and re-upload 
 
 ## Current limits
 
-- The wizard and the website appear in 27 languages, but the generated project files (rules, role briefs, board) and the management site are written in Arabic for now. Employees are told which language to work in and answer you in it.
+- The wizard and the website appear in 13 languages, but the generated project files (rules, role briefs, board) and the management site are written in Arabic for now. Employees are told which language to work in and answer you in it.
 - File names, commands and the board's status words stay in Arabic because the tool reads them literally.
 - Windows installation has not yet been tested on a real machine.
 

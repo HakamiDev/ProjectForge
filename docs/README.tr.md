@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Português](README.pt.md) · [Nederlands](README.nl.md) · **Türkçe** · [Русский](README.ru.md) · [Українська](README.uk.md) · [Македонски](README.mk.md) · [Polski](README.pl.md) · [Română](README.ro.md) · [Ελληνικά](README.el.md) · [فارسی](README.fa.md) · [اردو](README.ur.md) · [हिन्दी](README.hi.md) · [বাংলা](README.bn.md) · [Bahasa Indonesia](README.id.md) · [Bahasa Melayu](README.ms.md) · [Tiếng Việt](README.vi.md) · [ไทย](README.th.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Kiswahili](README.sw.md)
+[English](../README.md) · [العربية](README.ar.md) · [Français](README.fr.md) · [Español](README.es.md) · [Deutsch](README.de.md) · [Português](README.pt.md) · **Türkçe** · [Русский](README.ru.md) · [Македонски](README.mk.md) · [हिन्दी](README.hi.md) · [Bahasa Indonesia](README.id.md) · [中文](README.zh.md) · [日本語](README.ja.md)
 
 </p>
 
@@ -47,7 +47,7 @@ Site ayrıca önce platformunuzu ve tercih ettiğiniz dili seçmenize olanak tan
 - **80 uzmanlık alanı** (strateji, restoranlar, gayrimenkul, yazılım, İK, eğitim ve daha fazlası) ve tek tıkla ekleyebileceğiniz 330'dan fazla hazır rol.
 - **18 grupta 130 hazır beceri.** Beceri; ne zaman kullanılacağını, adımlarını, çıktısını ve kabul ölçütünü anlatan kısa bir dosyadır; böylece çalışan doğaçlama yapmak yerine onu uygular.
 - **Dört platform:** Claude, ChatGPT, Grok ve Gemini. Her çalışan farklı bir platformda çalışabilir.
-- **Web sitesinde ve sihirbazda 27 arayüz dili.** Tercih edilen dil, tüm sistemi yönetmek için kullanılan ve çalışanlarla iletişimde geçerli olan dildir.
+- **Web sitesinde ve sihirbazda 13 arayüz dili.** Tercih edilen dil, tüm sistemi yönetmek için kullanılan ve çalışanlarla iletişimde geçerli olan dildir.
 - **Tek bir HTML dosyasından yönetim sitesi:** pano, ekip, kararlar, metrikler, hazır komutlar kitaplığı ve geciken veya sizden yanıt bekleyen işleri işaretleyen bir dikkat motoru.
 
 ## Komutlar
@@ -67,7 +67,7 @@ Dosyaları proje klasöründen özgün konumunda yükleyin ve değişenleri yeni
 
 ## Mevcut sınırlamalar
 
-- Sihirbaz ve web sitesi 27 dilde görünür; ancak oluşturulan proje dosyaları (kurallar, rol tanımları, pano) ile yönetim sitesi şimdilik Arapça yazılmaktadır. Çalışanlara hangi dilde çalışacakları söylenir ve size o dilde yanıt verirler.
+- Sihirbaz ve web sitesi 13 dilde görünür; ancak oluşturulan proje dosyaları (kurallar, rol tanımları, pano) ile yönetim sitesi şimdilik Arapça yazılmaktadır. Çalışanlara hangi dilde çalışacakları söylenir ve size o dilde yanıt verirler.
 - Dosya adları, komutlar ve panonun durum sözcükleri, araç bunları birebir okuduğu için Arapça kalır.
 - Windows kurulumu henüz gerçek bir makinede test edilmemiştir.
 
