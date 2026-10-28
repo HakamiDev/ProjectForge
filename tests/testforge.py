@@ -275,6 +275,57 @@ class ForgeTests(unittest.TestCase):
         self.assertIn('_WIZARD_Z = """', src)
         compile(src, "single", "exec")
 
+    def test_language_choices_have_complete_interface_translations(self):
+        """Every advertised UI language must have translations on both surfaces."""
+        def js_json(text, name):
+            match = re.search(r"(?:var |,)" + name + r"\s*=\s*", text)
+            self.assertIsNotNone(match, name)
+            return json.JSONDecoder().raw_decode(text[match.end():])[0]
+
+        wizard = core.load_wizard()
+        site = (Path(core.__file__).parent.parent / "site" / "template.html").read_text(encoding="utf-8")
+        choices = {row[0] for row in core.LANGUAGES}
+        for surface in (wizard, site):
+            codes = js_json(surface, "CODES")
+            translations = js_json(surface, "TR")
+            self.assertEqual(choices, {"العربية", "English"} | set(codes))
+            self.assertEqual(set(codes.values()), set(translations))
+            self.assertEqual(len(choices), 27)
+            self.assertNotIn("he", translations)
+            self.assertNotIn("Hebrew", surface)
+            keys = set(next(iter(translations.values())))
+            for code, strings in translations.items():
+                self.assertEqual(set(strings), keys, code)
+                self.assertTrue(all(isinstance(v, str) and v.strip() for v in strings.values()), code)
+        self.assertEqual(js_json(wizard, "LANGS"), [list(row) for row in core.LANGUAGES])
+
+    def test_wizard_language_list_comes_from_core(self):
+        """The browser selector must follow the same registry as CLI/site builds."""
+        from unittest import mock
+        choices = [("العربية", "العربية", "العربية", "Arabic"), ("English", "English", "الإنجليزية", "English")]
+        with mock.patch.object(core, "LANGUAGES", choices):
+            wizard = core.load_wizard()
+        match = re.search(r"LANGS\s*=\s*", wizard)
+        actual = json.JSONDecoder().raw_decode(wizard[match.end():])[0]
+        self.assertEqual(actual, [list(row) for row in choices])
+
+    def test_standalone_preserves_integrated_templates_and_catalog(self):
+        """A distributed tool must contain the same reviewed UI and data as source."""
+        import runpy
+        tool = self.tmp / core.TOOL_NAME
+        tool.write_text(core.single_source(), encoding="utf-8")
+        built = runpy.run_path(str(tool))
+        for name in ("LANGUAGES", "SKILLS", "SKILL_GROUPS", "PRESETS"):
+            self.assertEqual(built[name], getattr(core, name), name)
+        self.assertEqual(built["load_wizard"](), core.load_wizard())
+        self.assertEqual(built["load_template"](), core.load_template())
+        self.assertEqual((len(built["PRESETS"]), len(built["role_library"]()), len(built["SKILLS"]), len(built["SKILL_GROUPS"])), (80, 334, 130, 18))
+        for i, language in enumerate(built["LANGUAGES"]):
+            root = built["create_project"](self.tmp, "Locale %d" % i, "Integration verification", "Test Owner", "general", None, None, [], None, "ChatGPT", language[0])
+            self.assertEqual(built["load_team"](root)["language"], language[0])
+            self.assertEqual(built["check_project"](root), [], language[0])
+            self.assertIn('var DEMO=0', (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

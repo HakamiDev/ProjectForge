@@ -2036,11 +2036,6 @@ LANGUAGES = [
     ("Русский (Russian)", "Русский", "الروسية", "Russian"),
     ("Українська (Ukrainian)", "Українська", "الأوكرانية", "Ukrainian"),
     ("Македонски (Macedonian)", "Македонски", "المقدونية", "Macedonian"),
-    ("Српски (Serbian)", "Српски", "الصربية", "Serbian"),
-    ("Hrvatski", "Hrvatski", "الكرواتية", "Croatian"),
-    ("Bosanski", "Bosanski", "البوسنية", "Bosnian"),
-    ("Shqip", "Shqip", "الألبانية", "Albanian"),
-    ("Български (Bulgarian)", "Български", "البلغارية", "Bulgarian"),
     ("Polski", "Polski", "البولندية", "Polish"),
     ("Română", "Română", "الرومانية", "Romanian"),
     ("Ελληνικά (Greek)", "Ελληνικά", "اليونانية", "Greek"),
@@ -2228,7 +2223,7 @@ def load_template():
 def load_wizard():
     p = Path(__file__).resolve().parent / "templates" / "wizard.html"
     if p.is_file():
-        return _with_skin(p.read_text(encoding="utf-8"), "skin wizard.css")
+        return _with_skin(p.read_text(encoding="utf-8"), "skin wizard.css").replace("@@LANGS@@", json.dumps(LANGUAGES, ensure_ascii=False))
     if _WIZARD_Z:
         import base64
         import zlib

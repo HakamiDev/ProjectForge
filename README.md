@@ -79,7 +79,11 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 
 في كل المنصات ارفع الملفات من مجلد المشروع في مكانه الأصلي ولا تستخدم نسخة أخرى، وأعد رفع ما تغيّر. وعلى حد علمنا لا تكتب Grok وGemini في المجلد مباشرة، فانقل مخرجاتهما إلى المجلد بنفسك.
 
-أسماء الملفات والأوامر وكلمات حالات اللوحة تبقى كما هي لأن الأداة تقرؤها حرفيًا. وواجهة المعالج وملفات التعليمات بالعربية حاليًا.
+واجهة المعالج والموقع العام متاحان بـ**27 لغة**: العربية والإنجليزية و25 لغة مترجمة. وتشمل ترجمة المعالج مكتبة الأوامر الظاهرة فيه وأوامر بدء المحادثات. أسماء الأدوار والتخصصات والمهارات تظهر بالإنجليزية عند اختيار لغة واجهة غير العربية.
+
+**حدود التعريب:** موقع الإدارة والملفات المولّدة على القرص، ومنها مكتبة الأوامر واللوحة وملفات التعليمات، ما زالت أساسًا بالعربية، مع توجيه الوكلاء إلى الكتابة بلغة العمل المختارة. أسماء الملفات والأوامر وقيم حالات اللوحة تبقى كما هي لأن الأداة تقرؤها حرفيًا. لا يعني اختيار لغة العمل أن جميع الملفات أو موقع الإدارة مترجمة إليها.
+
+الترجمات مراجعة آليًا؛ لا ندّعي مراجعة ناطق أصلي لكل لغة. تفاصيل التغطية وحدودها في `Language Coverage.md`.
 
 ## المهارات ومكتبة الأوامر
 
@@ -108,6 +112,10 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 | `register` | يسجّل المشروع في سجل مركزي للمشاريع |
 | `selftest` | يختبر الأداة على مشروع مؤقت |
 
+## حالة النسخة
+
+الحزمة المحلية الموحّدة مرشحة للإصدار **1.1.0**؛ وجودها لا يعني نشر الإصدار أو نجاح CI على GitHub. تجربة Windows الفعلية لم تكتمل بعد. نتائج التحقق المحلي في `Verification Results.json`، وتفاصيل الدمج في `Release Notes.md`.
+
 ## للمطورين
 
 ```
@@ -126,7 +134,7 @@ tests/                اختبارات الوحدة واختبار المتصف�
 site/                 الموقع التعريفي ومكتبة الأوامر وصورة المعاينة
 ```
 
-الموقع يُنشر تلقائيًا على GitHub Pages عند الدفع إلى `main` (فعّل Pages من Settings ثم Source: GitHub Actions)، ووسم `v1.0.0` يرفع ملف الأداة الواحد و`Project Forge.zip` إلى صفحة الإصدارات.
+الموقع يُنشر تلقائيًا على GitHub Pages عند الدفع إلى `main` (فعّل Pages من Settings ثم Source: GitHub Actions)، وأي وسم إصدار بصيغة `v*` يرفع ملف الأداة الواحد و`Project Forge.zip` إلى صفحة الإصدارات.
 
 ## الترخيص
 
@@ -138,7 +146,7 @@ MIT.
 
 **Project Forge is an operating system for a team of AI agents.** One command turns a plain folder into a disciplined office: a single board every agent works from (on any platform), an independent QA gate, decision governance, a full audit trail, performance metrics exported to Power BI, and a management site that runs from a single HTML file.
 
-Python 3.9+, no dependencies, no server. Arabic-first: every generated file, role brief and report is written in Arabic.
+Python 3.9+, no runtime dependencies. The creation wizard runs a temporary local server; the generated office is a standalone HTML file. The public site and wizard support **27 interface languages**. Generated project files and the office UI remain primarily Arabic; agents are instructed to use the selected working language. Role, preset and skill labels use English outside the Arabic interface. Translations have automated review, not a native-speaker guarantee. See `Language Coverage.md`.
 
 **Install** (macOS/Linux):
 
@@ -162,8 +170,8 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 - No accountability: every board write is logged with who, when and what.
 - Sensitive data in external tools: a binding data policy with classification and approved tools.
 
-**Team presets:** general, transformation (AI transformation team), operations, data (BI), software, content. Add any role with `add-role`.
+**Catalog:** 80 team presets, 334 reusable roles, and 130 skills in 18 skill groups. Add any role with `add-role`.
 
-**Commands:** `new`, `build`, `watch`, `rows`, `add-row`, `set-status`, `add-role`, `decide`, `status`, `report`, `export`, `check`, `register`, `selftest`.
+**Commands:** `skills`, `add-skill`, `new`, `build`, `watch`, `rows`, `add-row`, `set-status`, `add-role`, `decide`, `status`, `report`, `export`, `check`, `register`, `selftest`.
 
 MIT licensed.

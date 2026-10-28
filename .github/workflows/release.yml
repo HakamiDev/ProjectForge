@@ -14,6 +14,9 @@ jobs:
           python-version: "3.12"
       - run: python3 -I tests/testforge.py
       - run: python3 -I tools/build-single.py
+      - run: python3 -I tools/build-site.py
+      - run: python3 -I tests/releasecheck.py
+      - run: python3 -I "dist/Project Forge 1.py" selftest
       - run: |
           mkdir -p "dist/Project Forge"
           cp "dist/Project Forge 1.py" "dist/Project Forge/"

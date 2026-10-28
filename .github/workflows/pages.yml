@@ -2,7 +2,7 @@ name: pages
 on:
   push:
     branches: [main]
-    paths: [site/**, tools/build-site.py, forge/core.py]
+    paths: [site/**, tools/build-site.py, forge/core.py, forge/templates/**, tests/**, Language Coverage.md]
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python3 -I tools/build-site.py "https://github.com/${{ github.repository }}" "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+      - run: python3 -I tests/testforge.py
+      - run: python3 -I tools/build-single.py
+      - run: python3 -I tests/releasecheck.py
       - run: mkdir out && cp site/index.html out/index.html && cp site/og.png site/icon-192.png site/favicon.png out/ && cp -r site/logo out/logo
       - uses: actions/upload-pages-artifact@v3
         with:
