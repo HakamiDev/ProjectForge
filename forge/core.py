@@ -9,6 +9,7 @@ Project Forge 1: أداة بناء مشروع بفريق ذكاء اصطناعي
   new        ينشئ مشروعًا كاملًا: المجلدات والقواعد واللوحة وملفات الأدوار والأوامر وموقع الإدارة.
   build      يعيد بناء موقع الإدارة من اللوحة (Office/Project Office.html).
   watch      يعيد البناء تلقائيًا كلما تغيّرت اللوحة أو الفريق أو سجل القرارات.
+  status     إحاطة سريعة: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر، راكد، محجوب).
   rows       يعرض الصفوف الجاهزة لدور معيّن.
   add-row    يضيف صفًا إلى اللوحة بأمان (يحسب الرقم ويمنع التعارض).
   set-status يغيّر حالة صف. «معتمدة» و«ملغاة» تشترطان --owner-order.
@@ -1800,6 +1801,7 @@ python3 -I "Tools/{{tool}}" add-row --from "{{pm}}" --to "رئيس التنفي�
 python3 -I "Tools/{{tool}}" set-status 3 "مسلّمة" --note "..."
 python3 -I "Tools/{{tool}}" add-role "اسم الدور" --title "المسمى" --scope "الاختصاص"
 python3 -I "Tools/{{tool}}" decide "نص القرار" --tag "قابل للتراجع"
+python3 -I "Tools/{{tool}}" status
 python3 -I "Tools/{{tool}}" report
 python3 -I "Tools/{{tool}}" export
 python3 -I "Tools/{{tool}}" build
@@ -2204,10 +2206,18 @@ _TEMPLATE_Z = None  # تملؤه tools/build-single.py في نسخة الملف 
 _WIZARD_Z = None  # واجهة الإنشاء الرسومية، تملؤها tools/build-single.py أيضًا
 
 
+def _with_skin(html, skin):
+    """يحقن الخط وطبقة التصميم (سبيكة) في آخر وسم style، فتغلب على ما قبلها."""
+    d = Path(__file__).resolve().parent / "templates"
+    extra = "".join((d / f).read_text(encoding="utf-8") for f in ("fonts.css", skin) if (d / f).is_file())
+    i = html.rfind("</style>")
+    return html if i < 0 or not extra else html[:i] + "\n" + extra + html[i:]
+
+
 def load_template():
     p = Path(__file__).resolve().parent / "templates" / "office.html"
     if p.is_file():
-        return p.read_text(encoding="utf-8")
+        return _with_skin(p.read_text(encoding="utf-8"), "skin office.css")
     if _TEMPLATE_Z:
         import base64
         import zlib
@@ -2218,7 +2228,7 @@ def load_template():
 def load_wizard():
     p = Path(__file__).resolve().parent / "templates" / "wizard.html"
     if p.is_file():
-        return p.read_text(encoding="utf-8")
+        return _with_skin(p.read_text(encoding="utf-8"), "skin wizard.css")
     if _WIZARD_Z:
         import base64
         import zlib
@@ -2426,7 +2436,7 @@ def site_data(root):
         "team": D_team, "tasks": D_tasks, "stc": stc, "nt": len(D_tasks), "nc": len(circs),
         "circs": circs, "dec": dec, "pend": pend,
         "ideas": [], "ch": [], "labels": {}, "dropped": [], "disc": [],
-        "imgs": imgs, "nimg": nimg, "th": [], "png": [], "out": out, "links": {},
+        "imgs": imgs, "nimg": nimg, "th": [], "png": [], "out": out, "links": {}, "att": [{"k": x["kind"], "l": x["label"], "s": x["sev"], "n": x["n"], "who": x["who"], "t": x["text"]} for x in attention(root)],
         "tpl": {"close": CLOSE_T if is_ar(team.get("language")) else CLOSE_EN, "resume": RESUME_T if is_ar(team.get("language")) else RESUME_EN}, "ico": ICONS, "ei": ei}
 
 
@@ -3142,7 +3152,141 @@ def metrics(root):
     return {"project": team["project"], "owner": team["owner"], "goal": team["goal"], "at": fmt_dt(now()), "total": len(tasks), "done": done,
             "doing": doing, "waiting": waiting, "assigned": assigned, "returned": returned, "qa_rate": qa_rate, "cycle_avg": cycle_avg,
             "cycle_n": len(cycles), "delivered_week": delivered_week, "load": load, "pending": pend, "circulars": len(b["circulars"]),
-            "decisions": ndec, "outputs": nout, "team": len(team["roster"])}
+            "decisions": ndec, "outputs": nout, "team": len(team["roster"]), "attention": attention(root)}
+
+
+STALL_HOURS = 72
+QA_WAIT_HOURS = 24
+_AR_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "01234567890123456789")
+ATT_LABELS = {"overdue": "متأخر", "dead": "تبعية معطّلة", "late": "قرار متأخر", "stalled": "راكد", "blocked": "محجوب", "qa": "ينتظر التدقيق", "load": "حمل زائد"}
+ATT_SEV = {"overdue": 1, "dead": 1, "late": 1, "stalled": 2, "blocked": 2, "qa": 2, "load": 3}
+
+
+def parse_due(s):
+    """موعد الصف: «2026-10-30» أو «30 أكتوبر 2026». يعيد نهاية ذلك اليوم بتوقيت الرياض، أو None."""
+    s = (s or "").translate(_AR_DIGITS)
+    m = re.search(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", s)
+    try:
+        if m:
+            y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        else:
+            m = re.search(r"(\d{1,2})\s+(%s)\s+(\d{4})" % "|".join(MONTHS), s)
+            if not m:
+                return None
+            y, mo, d = int(m.group(3)), MONTHS.index(m.group(2)) + 1, int(m.group(1))
+        return dt.datetime(y, mo, d, 23, 59, tzinfo=TZ)
+    except ValueError:
+        return None
+
+
+def _count_ar(n, one, two, few, many):
+    """عدد مع معدوده بقواعد العربية: يوم، يومان، 3 أيام، 11 يومًا."""
+    if n == 1:
+        return one
+    if n == 2:
+        return two
+    return "%d %s" % (n, few if 3 <= n <= 10 else many)
+
+
+def human_span(hours):
+    if hours < 1:
+        return "أقل من ساعة"
+    if hours < 48:
+        return _count_ar(round(hours), "ساعة", "ساعتان", "ساعات", "ساعة")
+    return _count_ar(round(hours / 24), "يوم", "يومان", "أيام", "يومًا")
+
+
+def attention(root, at=None):
+    """ما يحتاج انتباهًا الآن: صفوف متأخرة أو بتبعية معطّلة أو راكدة أو محجوبة بحاجز راكد، وقرارات تجاوزت مهلتها، وحمل زائد."""
+    at = at or now()
+    team = load_team(root)
+    b = read_board(root)
+    by_n = {t["n"]: t for t in b["tasks"]}
+    last = {}
+    for h in read_history(root):
+        if h["n"] not in last or h["at"] > last[h["n"]]:
+            last[h["n"]] = h["at"]
+    items = []
+
+    def add(kind, n, who, text, hours=None):
+        items.append({"kind": kind, "label": ATT_LABELS[kind], "sev": ATT_SEV[kind], "n": n, "who": who, "text": text, "hours": hours})
+
+    def is_open(t):
+        s = norm(t["status"])
+        return not (is_done(s) or s.startswith(("ملغ", "مؤجل")))
+
+    stalled = {}
+    for t in b["tasks"]:
+        if not is_open(t):
+            continue
+        n, st = t["n"], norm(t["status"]) or "محالة"
+        who = clean_name(t["to"])
+        deps = sorted({int(x) for x in re.findall(r"\d+", t["after"] or "")})
+        dead = [d for d in deps if d not in by_n or norm(by_n[d]["status"]).startswith("ملغ")]
+        queued = any(d in by_n and is_open(by_n[d]) for d in deps)
+        if dead:
+            add("dead", n, who, "الصف %d يعتمد على الصف %s الملغى أو غير الموجود؛ أعد تحديد «يبدأ بعد»" % (n, "، ".join(str(d) for d in dead)))
+        due = parse_due(t["due"])
+        if due and due < at:
+            add("overdue", n, who, "الصف %d تجاوز موعده (%s) بمقدار %s عند %s" % (n, due.strftime("%Y-%m-%d"), human_span((at - due).total_seconds() / 3600), who),
+                (at - due).total_seconds() / 3600)
+        if n in last and not queued and st in ("محالة", "قيد التنفيذ", "أعيدت للتعديل"):
+            age = (at - last[n]).total_seconds() / 3600
+            if age > STALL_HOURS:
+                stalled[n] = age
+                add("stalled", n, who, "الصف %d في «%s» منذ %s دون تغيّر عند %s" % (n, st, human_span(age), who), age)
+        if n in last and st == "بانتظار التدقيق":
+            age = (at - last[n]).total_seconds() / 3600
+            if age > QA_WAIT_HOURS:
+                add("qa", n, QA_NAME, "الصف %d ينتظر التدقيق منذ %s" % (n, human_span(age)), age)
+    overdue_n = {i["n"] for i in items if i["kind"] == "overdue"}
+    for t in b["tasks"]:
+        if not is_open(t) or norm(t["status"]) not in ("محالة", "قيد التنفيذ"):
+            continue
+        deps = sorted({int(x) for x in re.findall(r"\d+", t["after"] or "")})
+        holders = [d for d in deps if d in stalled or d in overdue_n]
+        if holders:
+            add("blocked", t["n"], clean_name(t["to"]), "الصف %d محجوب بالصف %s وهو متأخر أو راكد" % (t["n"], "، ".join(str(d) for d in holders)))
+    for d in b["decisions"]:
+        age = decision_age_hours(d["text"])
+        if age is not None and age > DECISION_SLA_HOURS:
+            add("late", d["n"], team["owner"], "القرار المعلق %d تجاوز %d ساعة؛ يؤخذ بالتوصية (%s)" % (d["n"], DECISION_SLA_HOURS, clip(d["text"], 70)), age)
+    for r in team["roster"]:
+        k = sum(1 for t in b["tasks"] if role_key(t["to"]) == role_key(r["name"]) and is_open(t))
+        if k > OPEN_CAP:
+            add("load", None, r["name"], "%s عنده %d صفوف مفتوحة (السقف %d)" % (r["name"], k, OPEN_CAP))
+    items.sort(key=lambda i: (i["sev"], -(i["hours"] or 0), i["n"] or 0))
+    return items
+
+
+def cmd_status(a):
+    """إحاطة سريعة من الطرفية: الأرقام وما ينتظرك وما يحتاج انتباهًا."""
+    root = find_root(a.root)
+    m = metrics(root)
+    att = m["attention"]
+    if a.json:
+        print(json.dumps({"project": m["project"], "at": m["at"], "total": m["total"], "done": m["done"], "doing": m["doing"], "waiting": m["waiting"],
+                          "assigned": m["assigned"], "returned": m["returned"], "pending": [{"n": d["n"], "late": d["late"]} for d in m["pending"]],
+                          "attention": att}, ensure_ascii=False, indent=2))
+        return
+    print("%s · %s" % (m["project"], m["at"]))
+    print("الهدف: %s" % m["goal"])
+    print("")
+    print("%d صفًا: %d مسلّمة · %d قيد التنفيذ · %d بانتظار · %d محالة · %d أعيدت" % (m["total"], m["done"], m["doing"], m["waiting"], m["assigned"], m["returned"]))
+    print("")
+    print("ينتظر قرارك (%d):" % len(m["pending"]))
+    for d in m["pending"]:
+        print("  %d. %s" % (d["n"], d["text"]))
+    if not m["pending"]:
+        print("  لا شيء")
+    print("")
+    print("يحتاج انتباهًا (%d):" % len(att))
+    for i, x in enumerate(att, 1):
+        print("  %d. [%s] %s" % (i, x["label"], x["text"]))
+    if not att:
+        print("  لا شيء: المشروع يسير بلا عوائق")
+    if a.strict and any(x["sev"] == 1 for x in att):
+        sys.exit(2)
 
 
 def report_md(m):
@@ -3169,6 +3313,7 @@ def report_md(m):
     out += ["", "## 4. التنبيهات", ""]
     alerts = [("%s تجاوز سقف الصفوف المفتوحة" % r["name"]) for r in m["load"] if r["over"]]
     alerts += ["القرار المعلق %d تجاوز %d ساعة؛ يؤخذ بالتوصية" % (d["n"], DECISION_SLA_HOURS) for d in m["pending"] if d["late"]]
+    alerts += ["%s: %s" % (x["label"], x["text"]) for x in m["attention"] if x["kind"] not in ("load", "late")]
     if len(m["pending"]) > OPEN_CAP:
         alerts.append("القرارات المعلقة تجاوزت السقف")
     if m["returned"] > m["done"] and m["returned"]:
@@ -3440,6 +3585,10 @@ def main(argv=None):
     p.add_argument("keys")
     p.set_defaults(fn=cmd_add_skill)
     sp.add_parser("report", help="تقرير أداء: المؤشرات والحمل والقرارات المتأخرة").set_defaults(fn=cmd_report)
+    p = sp.add_parser("status", help="إحاطة سريعة: الأرقام وما ينتظرك وما يحتاج انتباهًا")
+    p.add_argument("--json", action="store_true", help="مخرج JSON للآلة")
+    p.add_argument("--strict", action="store_true", help="رمز خروج 2 عند وجود بند عاجل")
+    p.set_defaults(fn=cmd_status)
     sp.add_parser("export", help="تصدير اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI").set_defaults(fn=cmd_export)
     sp.add_parser("check", help="فحص المشروع").set_defaults(fn=cmd_check)
     p = sp.add_parser("register", help="تسجيل في مركز البوصلات")

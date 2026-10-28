@@ -4,6 +4,7 @@
     python3 -I tools/build-site.py [REPO_URL]
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -26,6 +27,7 @@ cli = [
     ("set-status", "يغيّر حالة صف. «معتمدة» و«ملغاة» تشترطان --owner-order أي أمر صاحب المشروع.", RUN + ' set-status 3 "مسلّمة" --note "تم"'),
     ("add-role", "يضيف دورًا جديدًا ويحدّث القواعد والأوامر والموقع.", RUN + ' add-role "المحلل" --title "تحليل البيانات" --scope "التحليل والتقارير"'),
     ("decide", "يسجّل قرارًا في سجل القرارات بترقيم تلقائي.", RUN + ' decide "اعتماد النسخة الأولى" --tag "قابل للتراجع"'),
+    ("status", "إحاطة سريعة من الطرفية: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر أو راكد أو محجوب). أضف --json لمخرج الآلة.", RUN + " status"),
     ("report", "تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل على الأدوار والقرارات المتأخرة. يُحفظ في Docs/Reports.", RUN + " report"),
     ("export", "يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV (UTF-8 مع BOM) جاهزة لـ Power BI وExcel.", RUN + " export"),
     ("check", "يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.", RUN + " check"),
@@ -64,6 +66,13 @@ lib = {"repo": REPO, "tool": T, "cli": [dict(n=a, d=b, c=c) for a, b, c in cli],
        "agents": [dict(n=a, d=b, c=c) for a, b, c in agents],
        "tools": [dict(n=a, d=b, c=c, s=s) for a, b, c, s in tools]}
 html = (root / "site" / "template.html").read_text(encoding="utf-8")
+# الخط وطبقة التصميم الجديدة (سبيكة) تُحقن في آخر وسم style، وخط Cairo القديم يُحذف
+_tp = root / "forge" / "templates"
+html = re.sub(r'@font-face\{font-family:"Cairo"[^}]*\}\s*', "", html).replace('"Cairo",', '"Forge Sans",')
+_extra = "".join((_tp / f).read_text(encoding="utf-8") for f in ("fonts.css", "skin site.css") if (_tp / f).is_file())
+_i = html.rfind("</style>")
+if _extra and _i >= 0:
+    html = html[:_i] + "\n" + _extra + html[_i:]
 payload = json.dumps(lib, ensure_ascii=False).replace("</", "<\\/")
 out = root / "site" / "index.html"
 site_url = (sys.argv[2] if len(sys.argv) > 2 else "").rstrip("/") + ("/" if len(sys.argv) > 2 else "")

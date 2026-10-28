@@ -7,12 +7,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>@@TITLE@@</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
 <style>
-/* التخطيط: رأس زجاجي بتنقل ستة أقسام، ومحتوى بطاقات مفتوحة، ولوحة استكشاف جانبية تفتح لكل عنصر يُضغط؛ ألوان وإعدادات «استوديو التصميم» المعتمدة (القرار 61) */
-:root{--bg:#F4F7FF;--ink:#17203A;--muted:#58627F;--line:rgba(23,32,58,.14);--card:rgba(23,32,58,.035);--accent:#2F6BE0;--accent-fg:#2F6BE0;--accent-ink:#fff;--glow:#2F6BE0;--shine:#7FB0FF;--btnfill:#FFFFFF;--btntx:#17203A;--ok:#0F7A96;--wait:#95660D;--bad:#C2415F;--prog:#535CDD;--s1:#34F5A0;--s2:#3EC7FF;--dotn:60,80,120;--dotl:60,80,120;--doth:59,106,168;--dlo:.2;--dsp:30;--dR:150;--shd:rgba(47,80,160,.45);--hi:1;color-scheme:light;--font:"Cairo","Segoe UI",Tahoma,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#FFD86B;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#FFD86B;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}
+/* التخطيط: رأس زجاجي بتنقل ستة أقسام، ومحتوى بطاقات مفتوحة، ولوحة استكشاف جانبية تفتح لكل عنصر يُضغط؛ ألوان وإعدادات «استوديو التصميم» المعتمدة  */
+:root{--bg:#F4F7FF;--ink:#17203A;--muted:#58627F;--line:rgba(23,32,58,.14);--card:rgba(23,32,58,.035);--accent:#2F6BE0;--accent-fg:#2F6BE0;--accent-ink:#fff;--glow:#2F6BE0;--shine:#7FB0FF;--btnfill:#FFFFFF;--btntx:#17203A;--ok:#0F7A96;--wait:#2F7FB8;--bad:#C2415F;--prog:#535CDD;--s1:#34F5A0;--s2:#3EC7FF;--dotn:60,80,120;--dotl:60,80,120;--doth:59,106,168;--dlo:.2;--dsp:30;--dR:150;--shd:rgba(47,80,160,.45);--hi:1;color-scheme:light;--font:"Cairo","Segoe UI",Tahoma,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#7FC8FF;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15191E;--ink:#EEF2FB;--muted:#8E9AB6;--line:rgba(255,255,255,.13);--card:rgba(238,242,251,.02);--accent:#5800DB;--accent-fg:#A47DFF;--accent-ink:#fff;--glow:#8FB4FF;--shine:#FFFFFF;--btnfill:#0E1416;--btntx:#FFFFFF;--ok:#9FD0FF;--wait:#7FC8FF;--bad:#FF7A9A;--prog:#B79CFF;--dotn:179,179,179;--dotl:255,255,255;--doth:89,120,130;--dlo:.1;--dsp:63;--dR:110;--shd:rgba(0,0,0,.45);--hi:.31;color-scheme:dark}
 *{box-sizing:border-box}
 @property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
 body{margin:0;background:linear-gradient(var(--bgang,160deg),var(--bg),var(--bg2,var(--bg))) fixed;color:var(--ink);font-family:var(--font);direction:rtl;line-height:1.7;font-size:14.5px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 60px}
@@ -21,8 +20,8 @@ canvas#cg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-event
 .wrap{max-width:1180px;margin:0 auto}
 /* الزجاج G6 + لمعة S15 */
 .gl{position:relative;overflow:hidden;isolation:isolate;border-radius:24px;
- background:linear-gradient(90deg,transparent,#ff7ab6,#ffd86b,#7bffd0,#6bb7ff,#b98cff,transparent) 50% calc(100% - 1px)/66% var(--grimh,1.5px) no-repeat,var(--gfill,rgba(255,255,255,0));
- -webkit-backdrop-filter:blur(var(--gblur,2px)) saturate(var(--gsat,1.6));backdrop-filter:blur(var(--gblur,2px)) saturate(var(--gsat,1.6));backdrop-filter:blur(var(--gblur,2px)) saturate(var(--gsat,1.6)) url(#orf);
+ background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff,transparent) 50% calc(100% - 1px)/66% var(--grimh,1.5px) no-repeat,var(--gfill,rgba(255,255,255,0));
+ -webkit-backdrop-filter:blur(var(--gblur,2px)) saturate(var(--gsat,1.6));backdrop-filter:blur(var(--gblur,2px)) saturate(var(--gsat,1.6));backdrop-filter:url(#orf) blur(var(--gblur,2px)) saturate(var(--gsat,1.6));
  box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 2px rgba(255,255,255,var(--hi)),inset 0 -3px 8px rgba(255,255,255,calc(var(--hi)*.35)),inset 5px 0 14px -6px rgba(255,255,255,calc(var(--hi)*.55)),0 22px 40px -18px var(--shd)}
 .gl>*{position:relative;z-index:1}
 .gl::before,.gl::after{content:"";position:absolute;z-index:-1;pointer-events:none;width:75%;height:100%;filter:blur(var(--gaub,25px));opacity:var(--gau,.3)}
@@ -246,7 +245,7 @@ select option{background:var(--bg);color:var(--ink)}
 #th{display:inline-flex;gap:6px;align-items:center}
 
 /* مخطط النيون: لوحة داكنة بالألوان نفسها في الوضعين الفاتح والداكن */
-.stage{--gnf:#020303;--gns:#00495c;--gic:#FFE8FB;--ged:#00d19d;--gbm:#FFFFFF;--ggl:#4dffe1;--gbg:#090b0c;position:relative;border-radius:24px;overflow:hidden;touch-action:pan-y;background:linear-gradient(90deg,transparent,#ff7ab6,#ffd86b,#7bffd0,#6bb7ff,#b98cff,transparent) 50% calc(100% - 1px)/66% var(--grimh,1.5px) no-repeat,var(--gbg)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.stage{--gnf:#020303;--gns:#00495c;--gic:#FFE8FB;--ged:#00d19d;--gbm:#FFFFFF;--ggl:#4dffe1;--gbg:#090b0c;position:relative;border-radius:24px;overflow:hidden;touch-action:pan-y;background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff,transparent) 50% calc(100% - 1px)/66% var(--grimh,1.5px) no-repeat,var(--gbg)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .stage::before,.stage::after{display:none!important}
 .stage svg{display:block;width:100%;height:auto}
 .gedge{fill:none;stroke:var(--ged);stroke-linecap:round;stroke-linejoin:round;opacity:var(--o,.4);transition:opacity .3s}
@@ -313,14 +312,14 @@ input[type=text]{background:var(--card);border:1px solid var(--line);border-radi
 html[data-motion="static"] #dr,html[data-motion="static"] #dr.on{transition:none}html[data-motion="static"] .menu.on{animation:none}
 
 /* ===== مكتبة الزجاج المضمّنة (تحت .xlib) ===== */
-/* Glass Button 1: زر زجاجي بانكسار الحافة للمكتب (الواجهة فقط).
+/* زر الزجاج: زر زجاجي بانكسار الحافة للمكتب (الواجهة فقط).
    المصدر الفكري: آلية «عدسة الحافة» العامة (خريطة إزاحة في مرشح SVG داخل backdrop-filter)؛ الكود كله مكتوب للمكتب.
-   الرموز من Brand Tokens 1.css، والحركة من UI Motion Kit 1 (أوضاع data-motion).
+   الرموز من رموز الهوية، والحركة من أوضاع الحركة (أوضاع data-motion).
    قاعدة الأداء: الحركة transform وopacity فقط؛ لا تحريك box-shadow ولا blur ولا background. */
 
 .gb{
   --gb-h:72px; --gb-fs:20px; --gb-blur:2.5px;
-  --gx:0; --gy:0; --gs:1; --gh:0; --gl:0;           /* يكتبها Glass Button 1.js أثناء التفاعل فقط */
+  --gx:0; --gy:0; --gs:1; --gh:0; --gl:0;           /* يكتبها سكربت زر الزجاج أثناء التفاعل فقط */
   position:relative; display:inline-flex; align-items:stretch; justify-content:center;
   min-width:48px; min-height:48px; height:var(--gb-h); max-width:100%;
   padding:0; border:0; border-radius:var(--radius-pill); background:none;
@@ -384,15 +383,15 @@ html[data-motion="static"] .gb-shadow,html[data-motion="static"] .gb-shadow::aft
 @media(prefers-reduced-transparency:reduce){.gb-glass{background:#231E3B; -webkit-backdrop-filter:none; backdrop-filter:none}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.gb-glass{background:#231E3B}}
 @media(forced-colors:active){.gb{border:2px solid ButtonText; color:ButtonText} .gb-shadow,.gb-sheen,.gb-rim{display:none} .gb-glass{background:Canvas; backdrop-filter:none}.gb:focus-visible{outline-color:Highlight}}
-/* Glass Extras 1: سبعة مكوّنات مساندة للمكتب، مكتوبة من الصفر بعد قراءة مراجع Framer (Brand/References/Framer Components 1).
-   الرموز: Brand Tokens 1.css · الحركة: UI Motion Kit 1 (data-motion). القاعدة: transform وopacity وclip-path فقط، بلا WebGL، بلا مكتبات.
-   المكوّنات: .gfb زر التوهّج السفلي · .ab شارة الحالة · .ir حلقة الأيقونة · .di تأكيد الحذف · .afb زر الدائرة والسهم · .gst زر النجوم · أثر المؤشر في Glass Extras 1.js */
+/* مكوّنات الزجاج الأولى: سبعة مكوّنات مساندة للمكتب.
+   الرموز: رموز الهوية · الحركة: أوضاع الحركة (data-motion). القاعدة: transform وopacity وclip-path فقط، بلا WebGL، بلا مكتبات.
+   المكوّنات: .gfb زر التوهّج السفلي · .ab شارة الحالة · .ir حلقة الأيقونة · .di تأكيد الحذف · .afb زر الدائرة والسهم · .gst زر النجوم · أثر المؤشر في سكربت مكوّنات الزجاج */
 
 .gfb,.ab,.ir,.di,.afb,.gst{--gx-ink:#F7F4FF; box-sizing:border-box; font:700 16px/1.5 var(--font-ui); color:var(--gx-ink); letter-spacing:0}
 .gfb *,.ab *,.ir *,.di *,.afb *,.gst *{box-sizing:border-box}
 :is(.gfb,.di,.afb,.gst):focus-visible{outline:2px solid var(--cyan); outline-offset:4px}
 
-/* ===== 1. زر التوهّج السفلي (مرجع Frosted Glass Button) ===== */
+/* ===== 1. زر التوهّج السفلي ===== */
 .gfb{position:relative; isolation:isolate; display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2); min-height:48px; padding:0 var(--space-5);
   border:0; border-radius:var(--radius-pill); overflow:hidden; text-decoration:none; cursor:pointer; background:var(--glass-sheen),linear-gradient(0deg,rgba(35,30,59,.78),rgba(35,30,59,.78));
   box-shadow:inset 0 0 0 1px var(--glass-border),var(--glass-edge),0 8px 20px -10px rgba(6,8,23,.55); touch-action:manipulation; -webkit-tap-highlight-color:transparent}
@@ -408,7 +407,7 @@ html[data-motion="static"] .gb-shadow,html[data-motion="static"] .gb-shadow::aft
 .ab{display:inline-flex; align-items:center; gap:var(--space-2); font-weight:600; font-size:14px}
 .ab-dot{position:relative; width:12px; height:12px; border-radius:50%; background:var(--ab-c,#187E62)}
 .ab-dot::after{content:""; position:absolute; inset:0; border-radius:50%; background:var(--ab-c,#187E62); opacity:0; animation:ab-pulse 1800ms var(--motion-ease) infinite}
-.ab[data-state="ok"]{--ab-c:#34C79A} .ab[data-state="warn"]{--ab-c:#E3A838} .ab[data-state="bad"]{--ab-c:#F0607F}
+.ab[data-state="ok"]{--ab-c:#34C79A} .ab[data-state="warn"]{--ab-c:#7FA8FF} .ab[data-state="bad"]{--ab-c:#F0607F}
 .ab[data-paused] .ab-dot::after{animation-play-state:paused}
 @keyframes ab-pulse{0%{opacity:.7; transform:scale(1)}70%,100%{opacity:0; transform:scale(2.6)}}
 
@@ -468,8 +467,8 @@ html[data-motion="simple"] .gfb::before{transition:opacity 200ms linear}
 @media(prefers-reduced-motion:reduce) and (min-width:901px){.ab-dot::after,.ir-ring,.gst-s{animation:none!important}.gfb::before,.afb-cover,.afb-ic svg{transition:none!important}.di[data-state="timer"] .di-bar{animation:none; transform:scaleX(1)}}
 @media(prefers-reduced-transparency:reduce){.gfb{background:#231E3B}}
 @media(forced-colors:active){.gfb,.gst,.di,.afb{border:1px solid ButtonText; background:ButtonFace; color:ButtonText; box-shadow:none}.afb-cover{display:none}.ab-dot{background:CanvasText}.ir-ring{display:none}.ir{border:2px solid CanvasText}}
-/* Glass Extras 2: أربعة مكوّنات أزرار للمكتب، مكتوبة من الصفر بعد قراءة مراجع Framer (Brand/References/Framer Components 1).
-   الرموز: Brand Tokens 1.css · الحركة: UI Motion Kit 1 (data-motion). القاعدة: transform وopacity وclip-path وrotate فقط، بلا WebGL، بلا مكتبات.
+/* مكوّنات الزجاج الثانية: أربعة مكوّنات أزرار للمكتب.
+   الرموز: رموز الهوية · الحركة: أوضاع الحركة (data-motion). القاعدة: transform وopacity وclip-path وrotate فقط، بلا WebGL، بلا مكتبات.
    المكوّنات: .ngb زر نوفا المتوهّج · .shb زر الشيدر مع طبقة .lqg (التدرج السائل) · .cta زر الدعوة إلى إجراء · .tt مبدّل المظهر */
 
 .ngb,.shb,.cta,.tt{box-sizing:border-box; font:600 16px/1.5 var(--font-ui); letter-spacing:0}
@@ -556,11 +555,11 @@ html[data-motion="simple"] .gfb::before{transition:opacity 200ms linear}
 .cta:active{transform:scale(.98)}
 
 /* ===== 5. مبدّل المظهر .tt (مرجع Theme Toggle Button): يضبط html[data-theme] ويتذكر الاختيار ===== */
-.tt{--tt-d:1; --tt-size:44px; --tt-ink:#F7F4FF; --tt-bg:rgba(35,30,59,.78); --tt-sun:#F6B93B; --tt-moon:#C5B5F2;
+.tt{--tt-d:1; --tt-size:44px; --tt-ink:#F7F4FF; --tt-bg:rgba(35,30,59,.78); --tt-sun:#BBD2FF; --tt-moon:#C5B5F2;
   position:relative; display:inline-grid; place-items:center; width:var(--tt-size); height:var(--tt-size); padding:0; border:0; border-radius:50%; cursor:pointer; color:var(--tt-ink);
   background:var(--glass-sheen),var(--tt-bg); box-shadow:inset 0 0 0 1px var(--glass-border),var(--glass-edge); transition:transform 200ms var(--motion-ease); touch-action:manipulation; -webkit-tap-highlight-color:transparent}
 [dir="rtl"] .tt{--tt-d:-1}
-.xlib[data-xt="light"] .tt{--tt-ink:#231E3B; --tt-bg:rgba(255,255,255,.92); --tt-sun:#B25E00; --tt-moon:#354BD4; box-shadow:inset 0 0 0 1px rgba(35,30,59,.22)}
+.xlib[data-xt="light"] .tt{--tt-ink:#231E3B; --tt-bg:rgba(255,255,255,.92); --tt-sun:#4A6FD9; --tt-moon:#354BD4; box-shadow:inset 0 0 0 1px rgba(35,30,59,.22)}
 .tt:hover{transform:scale(1.08)} .tt:active{transform:scale(.94)}
 .tt-i{position:absolute; inset:0; display:grid; place-items:center; transition:opacity 300ms var(--motion-ease),transform 400ms var(--motion-ease)}
 .tt-i svg{width:55%; height:55%; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
@@ -575,7 +574,7 @@ html[data-motion="simple"] .gfb::before{transition:opacity 200ms linear}
 .tt[data-type="switch"] .tt-i{inset:auto; top:50%; margin-top:calc(var(--tt-k) / -2); inset-inline-start:calc(var(--tt-size) * .14); width:var(--tt-k); height:var(--tt-k);
   transition:opacity 220ms linear,transform 320ms var(--motion-ease)}
 .tt[data-type="switch"] .tt-i svg{width:62%; height:62%}
-.tt[data-type="switch"] .tt-sun{--tt-sun:#B25E00} .tt[data-type="switch"] .tt-moon{--tt-moon:#354BD4}
+.tt[data-type="switch"] .tt-sun{--tt-sun:#4A6FD9} .tt[data-type="switch"] .tt-moon{--tt-moon:#354BD4}
 .tt[data-type="switch"].xlib[data-xt="light"]::before,.tt[data-type="switch"].xlib[data-xt="light"] .tt-i{transform:translateX(var(--tt-x))}
 .tt[data-type="switch"][data-theme="dark"] .tt-i,.tt[data-type="switch"].xlib[data-xt="light"] .tt-i{transform:translateX(0)}
 .tt[data-type="switch"].xlib[data-xt="light"] .tt-i{transform:translateX(var(--tt-x))}
@@ -596,8 +595,8 @@ html[data-motion="static"] :is(.ngb,.ngb-ring,.ngb-halo,.ngb-shine,.shb,.shb .lq
   .ngb,.shb,.cta,.tt{border:1px solid ButtonText; background:ButtonFace; color:ButtonText; box-shadow:none}
   .ngb-ring,.ngb-halo,.ngb-shine,.lqg,.shb::after,.cta-cover{display:none}
   .cta-ic{color:ButtonText} .tt-i{color:ButtonText}}
-/* Shiny Button 1: نسخة CSS خالصة (بلا React ولا Framer) من الزر Hyperiux Shiny Button (23 أكتوبر 2026، القرار 50).
-   المصدر: `Templates/Shared Assets/Hyperiux Shiny Button 1.tsx`، والقيم الافتراضية نفسها.
+/* الزر اللامع: نسخة CSS خالصة (بلا React ولا Framer) من زر لامع شائع.
+   
    الاستعمال: <button class="shiny" type="button"><span>النص</span></button>. النص داخل span ضروري.
    التخصيص بمتغيرات على العنصر: --shiny-fill و--shiny-label و--shiny-accent و--shiny-accent-soft و--shiny-sweep (مدة الدوران) و--shiny-ease و--shiny-arc و--shiny-radius.
    يحترم prefers-reduced-motion فيتوقف الدوران واللمعان. */
@@ -607,7 +606,7 @@ html[data-motion="static"] :is(.ngb,.ngb-ring,.ngb-halo,.ngb-shine,.shb,.shb .lq
 @property --shiny-shine{syntax:"<color>";initial-value:white;inherits:false}
 
 .shiny{
-  --shiny-fill:#000;--shiny-label:#fff;--shiny-accent:#ff5f00;--shiny-accent-soft:#ff9253;
+  --shiny-fill:#000;--shiny-label:#fff;--shiny-accent:#6200F5;--shiny-accent-soft:#A47DFF;
   --shiny-sweep:3s;--shiny-ease:.8s;--shiny-radius:32px;--shiny-inset:#1a1818;
   --shiny-percent:5%;--shiny-anim:shiny-angle linear infinite;--shiny-tr:var(--shiny-ease) cubic-bezier(.25,1,.5,1);
   isolation:isolate;position:relative;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;outline-offset:4px;
@@ -656,7 +655,7 @@ nav#nav{position:relative}
 :is(html[data-cur="slide"],[data-v="slide"]) .navind{display:block;position:absolute;z-index:0;border-radius:999px;pointer-events:none;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 38%,var(--btnfill)),color-mix(in srgb,var(--glow) 24%,var(--btnfill)));border:1px solid color-mix(in srgb,var(--glow) 60%,transparent);box-shadow:0 0 16px -4px var(--glow),inset 0 1px 0 rgba(255,255,255,.3);transition:left .5s cubic-bezier(.3,1.35,.4,1),width .5s cubic-bezier(.3,1.35,.4,1),top .3s,height .3s}
 :is(html[data-cur="halo"],[data-v="halo"]) .sb[aria-current="page"]{background:radial-gradient(ellipse 72% 90% at 50% 100%,color-mix(in srgb,var(--glow) 78%,transparent),color-mix(in srgb,var(--glow) 22%,transparent) 55%,transparent 100%);border-color:transparent;box-shadow:0 10px 18px -8px var(--glow);color:var(--ink);font-weight:600;text-shadow:0 0 12px color-mix(in srgb,var(--glow) 55%,transparent);background-origin:border-box;background-clip:border-box}
 :is(html[data-cur="outline"],[data-v="outline"]) .sb[aria-current="page"]{background:transparent;border:1.5px solid var(--glow);color:color-mix(in srgb,var(--glow) 55%,var(--ink));font-weight:600;box-shadow:0 0 0 3px var(--bg),0 0 0 4.5px color-mix(in srgb,var(--glow) 55%,transparent)}
-:is(html[data-cur="spectrum"],[data-v="spectrum"]) .sb[aria-current="page"]{background:linear-gradient(color-mix(in srgb,var(--btnfill) 86%,var(--accent)),color-mix(in srgb,var(--btnfill) 86%,var(--accent))) padding-box,linear-gradient(90deg,#ff7ab6,#ffd86b,#7bffd0,#6bb7ff,#b98cff) border-box;box-shadow:0 0 14px -2px color-mix(in srgb,var(--glow) 45%,transparent)}
+:is(html[data-cur="spectrum"],[data-v="spectrum"]) .sb[aria-current="page"]{background:linear-gradient(color-mix(in srgb,var(--btnfill) 86%,var(--accent)),color-mix(in srgb,var(--btnfill) 86%,var(--accent))) padding-box,linear-gradient(90deg,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff) border-box;box-shadow:0 0 14px -2px color-mix(in srgb,var(--glow) 45%,transparent)}
 @media (prefers-reduced-motion:reduce) and (min-width:901px){.sb[aria-current="page"]::after{animation:none!important}.navind{transition:none!important}}
 html[data-motion="static"] .sb[aria-current="page"]::after,html[data-motion="static"] .navind{animation:none!important;transition:none!important}
 
@@ -681,7 +680,7 @@ html[data-motion="static"] .sb[aria-current="page"]::after,html[data-motion="sta
 .gzs[data-scene="vivid"]{background:radial-gradient(60% 80% at 12% 18%,#ff6fb1,transparent 62%),radial-gradient(55% 70% at 88% 22%,#4ee3ff,transparent 62%),radial-gradient(70% 90% at 50% 105%,#7b5cff,transparent 66%),#1a1033}
 .gzs[data-scene="dark"]{background:radial-gradient(50% 60% at 80% 20%,rgba(88,0,219,.75),transparent 60%),radial-gradient(40% 50% at 15% 85%,rgba(0,209,157,.55),transparent 60%),#090b0c}
 .gzs[data-scene="light"]{--zink:#17203A;background:radial-gradient(55% 70% at 15% 20%,#ffb3d9,transparent 62%),radial-gradient(55% 70% at 85% 80%,#8fc2ff,transparent 62%),#eef3ff}
-.gzs[data-scene="photo"]{background:conic-gradient(from 20deg at 32% 40%,#f6d365,#fda085,#a1c4fd,#c2e9fb,#d4a5ff,#f6d365)}
+.gzs[data-scene="photo"]{background:conic-gradient(from 20deg at 32% 40%,#9FB4FF,#D4A5FF,#a1c4fd,#c2e9fb,#d4a5ff,#9FB4FF)}
 .gzs::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,rgba(255,255,255,.34) 0 2px,transparent 2px 22px),repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 2px,transparent 2px 22px);-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 25%,transparent 90%);mask-image:radial-gradient(circle at 50% 50%,#000 25%,transparent 90%)}
 .gzs::after{content:"";position:absolute;z-index:-1;width:96px;height:96px;border-radius:50%;inset-inline-start:9%;top:12%;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,0))}
 .gzp{position:relative;width:min(100%,300px);padding:14px 16px;color:var(--zink)}
@@ -838,8 +837,8 @@ html[data-motion="static"] #tring{transition:none}
 .fol{color:var(--ink)}
 .cdn48.urg,.cdn48.exp{color:color-mix(in srgb,var(--bad) 62%,var(--ink))}
 @media (max-width:640px){#edo{font-size:0;padding-inline:9px}#edo .edc{font-size:11px;margin:0}#edl{inset-inline-start:8px;width:calc(100vw - 16px)}}
-@media (max-width:440px){.acts .sb.sm{padding-inline:8px}.acts{gap:3px}.hd .brand{gap:5px}.brand span.tx{font-size:.7em}#th{font-size:0;gap:0}#th svg{margin:0}}
-@media (min-width:861px) and (max-width:1240px){#edo{font-size:0;padding-inline:9px}#edo .edc{font-size:11px;margin:0}.hd{gap:6px}nav#nav{gap:3px;min-width:0}nav#nav .sb{padding-inline:10px}.acts{gap:3px}.acts .sb.sm{padding-inline:9px}.acts .sb kbd{display:none}#th{font-size:0;gap:0}.brand span.tx{font-size:.74em}}
+@media (max-width:440px){.acts .sb.sm{padding-inline:8px}.acts{gap:3px}.hd .brand{gap:5px}.brand span.tx{font-size:.7em}#th{gap:0}#th .tx{display:none}#th svg{margin:0}}
+@media (min-width:861px) and (max-width:1240px){#edo{font-size:0;padding-inline:9px}#edo .edc{font-size:11px;margin:0}.hd{gap:6px}nav#nav{gap:3px;min-width:0}nav#nav .sb{padding-inline:10px}.acts{gap:3px}.acts .sb.sm{padding-inline:9px}.acts .sb kbd{display:none}#th{gap:0}#th .tx{display:none}.brand span.tx{font-size:.74em}}
 @media (min-width:861px) and (max-width:1020px){.brand span.tx{display:none}}
 @media (min-width:861px) and (max-width:1100px){.hd{flex-wrap:wrap;row-gap:6px}.hd .brand{flex:1}.hd .brand span.tx{display:inline}nav#nav{order:3;flex:1 1 100%;justify-content:center;flex-wrap:wrap}nav#nav .sb{font-size:.92em;padding-inline:12px}.acts{margin-inline-start:auto}}
 
@@ -852,7 +851,7 @@ header.top{width:min(97vw,1640px);margin-inline:calc((100% - min(97vw,1640px))/2
 /* نقطة حالة الاتصال */
 #cdot{flex:none;width:9px;height:9px;border-radius:50%;margin-inline:4px;background:#8a8f9c;box-shadow:0 0 0 2px color-mix(in srgb,#8a8f9c 25%,transparent);transition:background .3s,box-shadow .3s}
 #cdot.on{background:#22c55e;box-shadow:0 0 0 2px color-mix(in srgb,#22c55e 28%,transparent),0 0 9px 2px color-mix(in srgb,#22c55e 70%,transparent);animation:cdp 2.8s ease-in-out infinite}
-#cdot.busy{background:#f59e0b;box-shadow:0 0 0 2px color-mix(in srgb,#f59e0b 28%,transparent),0 0 9px 2px color-mix(in srgb,#f59e0b 70%,transparent);animation:cdp .9s ease-in-out infinite}
+#cdot.busy{background:#6AA9FF;box-shadow:0 0 0 2px color-mix(in srgb,#6AA9FF 28%,transparent),0 0 9px 2px color-mix(in srgb,#6AA9FF 70%,transparent);animation:cdp .9s ease-in-out infinite}
 #cdot.err{background:#ef4444;box-shadow:0 0 0 2px color-mix(in srgb,#ef4444 28%,transparent),0 0 9px 2px color-mix(in srgb,#ef4444 70%,transparent)}
 @keyframes cdp{50%{opacity:.55}}
 html[data-motion="off"] #cdot,.noa #cdot{animation:none}
@@ -878,9 +877,9 @@ html[data-sec="comms"] .sechead::after{opacity:.5;-webkit-mask-image:var(--topo)
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="orf" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="1" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="81" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="orf" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="1" seed="4" result="n0"/><feGaussianBlur in="n0" stdDeviation="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="56" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.1"/></filter></svg>
 <script>/* المظهر والإعدادات المعتمدة في التصميم الأصلي: تُزرع مرة واحدة لكل مفتاح لم يُضبط بعد */
-try{var __D={"ap1": "{\"t\":{\"light\":{\"dsp\":49,\"dotl\":\"#7cdfe7\",\"doth\":\"#84e3e2\",\"dotn\":\"#98e5cf\",\"bg\":\"#f0fffc\",\"bg2\":\"#fefaff\",\"bgang\":136,\"dR\":105,\"gblur\":2.5},\"dark\":{\"gblur\":2.5,\"gsat\":1,\"gau\":0.18,\"gaub\":0,\"wait\":\"#b39b00\",\"bad\":\"#8a0020\",\"prog\":\"#004d2b\",\"glow\":\"#255f5c\",\"hi\":0.12,\"grimh\":0.4,\"shine\":\"#ffffff\",\"btnfill\":\"#020807\",\"accent-fg\":\"#5800db\",\"dR\":130,\"bgang\":16,\"dsp\":53,\"ccgc\":\"#32b3aa\",\"ccsc\":\"#ffffff\",\"cchc\":\"#00dbb7\",\"s1\":\"#8affe2\",\"s2\":\"#00abd6\",\"shd\":{\"c\":\"#000000\",\"a\":0.745}}},\"g\":{\"gdisp\":56,\"gfreq\":0.005,\"sbspd\":1,\"sbdec\":0.15,\"sbacc\":0.05,\"sbcur\":2,\"ptr\":0,\"sbidle\":8,\"sbglow\":15,\"stg\":0,\"mspd\":0.3,\"sbshr\":53},\"mode\":\"\"}", "curv": "\"slide\"", "gcfg": "{\"cfg\":{\"layout\":\"groups\",\"shape\":\"squircle\",\"size\":16,\"icon\":1.4,\"power\":0,\"labels\":true,\"lab\":10,\"edge\":\"arc\",\"curve\":0.3,\"ew\":0.6,\"eo\":0.7,\"halo\":1,\"beam\":\"comet\",\"bs\":0.4,\"speed\":1.8,\"count\":3,\"trail\":6,\"glow\":3,\"acc\":1,\"stiff\":0.15,\"damp\":0.82,\"couple\":0,\"rk\":0.5,\"rz\":0.95,\"rg\":0.1},\"col\":{\"dark\":{\"nf\":\"#001519\",\"ns\":\"#186d58\",\"ic\":\"#FFE8FB\",\"ed\":\"#4cffe1\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#0a0c10\"},\"light\":{\"nf\":\"#020303\",\"ns\":\"#00495c\",\"ic\":\"#FFE8FB\",\"ed\":\"#00d19d\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#090b0c\"}},\"mode\":\"مجمواعات رقم 1\"}", "gmodes": "[{\"name\":\"مجمواعات رقم 1\",\"cfg\":{\"layout\":\"groups\",\"shape\":\"squircle\",\"size\":16,\"icon\":1.4,\"power\":0,\"labels\":true,\"lab\":10,\"edge\":\"arc\",\"curve\":0.3,\"ew\":0.6,\"eo\":0.7,\"halo\":1,\"beam\":\"comet\",\"bs\":0.4,\"speed\":1.8,\"count\":3,\"trail\":6,\"glow\":3,\"acc\":1,\"stiff\":0.15,\"damp\":0.82,\"couple\":0,\"rk\":0.5,\"rz\":0.95,\"rg\":0.1},\"col\":{\"dark\":{\"nf\":\"#001519\",\"ns\":\"#186d58\",\"ic\":\"#FFE8FB\",\"ed\":\"#4cffe1\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#0a0c10\"},\"light\":{\"nf\":\"#020303\",\"ns\":\"#00495c\",\"ic\":\"#FFE8FB\",\"ed\":\"#00d19d\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#090b0c\"}}}]", "gzs": "\"dark\"", "theme": "\"auto\"", "pres": "false"};Object.keys(__D).forEach(function(k){if(localStorage.getItem('@@PREFIX@@'+k)==null)localStorage.setItem('@@PREFIX@@'+k,__D[k])})}catch(e){}</script><canvas id="cg" aria-hidden="true"></canvas>
+try{var __D={"ap1": "{\"t\":{\"light\":{\"dsp\":49,\"dotl\":\"#7cdfe7\",\"doth\":\"#84e3e2\",\"dotn\":\"#98e5cf\",\"bg\":\"#f0fffc\",\"bg2\":\"#fefaff\",\"bgang\":136,\"dR\":105,\"gblur\":2.5},\"dark\":{\"gblur\":2.5,\"gsat\":1,\"gau\":0.18,\"gaub\":0,\"wait\":\"#7fc8ff\",\"bad\":\"#8a0020\",\"prog\":\"#004d2b\",\"glow\":\"#255f5c\",\"hi\":0.12,\"grimh\":0.4,\"shine\":\"#ffffff\",\"btnfill\":\"#020807\",\"accent-fg\":\"#5800db\",\"dR\":130,\"bgang\":16,\"dsp\":53,\"ccgc\":\"#32b3aa\",\"ccsc\":\"#ffffff\",\"cchc\":\"#00dbb7\",\"s1\":\"#8affe2\",\"s2\":\"#00abd6\",\"shd\":{\"c\":\"#000000\",\"a\":0.745}}},\"g\":{\"gdisp\":56,\"gfreq\":0.005,\"sbspd\":1,\"sbdec\":0.15,\"sbacc\":0.05,\"sbcur\":2,\"ptr\":0,\"sbidle\":8,\"sbglow\":15,\"stg\":0,\"mspd\":0.3,\"sbshr\":53},\"mode\":\"\"}", "curv": "\"slide\"", "gcfg": "{\"cfg\":{\"layout\":\"groups\",\"shape\":\"squircle\",\"size\":16,\"icon\":1.4,\"power\":0,\"labels\":true,\"lab\":10,\"edge\":\"arc\",\"curve\":0.3,\"ew\":0.6,\"eo\":0.7,\"halo\":1,\"beam\":\"comet\",\"bs\":0.4,\"speed\":1.8,\"count\":3,\"trail\":6,\"glow\":3,\"acc\":1,\"stiff\":0.15,\"damp\":0.82,\"couple\":0,\"rk\":0.5,\"rz\":0.95,\"rg\":0.1},\"col\":{\"dark\":{\"nf\":\"#001519\",\"ns\":\"#186d58\",\"ic\":\"#FFE8FB\",\"ed\":\"#4cffe1\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#0a0c10\"},\"light\":{\"nf\":\"#020303\",\"ns\":\"#00495c\",\"ic\":\"#FFE8FB\",\"ed\":\"#00d19d\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#090b0c\"}},\"mode\":\"الوضع الافتراضي\"}", "gmodes": "[{\"name\":\"الوضع الافتراضي\",\"cfg\":{\"layout\":\"groups\",\"shape\":\"squircle\",\"size\":16,\"icon\":1.4,\"power\":0,\"labels\":true,\"lab\":10,\"edge\":\"arc\",\"curve\":0.3,\"ew\":0.6,\"eo\":0.7,\"halo\":1,\"beam\":\"comet\",\"bs\":0.4,\"speed\":1.8,\"count\":3,\"trail\":6,\"glow\":3,\"acc\":1,\"stiff\":0.15,\"damp\":0.82,\"couple\":0,\"rk\":0.5,\"rz\":0.95,\"rg\":0.1},\"col\":{\"dark\":{\"nf\":\"#001519\",\"ns\":\"#186d58\",\"ic\":\"#FFE8FB\",\"ed\":\"#4cffe1\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#0a0c10\"},\"light\":{\"nf\":\"#020303\",\"ns\":\"#00495c\",\"ic\":\"#FFE8FB\",\"ed\":\"#00d19d\",\"bm\":\"#FFFFFF\",\"gl\":\"#4dffe1\",\"bg\":\"#090b0c\"}}}]", "gzs": "\"dark\"", "theme": "\"auto\"", "pres": "false"};Object.keys(__D).forEach(function(k){if(localStorage.getItem('@@PREFIX@@'+k)==null)localStorage.setItem('@@PREFIX@@'+k,__D[k])})}catch(e){}</script><canvas id="cg" aria-hidden="true"></canvas>
 <div id="lyr" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="wrap" lang="ar">
 <header class="top"><div class="gl hd"><div class="brand"><i></i><span class="tx">@@PROJECT@@</span></div><nav id="nav" aria-label="الأقسام"></nav><div class="acts"><span id="cdot" class="off" role="status" aria-live="polite" aria-label="الاتصال بـ Claude: غير متصل" title="غير متصل: الحفظ في هذا المتصفح فقط"></span><button class="sb sm" id="sq" type="button" aria-label="بحث وأوامر">بحث <kbd>⌘K</kbd></button><button class="sb sm" id="th" type="button" aria-label="تبديل السمة">الوضع</button><button class="sb sm" id="pr" type="button" aria-pressed="false">عرض</button></div></div></header>
@@ -924,7 +923,7 @@ var byName={};D.team.forEach(function(m,i){m.k=i;byName[m.name]=m});
 function openOf(n){return D.tasks.filter(function(t){return t.to===n&&!CLOSED[t.st]})}
 function doneOf(n){return D.tasks.filter(function(t){return t.to===n&&OKS[t.st]}).length}
 var MODES=["auto","light","dark"],MLB={auto:"تلقائي",light:"فاتح",dark:"داكن"};
-var ST={theme:sg("theme","auto"),motion:sg("motion","full"),dots:sg("dots",true),pres:sg("pres",false)};
+var ST={theme:sg("theme","auto"),skin:sg("skin","glass"),motion:sg("motion","full"),dots:sg("dots",true),pres:sg("pres",false)};
 var SEC=[["command","الرئيسية","m"],["room","المتابعة","m"],["project","المهام","m"],["team","الفريق","m"],["library","مكتبة المخرجات","d"],["comms","التعميمات والأوامر","d"],["fav","المفضلة","x"],["settings","الإعدادات","x"]];
 var TABS={room:[["overview","نظرة عامة"],["decisions","القرارات"],["pulse","النبض"]],team:[["cards","البطاقات"],["graph","المخطط"],["queue","الأوامر القادمة"]],comms:[["circs","التعميمات"],["cmds","الأوامر"]],settings:[["general","عام"],["look","المظهر التفصيلي"],["buttons","الأزرار"],["glass","الزجاج"],["fonts","الخطوط"],["tools","الأدوات"]]};
 var cur=sg("sec","command"),tab={room:"overview",team:"cards",comms:"circs",settings:"general"};
@@ -938,11 +937,11 @@ var FAV=sg("fav",[]);
 function isFav(k){return FAV.indexOf(k)>=0}
 function togFav(k){var i=FAV.indexOf(k);if(i>=0)FAV.splice(i,1);else FAV.push(k);ss("fav",FAV);toast(i>=0?"أُزيل من المفضلة":"أُضيف إلى المفضلة")}
 /* ---------- تفضيلات ---------- */
-function applyPrefs(){var r=document.documentElement;if(ST.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",ST.theme);r.setAttribute("data-motion",ST.motion);document.body.classList.toggle("pres",!!ST.pres);var c=$("#cg");if(c)c.style.display=ST.dots?"":"none";var t=$("#th");if(t)t.innerHTML='<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg> '+MLB[ST.theme];var p=$("#pr");if(p)p.setAttribute("aria-pressed",String(!!ST.pres));apApply();libApply()}
+function applyPrefs(){var r=document.documentElement;if(ST.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",ST.theme);r.setAttribute("data-motion",ST.motion);r.setAttribute("data-skin",ST.skin==="classic"?"classic":"glass");document.body.classList.toggle("pres",!!ST.pres);var c=$("#cg");if(c)c.style.display=ST.dots?"":"none";var t=$("#th");if(t)t.innerHTML='<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg><span class="tx">'+MLB[ST.theme]+'</span>';var p=$("#pr");if(p)p.setAttribute("aria-pressed",String(!!ST.pres));apApply();libApply()}
 function setPref(k,v){ST[k]=v;ss(k,v);applyPrefs();if(cur==="settings")render(true)}
 /* ---------- التنقل ---------- */
-function navHtml(mob){return SEC.map(function(s){if(mob){if(["command","room","team","project"].indexOf(s[0])<0)return"";return'<button class="sb" type="button" data-go="'+s[0]+'"'+(cur===s[0]?' aria-current="page"':"")+">"+(s[0]==="command"?"الرئيسية":s[0]==="room"?"المتابعة":s[0]==="team"?"الفريق":"المهام")+"</button>"}
- if(s[2]==="x")return"";return'<button class="sb" type="button" data-go="'+s[0]+'"'+(cur===s[0]?' aria-current="page"':"")+">"+s[1]+"</button>"}).join("")+'<button class="sb" type="button" id="more'+(mob?"m":"d")+'" data-more="1" aria-haspopup="true" aria-expanded="false"'+(["fav","settings"].indexOf(cur)>=0||(mob&&["library","comms"].indexOf(cur)>=0)?' aria-current="page"':"")+">المزيد ▾</button>"}
+function nbd(){var n=(D.att||[]).length;return n?'<span class="nbd" title="بنود تحتاج انتباهًا">'+n+"</span>":""} function navHtml(mob){return SEC.map(function(s){if(mob){if(["command","room","team","project"].indexOf(s[0])<0)return"";return'<button class="sb" type="button" data-go="'+s[0]+'"'+(cur===s[0]?' aria-current="page"':"")+">"+(s[0]==="command"?"الرئيسية"+nbd():s[0]==="room"?"المتابعة":s[0]==="team"?"الفريق":"المهام")+"</button>"}
+ if(s[2]==="x")return"";return'<button class="sb" type="button" data-go="'+s[0]+'"'+(cur===s[0]?' aria-current="page"':"")+">"+s[1]+(s[0]==="command"?nbd():"")+"</button>"}).join("")+'<button class="sb" type="button" id="more'+(mob?"m":"d")+'" data-more="1" aria-haspopup="true" aria-expanded="false"'+(["fav","settings"].indexOf(cur)>=0||(mob&&["library","comms"].indexOf(cur)>=0)?' aria-current="page"':"")+">المزيد ▾</button>"}
 function paintNav(){$("#nav").innerHTML=navHtml(false);$("#bn").innerHTML=navHtml(true);libInd()}
 function openMenu(btn){var m=$("#menu"),mob=btn.id==="morem",list=SEC.filter(function(s){return mob?(["command","room","team","project"].indexOf(s[0])<0):s[2]==="x"});
  m.innerHTML=list.map(function(s){return'<button class="sb" type="button" data-go="'+s[0]+'"'+(cur===s[0]?' aria-current="page"':"")+">"+s[1]+"</button>"}).join("");
@@ -972,15 +971,19 @@ function morning(){var it=[],visit=sg("visit",GEN-30*3600e3);(D.pend||[]).forEac
  var nd=D.team.filter(function(m){return m.at&&new Date(m.at).getTime()>visit}).sort(function(a,b){return b.at<a.at?-1:1});
  if(nd.length)it.push({tag:"جديد",cls:"s-ok",tx:nd.length+" موظفين حدّثوا حالتهم منذ زيارتك: "+nd.slice(0,4).map(function(m){return m.name}).join("، "),o:"go:team"});
  return it}
+function attnHtml(){var A=D.att||[];if(!A.length)return"";
+ return'<section class="card att rv" style="--i:2" aria-label="يحتاج انتباهًا"><div class="row"><h2>يحتاج انتباهًا</h2><span class="pill">'+A.length+'</span><span class="sp"></span><span class="mini">متأخر أو راكد أو محجوب</span></div><div class="list" style="margin-top:10px">'+
+ A.slice(0,6).map(function(x){return'<button type="button" class="mrow" data-o="'+(x.n?"task:"+x.n:"go:team")+'"><span class="tag '+(x.s===1?"s-bad":"s-wait")+'">'+E(x.l)+'</span><span class="cl2">'+E(x.t)+"</span></button>"}).join("")+"</div>"+
+ (A.length>6?'<p class="mini" style="margin:8px 0 0">و'+(A.length-6)+" بنود أخرى. التفاصيل الكاملة: <code>status</code> من الطرفية.</p>":"")+"</section>"}
 function R_command(){var s=D.stc,pend=(s["بانتظار التدقيق"]||0)+(s["بانتظار اعتماد @@OWNER@@"]||0),it=morning(),g=grp();
  var rec=D.team.filter(function(m){return m.at}).sort(function(a,b){return b.at<a.at?-1:1}).slice(0,5);
  var kp=[["الكل",D.nt+dcn(),"all"],["مسلّمة",g.ok+dcn(),"done"],["بانتظار تدقيق أو تأكيد",pend,"wait"],["قيد التنفيذ",s["قيد التنفيذ"]||0,"prog"],["محالة",s["محالة"]||0,"mut"],["أُعيدت",s["أعيدت للتعديل"]||0,"bad"]];
  return head("الرئيسية","الهدف الحالي: "+E(D.goal))+
  '<section class="gl hero rv" style="--i:2" aria-label="مركز الصباح"><div class="row"><h2>مركز الصباح: ما ينتظرك الآن</h2><span class="sp"></span><button class="sb p sm edit" type="button" data-act="follow">تابع ←</button><button class="sb sm edit" type="button" data-act="seen">علّم كمقروء</button></div><div class="list" style="margin-top:12px">'+
- it.map(function(x){return'<button type="button" class="mrow" data-o="'+E(x.o)+'"><span class="tag '+x.cls+'">'+x.tag+'</span><span class="cl2">'+md(x.tx)+"</span></button>"}).join("")+"</div></section>"+
+ (it.map(function(x){return'<button type="button" class="mrow" data-o="'+E(x.o)+'"><span class="tag '+x.cls+'">'+x.tag+'</span><span class="cl2">'+md(x.tx)+"</span></button>"}).join("")||'<div class="empty">لا شيء ينتظرك الآن.</div>')+"</div></section>"+attnHtml()+
  '<div class="grid g6 rv" style="--i:3">'+kp.map(function(k){return'<button class="kpi'+(k[2]==="mut"?" key":"")+'" type="button" data-pf="'+k[2]+'"><div class="num">'+fmtN(k[1])+'</div><div class="lbl">'+k[0]+"</div></button>"}).join("")+"</div>"+
- '<div class="grid g2 rv" style="--i:4"><div class="card"><h2 style="margin-bottom:10px">توزيع المهام والقرارات والتعاميم</h2>'+ring()+'</div><div class="card"><h2 style="margin-bottom:10px">آخر التعميمات</h2><div class="list">'+D.circs.slice(0,4).map(function(c){return'<button type="button" class="circ" data-o="circ:'+c.n+'"><span class="row"><span class="n">'+c.n+"</span><span class='mini'>"+E(c.when)+'</span></span><span class="cl2">'+E(c.title)+"</span></button>"}).join("")+"</div></div></div>"+
- '<div class="card rv" style="--i:5"><div class="row"><h2>نبض الفريق</h2><span class="sp"></span><button class="sb sm" type="button" data-go="room" data-t="pulse">كل النبض</button></div><div class="grid g3" style="margin-top:10px">'+rec.map(function(m){return'<button type="button" class="mrow" data-o="emp:'+E(m.name)+'"><span class="dot2 '+(fresh(m.at)?"f":"")+'" style="margin-top:7px"></span><span style="display:grid;gap:2px"><b class="t">'+E(m.name)+'</b><span class="mini">'+rel(m.at)+'</span><span class="mini cl2">'+E(m.now)+"</span></span></button>"}).join("")+"</div></div>"+
+ '<div class="grid g2 rv" style="--i:4"><div class="card"><h2 style="margin-bottom:10px">توزيع المهام والقرارات والتعاميم</h2>'+ring()+'</div><div class="card"><h2 style="margin-bottom:10px">آخر التعميمات</h2><div class="list">'+D.circs.slice(0,4).map(function(c){return'<button type="button" class="circ" data-o="circ:'+c.n+'"><span class="row"><span class="n">'+c.n+"</span><span class='mini'>"+E(c.when)+'</span></span><span class="cl2">'+E(c.title)+"</span></button>"}).join("")||'<div class="empty">لا تعميمات بعد.</div>'+"</div></div></div>"+
+ '<div class="card rv" style="--i:5"><div class="row"><h2>نبض الفريق</h2><span class="sp"></span><button class="sb sm" type="button" data-go="room" data-t="pulse">كل النبض</button></div><div class="grid g3" style="margin-top:10px">'+rec.map(function(m){return'<button type="button" class="mrow" data-o="emp:'+E(m.name)+'"><span class="dot2 '+(fresh(m.at)?"f":"")+'" style="margin-top:7px"></span><span style="display:grid;gap:2px"><b class="t">'+E(m.name)+'</b><span class="mini">'+rel(m.at)+'</span><span class="mini cl2">'+E(m.now)+"</span></span></button>"}).join("")||'<div class="empty" style="grid-column:1/-1">لم يسجّل أحد نشاطًا بعد. يظهر هنا آخر من حدّث حالته.</div>'+"</div></div>"+
  demoBar()+'<p class="note rv edit" style="--i:6">نموذج أولي: بيانات حقيقية مولّدة في '+E(D.gen.replace("T"," ").slice(0,16))+"؛ التعديل والحفظ والتخصيص الكامل في الموقع الأصلي.</p>"}
 function R_room(){var t=tab.room,body="";
  if(t==="overview"){var g=grp(),emp=D.team.map(function(m){return[m.name,openOf(m.name).length]}).filter(function(x){return x[1]}).sort(function(a,b){return b[1]-a[1]}).slice(0,10),mx=emp[0]?emp[0][1]:1;
@@ -1307,7 +1310,7 @@ var APS=[
  ["الألوان الأساسية",[
   ["ink","c","لون النص","#17203A","#EEF2FB"],["muted","c","لون النص الثانوي","#58627F","#8E9AB6"],["accent","c","لون التمييز","#2F6BE0","#5800DB"],["accent-fg","c","لون التمييز للنص والإطارات والتركيز (يُقاس ≥ 4.5 على الخلفية)","#2F6BE0","#A47DFF"],["accent-ink","c","نص فوق التمييز","#FFFFFF","#FFFFFF"],["link","c","لون الروابط والخطوط","#2F6BE0","#8FB4FF"]]],
  ["الحالات",[
-  ["ok","c","مسلّمة / نشط","#0F7A96","#9FD0FF"],["wait","c","بانتظار","#95660D","#FFD86B"],["bad","c","مُعادة / متعثّر","#C2415F","#FF7A9A"],["prog","c","قيد التنفيذ","#535CDD","#B79CFF"]]],
+  ["ok","c","مسلّمة / نشط","#0F7A96","#9FD0FF"],["wait","c","بانتظار","#2F7FB8","#7FC8FF"],["bad","c","مُعادة / متعثّر","#C2415F","#FF7A9A"],["prog","c","قيد التنفيذ","#535CDD","#B79CFF"]]],
  ["البطاقات والحدود",[
   ["card","ca","تعبئة البطاقات","#17203A",.035,"#EEF2FB",.02],["line","ca","الحدود","#17203A",.14,"#FFFFFF",.13]]],
  ["الزجاج",[
@@ -1317,7 +1320,7 @@ var APS=[
  ["اللمعة والأزرار",[
   ["glow","c","لون لمعة الأزرار","#2F6BE0","#8FB4FF"],["shine","c","لون بريق الأزرار","#7FB0FF","#FFFFFF"],["btnfill","c","تعبئة الأزرار","#FFFFFF","#0E1416"],["btntx","c","نص الأزرار","#17203A","#FFFFFF"]]]];
 /* قيم عامة غير مرتبطة بالسمة */
-var APG=[["gdisp","انكسار الزجاج",0,200,1,"",81],["gfreq","تموّج الانكسار",.002,.03,.001,"",.009],["sbspd","لمعة الزر عند التحويم والتركيز (ثوانٍ للدورة)",.8,8,.1,"s",2.4],["sbcur","لمعة الزر المحدد والصفحة المفتوحة (ثوانٍ للدورة، 0 ساكنة)",0,30,1,"s",9],["sbidle","لمعة بقية الأزرار في السكون (ثوانٍ للدورة، 0 ساكنة)",0,40,1,"s",0],["sbacc","زمن تسارع اللمعة عند التحويم",.05,2,.05,"s",.35],["sbdec","زمن تباطؤ اللمعة بعد رفع المؤشر",.05,3,.05,"s",.9],["sbglow","قوة توهج الأزرار",0,100,1,"%",40],["sbshr","قوة اللمعة المتحركة في السكون",0,100,1,"%",100],["sbshc","قوة اللمعة المتحركة للزر المحدد والصفحة المفتوحة",0,100,1,"%",100],["sbshh","قوة اللمعة المتحركة عند التحويم والتركيز",0,100,1,"%",100],["mspd","سرعة الحركة العامة",.25,3,.05,"",1],["stg","فاصل ظهور العناصر (مللي ثانية)",0,200,5,"ms",70],["ptr","مدة انتقال الصفحة (مللي ثانية)",0,600,10,"ms",140]];
+var APG=[["gdisp","انكسار الزجاج",0,200,1,"",56],["gfreq","تموّج الانكسار",.002,.03,.001,"",.005],["sbspd","لمعة الزر عند التحويم والتركيز (ثوانٍ للدورة)",.8,8,.1,"s",2.4],["sbcur","لمعة الزر المحدد والصفحة المفتوحة (ثوانٍ للدورة، 0 ساكنة)",0,30,1,"s",9],["sbidle","لمعة بقية الأزرار في السكون (ثوانٍ للدورة، 0 ساكنة)",0,40,1,"s",0],["sbacc","زمن تسارع اللمعة عند التحويم",.05,2,.05,"s",.35],["sbdec","زمن تباطؤ اللمعة بعد رفع المؤشر",.05,3,.05,"s",.9],["sbglow","قوة توهج الأزرار",0,100,1,"%",40],["sbshr","قوة اللمعة المتحركة في السكون",0,100,1,"%",100],["sbshc","قوة اللمعة المتحركة للزر المحدد والصفحة المفتوحة",0,100,1,"%",100],["sbshh","قوة اللمعة المتحركة عند التحويم والتركيز",0,100,1,"%",100],["mspd","سرعة الحركة العامة",.25,3,.05,"",1],["stg","فاصل ظهور العناصر (مللي ثانية)",0,200,5,"ms",70],["ptr","مدة انتقال الصفحة (مللي ثانية)",0,600,10,"ms",140]];
 var AP=null,APM=[];
 function apInit(){if(AP)return;var s=sg("ap1",null)||{};AP={t:{light:(s.t||{}).light||{},dark:(s.t||{}).dark||{}},g:s.g||{},mode:s.mode||""};APM=sg("apm",[])}
 function apSave(){ss("ap1",AP)}
@@ -1330,10 +1333,10 @@ function rgb2hex(s){var p=String(s).split(",").map(function(x){return Math.max(0
 function apCss(it,v){var k=it[1];if(k==="ca"){var r=hex2rgb(v.c);return"rgba("+r[0]+","+r[1]+","+r[2]+","+v.a+")"}if(k==="rgb")return hex2rgb(v).join(",");if(k==="n")return String(v)+(it[6]||"");return v}
 function apApply(){apInit();var r=document.documentElement,tm=effTheme(),o=AP.t[tm],g=AP.g;
  apItems().forEach(function(it){r.style.removeProperty("--"+it[0])});APG.forEach(function(x){r.style.removeProperty("--"+x[0])});
- apItems().forEach(function(it){r.style.setProperty("--"+it[0],apCss(it,o[it[0]]!=null?o[it[0]]:apD(it,tm)))});
+ if(ST.skin==="classic")apItems().forEach(function(it){r.style.setProperty("--"+it[0],apCss(it,o[it[0]]!=null?o[it[0]]:apD(it,tm)))});
  var gv=function(k,d){return g[k]!=null?g[k]:d};
- r.style.setProperty("--sbspd",gv("sbspd",2.4)+"s");r.style.setProperty("--sbglow",gv("sbglow",40)+"%");SBCOL.forEach(function(c){var v=o["c"+c[0]];if(v)r.style.setProperty("--"+c[0],v);else r.style.removeProperty("--"+c[0])});r.style.setProperty("--sbshr",gv("sbshr",100)+"%");r.style.setProperty("--sbshc",gv("sbshc",100)+"%");r.style.setProperty("--sbshh",gv("sbshh",100)+"%");r.style.setProperty("--mspd",gv("mspd",1));r.style.setProperty("--stg",gv("stg",70)+"ms");r.style.setProperty("--ptr",gv("ptr",140)+"ms");
- var f=document.querySelector("#orf feDisplacementMap"),t=document.querySelector("#orf feTurbulence");if(f)f.setAttribute("scale",gv("gdisp",81));if(t)t.setAttribute("baseFrequency",gv("gfreq",.009));
+ r.style.setProperty("--sbspd",gv("sbspd",2.4)+"s");r.style.setProperty("--sbglow",gv("sbglow",40)+"%");SBCOL.forEach(function(c){var v=o["c"+c[0]];if(v&&ST.skin==="classic")r.style.setProperty("--"+c[0],v);else r.style.removeProperty("--"+c[0])});r.style.setProperty("--sbshr",gv("sbshr",100)+"%");r.style.setProperty("--sbshc",gv("sbshc",100)+"%");r.style.setProperty("--sbshh",gv("sbshh",100)+"%");r.style.setProperty("--mspd",gv("mspd",1));r.style.setProperty("--stg",gv("stg",70)+"ms");r.style.setProperty("--ptr",gv("ptr",140)+"ms");
+ var f=document.querySelector("#orf feDisplacementMap"),t=document.querySelector("#orf feTurbulence");if(f)f.setAttribute("scale",gv("gdisp",56));if(t)t.setAttribute("baseFrequency",gv("gfreq",.005));
  /* الألوان الموروثة: خلفية الجسم تتبع التدرّج، ولوحة المخطط تتبع السمة */
  if($("#gstage"))gcols();
  if(typeof sbmScan==="function")sbmScan()}
@@ -1469,18 +1472,18 @@ var ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d
 /* ---------- 5. تبويب «الأزرار» ---------- */
 var LBGS=[
  ["sb","الزر الأساسي","`.sb`","الواجهة الحالية: حلقة لمعة بمتغيرات اللون من «المظهر التفصيلي»","<button class=\"sb\" type=\"button\">زر أساسي</button><button class=\"sb sm\" type=\"button\">صغير</button><button class=\"sb\" type=\"button\" aria-pressed=\"true\">محدّد</button><button class=\"sb ic\" type=\"button\" aria-label=\"رمز\">✦</button>",0],
- ["shiny","Shiny Button (القرار 50)","`.shiny`","`Templates/Shared Assets/Shiny Button 1.css`، الزر الرئيسي المعتمد للنماذج؛ اللمعة عند التحويم","<button class=\"shiny\" type=\"button\" style=\"font-size:.72em\"><span>انسخ الإجابات</span></button><button class=\"shiny\" type=\"button\" style=\"font-size:.72em;--shiny-accent:#5800db;--shiny-accent-soft:#4dffe1;--shiny-fill:#0d0e12\"><span>نيون</span></button>",0],
- ["gb","زر الزجاج بانكسار الحافة","`.gb`","`Glass Button 1`: عدسة حافة بخريطة إزاحة، ثانوي",'<button class="gb" type="button" data-depth="9" data-refraction=".75" style="--gb-h:52px;--gb-fs:16px"><span class="gb-shadow" aria-hidden="true"></span><span class="gb-face"><span class="gb-glass" aria-hidden="true"></span><span class="gb-sheen" aria-hidden="true"></span><span class="gb-rim" aria-hidden="true"></span><span class="gb-label">ابدأ الآن</span><svg class="gb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></span></button>',1],
- ["gfb","زر التوهّج السفلي","`.gfb`","`Glass Extras 1`: توهج يصعد من الحافة السفلية عند التحويم",'<button class="gfb" type="button">ابدأ الآن '+ARW+'</button>',1],
- ["afb","زر الدائرة والسهم","`.afb`","`Glass Extras 1`: دائرة تتسع فتكشف النص المعكوس",'<button class="afb" type="button"><span>شاهد القوالب</span><span class="afb-cover" aria-hidden="true"><span>شاهد القوالب</span></span><span class="afb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
- ["cta","زر الدعوة إلى إجراء","`.cta`","`Glass Extras 2`: على نمط الدائرة والسهم للاتصال",'<button class="cta" type="button"><span>تواصل معنا</span><span class="cta-cover" aria-hidden="true"><span>تواصل معنا</span></span><span class="cta-ic" aria-hidden="true">'+ARW+'</span></button>',0],
- ["gst","زر النجوم","`.gst`","`Glass Extras 1`: نجوم تومض عند التحويم، زينة للموقع العام",'<button class="gst" type="button">'+[[8,25,0],[18,70,300],[30,35,700],[42,78,150],[55,22,900],[66,66,450],[78,30,1100],[90,72,600],[48,48,1250]].map(function(s){return'<span class="gst-s" style="--x:'+s[0]+'%;--y:'+s[1]+'%;--d:'+s[2]+'ms"></span>'}).join("")+'<span>أنشئ مشروعك</span></button>',1],
- ["ngb","زر نوفا المتوهّج","`.ngb`","`Glass Extras 2`: حلقة مخروطية تدور وهالة ولمعة تعبر",'<button class="ngb" type="button"><span class="ngb-halo" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-ring" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-shine" aria-hidden="true"></span><span class="ngb-label">استكشف القوالب</span></button>',0],
- ["shb","زر التدرج السائل","`.shb` و`.lqg`","`Glass Extras 2`: بقع لونية تنجرف خلف النص، للموقع العام",'<button class="shb" type="button" style="min-height:48px;padding:0 28px;font-size:16px"><span class="lqg" aria-hidden="true"></span><span class="shb-label">أنشئ مشروعك</span><span class="shb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
- ["tt","مبدّل المظهر","`.tt`","`Glass Extras 2`: شمس وقمر؛ هنا يبدّل سمة هذا الموقع",'<button class="tt" type="button" aria-label="تبديل المظهر"><span class="tt-i tt-sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.4 5.4l1.7 1.7M16.9 16.9l1.7 1.7M5.4 18.6l1.7-1.7M16.9 7.1l1.7-1.7"/></svg></span><span class="tt-i tt-moon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg></span></button>',0],
- ["di","تأكيد الحذف بعدّ","`.di`","`Glass Extras 1`: نقرة تبدأ عدًّا 5 ثوانٍ، ونقرة ثانية تلغي",'<button class="di" type="button" data-seconds="5" data-cancel="إلغاء الحذف" data-done="تم الحذف"><span class="di-bar"></span><span class="di-l">حذف العنصر</span><span class="di-n" aria-hidden="true"></span></button>',0],
- ["ab","شارات الحالة","`.ab`","`Glass Extras 1`: نقطة بنبضة حلقة",'<span class="ab" data-state="ok"><span class="ab-dot"></span>منشورة</span><span class="ab" data-state="warn"><span class="ab-dot"></span>مسودة</span><span class="ab" data-state="bad"><span class="ab-dot"></span>بها خطأ</span>',0],
- ["ir","حلقة الأيقونة","`.ir`","`Glass Extras 1`: حلقة مخروطية تدور حول رمز",'<span class="ir" style="--ir-size:64px"><span class="ir-ring"></span><span class="ir-body"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.5 7.2 12 13l8.5-5.8"/></svg></span>',0],
+ ["shiny","Shiny Button","`.shiny`","الزر الرئيسي المعتمد للنماذج؛ اللمعة عند التحويم","<button class=\"shiny\" type=\"button\" style=\"font-size:.72em\"><span>انسخ الإجابات</span></button><button class=\"shiny\" type=\"button\" style=\"font-size:.72em;--shiny-accent:#5800db;--shiny-accent-soft:#4dffe1;--shiny-fill:#0d0e12\"><span>نيون</span></button>",0],
+ ["gb","زر الزجاج بانكسار الحافة","`.gb`","عدسة حافة بخريطة إزاحة، ثانوي",'<button class="gb" type="button" data-depth="9" data-refraction=".75" style="--gb-h:52px;--gb-fs:16px"><span class="gb-shadow" aria-hidden="true"></span><span class="gb-face"><span class="gb-glass" aria-hidden="true"></span><span class="gb-sheen" aria-hidden="true"></span><span class="gb-rim" aria-hidden="true"></span><span class="gb-label">ابدأ الآن</span><svg class="gb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></span></button>',1],
+ ["gfb","زر التوهّج السفلي","`.gfb`","توهج يصعد من الحافة السفلية عند التحويم",'<button class="gfb" type="button">ابدأ الآن '+ARW+'</button>',1],
+ ["afb","زر الدائرة والسهم","`.afb`","دائرة تتسع فتكشف النص المعكوس",'<button class="afb" type="button"><span>شاهد القوالب</span><span class="afb-cover" aria-hidden="true"><span>شاهد القوالب</span></span><span class="afb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
+ ["cta","زر الدعوة إلى إجراء","`.cta`","على نمط الدائرة والسهم للاتصال",'<button class="cta" type="button"><span>تواصل معنا</span><span class="cta-cover" aria-hidden="true"><span>تواصل معنا</span></span><span class="cta-ic" aria-hidden="true">'+ARW+'</span></button>',0],
+ ["gst","زر النجوم","`.gst`","نجوم تومض عند التحويم، زينة للموقع العام",'<button class="gst" type="button">'+[[8,25,0],[18,70,300],[30,35,700],[42,78,150],[55,22,900],[66,66,450],[78,30,1100],[90,72,600],[48,48,1250]].map(function(s){return'<span class="gst-s" style="--x:'+s[0]+'%;--y:'+s[1]+'%;--d:'+s[2]+'ms"></span>'}).join("")+'<span>أنشئ مشروعك</span></button>',1],
+ ["ngb","زر نوفا المتوهّج","`.ngb`","حلقة مخروطية تدور وهالة ولمعة تعبر",'<button class="ngb" type="button"><span class="ngb-halo" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-ring" aria-hidden="true"><i class="ngb-spin"></i></span><span class="ngb-shine" aria-hidden="true"></span><span class="ngb-label">استكشف القوالب</span></button>',0],
+ ["shb","زر التدرج السائل","`.shb` و`.lqg`","بقع لونية تنجرف خلف النص، للموقع العام",'<button class="shb" type="button" style="min-height:48px;padding:0 28px;font-size:16px"><span class="lqg" aria-hidden="true"></span><span class="shb-label">أنشئ مشروعك</span><span class="shb-ic" aria-hidden="true">'+ARW+'</span></button>',0],
+ ["tt","مبدّل المظهر","`.tt`","شمس وقمر؛ هنا يبدّل سمة هذا الموقع",'<button class="tt" type="button" aria-label="تبديل المظهر"><span class="tt-i tt-sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M2.6 12H5M19 12h2.4M5.4 5.4l1.7 1.7M16.9 16.9l1.7 1.7M5.4 18.6l1.7-1.7M16.9 7.1l1.7-1.7"/></svg></span><span class="tt-i tt-moon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></svg></span></button>',0],
+ ["di","تأكيد الحذف بعدّ","`.di`","نقرة تبدأ عدًّا 5 ثوانٍ، ونقرة ثانية تلغي",'<button class="di" type="button" data-seconds="5" data-cancel="إلغاء الحذف" data-done="تم الحذف"><span class="di-bar"></span><span class="di-l">حذف العنصر</span><span class="di-n" aria-hidden="true"></span></button>',0],
+ ["ab","شارات الحالة","`.ab`","نقطة بنبضة حلقة",'<span class="ab" data-state="ok"><span class="ab-dot"></span>منشورة</span><span class="ab" data-state="warn"><span class="ab-dot"></span>مسودة</span><span class="ab" data-state="bad"><span class="ab-dot"></span>بها خطأ</span>',0],
+ ["ir","حلقة الأيقونة","`.ir`","حلقة مخروطية تدور حول رمز",'<span class="ir" style="--ir-size:64px"><span class="ir-ring"></span><span class="ir-body"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.5 7.2 12 13l8.5-5.8"/></svg></span>',0],
  ["chips","الشرائح والمفاتيح","`.chip` و`.seg` و`.pill`","عناصر الواجهة المساندة في هذا الموقع",'<button class="chip" type="button">شريحة</button><button class="chip" type="button" style="border-color:var(--accent)">محددة</button><span class="seg"><button type="button" aria-pressed="true">كامل</button><button type="button" aria-pressed="false">مبسّط</button><button type="button" aria-pressed="false">ثابت</button></span><span class="pill s-ok">مسلّمة</span><span class="pill s-wait">بانتظار</span><span class="pill s-bad">أُعيدت</span>',0]];
 function curCard(v){var id=v[0];return'<div class="cd" data-v="'+id+'"><div class="cdn"><button class="sb sm" type="button" tabindex="-1">الرئيسية</button><button class="sb sm" type="button" aria-current="page" tabindex="-1">المتابعة</button><button class="sb sm" type="button" tabindex="-1">الفريق</button><i class="navind"></i></div><div class="cdt"><b>'+E(v[1])+'</b><span class="mini">'+E(v[2])+'</span></div><button class="sb sm" type="button" data-cv="'+id+'" aria-pressed="'+(CURSET===id)+'">'+(CURSET===id?"المعتمد حاليًا":"اعتمد هذا الشكل")+"</button></div>"}
 function sbSpeedRows(){apInit();return["sbspd","sbcur","sbidle","sbacc","sbdec","sbglow","sbshr","sbshc","sbshh"].map(function(k){var x=APG.filter(function(a){return a[0]===k})[0],v=AP.g[k]!=null?AP.g[k]:x[6];return'<label class="cl"><span>'+x[1]+' <output>'+apFmt(v)+x[5]+'</output></span><input type="range" data-apg="'+k+'" min="'+x[2]+'" max="'+x[3]+'" step="'+x[4]+'" value="'+v+'"></label>'}).join("")}
@@ -1495,9 +1498,9 @@ h+=sbColorCard();h+=ohkCard();
 var GZV=[["bl","التغبيش",24,0,60,1,"px"],["sa","التشبّع",1.5,.5,3,.05,""],["fa","كثافة التعبئة",.46,0,1,.01,""],["ba","وضوح الحافة",.24,0,1,.01,""],["rd","انحناء الزوايا",28,0,60,1,"px"],["hi","سطوع الحافة الداخلية",.3,0,1.2,.01,""],["sh","عمق الظل",.42,0,1,.01,""],["rf","قوة الانكسار",40,0,150,1,""],["au","كثافة الشفق",.85,0,1,.01,""],["aub","تمويه الشفق",35,0,80,1,"px"]];
 var GZT=[
  {id:"g6",name:"زجاج الموقع الحالي (G6)",cls:"gl",src:"`.gl`: الصنف المعتمد في كل الموقع؛ ضبطه هنا يغيّر الموقع كله",g:1},
- {id:"brand",name:"زجاج المكتب 1",cls:"gz-brand",src:"`.glass` في `Brand Tokens 1.css`",v:{bl:24,sa:1.5,fa:.46,ba:.24,rd:28,hi:.3,sh:.42},c:["bl","sa","fa","ba","rd","hi","sh"]},
+ {id:"brand",name:"زجاج المكتب 1",cls:"gz-brand",src:"`.glass`",v:{bl:24,sa:1.5,fa:.46,ba:.24,rd:28,hi:.3,sh:.42},c:["bl","sa","fa","ba","rd","hi","sh"]},
  {id:"strong",name:"الزجاج القوي",cls:"gz-brand",src:"`.glass-strong`: التعبئة الأكثف للنصوص الطويلة",v:{bl:24,sa:1.5,fa:.64,ba:.24,rd:28,hi:.3,sh:.42},c:["bl","sa","fa","ba","rd","hi","sh"]},
- {id:"office",name:"زجاج مكتب الإدارة",cls:"gz-office",src:"`Office Glass Element 1.css` (`.glass`، القرار 49)",v:{bl:20,sa:1.5,fa:.52,ba:.8,rd:22,sh:.08},c:["bl","sa","fa","ba","rd","sh"]},
+ {id:"office",name:"زجاج مكتب الإدارة",cls:"gz-office",src:"`.glass`",v:{bl:20,sa:1.5,fa:.52,ba:.8,rd:22,sh:.08},c:["bl","sa","fa","ba","rd","sh"]},
  {id:"flat",name:"الزجاج المسطّح",cls:"gz-flat",src:"`.glass-flat`: بلا ضبابية، للصفوف والبطاقات الداخلية",v:{bl:0,sa:1,fa:.5,ba:.14,rd:14},c:["bl","fa","ba","rd"]},
  {id:"liquid",name:"الزجاج السائل",cls:"gz-liquid",src:"Liquid Glass: انكسار الحافة كما في `.gb-glass` (يعمل بالانكسار في Chromium فقط)",v:{bl:3,sa:1.6,fa:.06,ba:.35,rd:26,hi:.45,sh:.4,rf:40},c:["bl","sa","fa","ba","rd","hi","sh","rf"]},
  {id:"frost",name:"الزجاج الصقيعي",cls:"gz-frost",src:"تغبيش عالٍ وتعبئة بيضاء، للأشرطة فوق الصور",v:{bl:40,sa:1.8,fa:.25,ba:.5,rd:24,hi:.5,sh:.25},c:["bl","sa","fa","ba","rd","hi","sh"]},
@@ -1578,13 +1581,13 @@ document.addEventListener("input",function(e){var t=e.target;if(!t.closest)retur
  if(t.id==="fst"||t.id==="fsz"||t.id==="fwt"){if(t.id==="fst")FS.t=t.value;if(t.id==="fsz"){FS.sz=+t.value;$("#fszo").textContent=FS.sz+"px"}if(t.id==="fwt"){FS.wt=+t.value;$("#fwto").textContent=FS.wt}ss("fs",FS);
   $$(".fcs").forEach(function(s){if(t.id==="fst"&&!s.closest(".fc").style.cssText.match(/IBM Plex Mono/))s.textContent=FS.t;s.style.fontSize=FS.sz+"px";s.style.fontWeight=FS.wt})}});
 
-/* Glass Button 1: يضيف انكسار الحافة وتتبّع الضوء والميل إلى العناصر .gb (الواجهة فقط).
+/* زر الزجاج: يضيف انكسار الحافة وتتبّع الضوء والميل إلى العناصر .gb (الواجهة فقط).
    بلا اعتماد. خريطة الإزاحة تُولَّد مرة واحدة لكل مقاس، ولا حلقة حركة إلا أثناء التفاعل. */
 (function(){
 'use strict';
 var SVG='http://www.w3.org/2000/svg',uid=0;
 
-function mode(){ /* مثل UI Motion Kit 1 */
+function mode(){ 
   var m=document.documentElement.getAttribute('data-motion')||'full';
   try{if(matchMedia('(prefers-reduced-motion: reduce) and (min-width:901px)').matches)return 'static'}catch(e){}
   return m;
@@ -1915,7 +1918,7 @@ try{if(window.claude&&claude.use)claude.use("db").then(function(db){if(db)stInit
 
 /* الإعدادات */
 function seg(k,opts){return'<div class="seg" role="group">'+opts.map(function(o){return'<button type="button" data-set="'+k+":"+o[0]+'" aria-pressed="'+(String(ST[k])===String(o[0]))+'">'+o[1]+"</button>"}).join("")+"</div>"}
-function setGeneral(){return '<div class="card rv" style="--i:2"><div class="setrow"><div><b>السمة</b><div class="mini">تلقائي يتبع النظام</div></div>'+seg("theme",[["auto","تلقائي"],["light","فاتح"],["dark","داكن"]])+'</div><div class="setrow"><div><b>مستوى الحركة</b><div class="mini">تقليل الحركة في النظام يفرض الثابت</div></div>'+seg("motion",[["full","كامل"],["simple","مبسّط"],["static","ثابت"]])+'</div><div class="setrow"><div><b>النقاط التفاعلية في الخلفية</b></div>'+seg("dots",[[true,"تعمل"],[false,"إيقاف"]])+'</div><div class="setrow"><div><b>وضع العرض</b><div class="mini">يخفي أدوات التعديل والنسخ ويكبّر الخط</div></div>'+seg("pres",[[true,"مفعّل"],[false,"معطّل"]])+'</div><div class="setrow"><div><b>بيانات هذا المتصفح</b><div class="mini">المفضلة والمونتاج والاستوديو وآخر زيارة</div></div><button class="sb sm" type="button" data-act="wipe">مسح</button></div></div>'}
+function setGeneral(){return '<div class="card rv" style="--i:2"><div class="setrow"><div><b>التصميم</b><div class="mini">«زجاجي» هو التصميم الحديث، و«كلاسيكي» الزجاجي المبسّط السابق</div></div>'+seg("skin",[["glass","زجاجي"],["classic","كلاسيكي"]])+'</div><div class="setrow"><div><b>السمة</b><div class="mini">تلقائي يتبع النظام</div></div>'+seg("theme",[["auto","تلقائي"],["light","فاتح"],["dark","داكن"]])+'</div><div class="setrow"><div><b>مستوى الحركة</b><div class="mini">تقليل الحركة في النظام يفرض الثابت</div></div>'+seg("motion",[["full","كامل"],["simple","مبسّط"],["static","ثابت"]])+'</div><div class="setrow"><div><b>النقاط التفاعلية في الخلفية</b></div>'+seg("dots",[[true,"تعمل"],[false,"إيقاف"]])+'</div><div class="setrow"><div><b>وضع العرض</b><div class="mini">يخفي أدوات التعديل والنسخ ويكبّر الخط</div></div>'+seg("pres",[[true,"مفعّل"],[false,"معطّل"]])+'</div><div class="setrow"><div><b>بيانات هذا المتصفح</b><div class="mini">المفضلة والمونتاج والاستوديو وآخر زيارة</div></div><button class="sb sm" type="button" data-act="wipe">مسح</button></div></div>'}
 function R_settings(){var t=tab.settings||"general",b=t==="look"?apHtml():t==="buttons"?libButtons():t==="glass"?libGlass():t==="fonts"?libFonts():t==="tools"?featTools():setGeneral();
  return head("الإعدادات","المظهر والحركة، وأنماط الأزرار والزجاج والخطوط، وتُحفظ في متصفحك.",TABS.settings)+b}
 var VIEWS={command:R_command,room:R_room,team:R_team,library:R_library,project:R_project,comms:R_comms,fav:R_fav,settings:R_settings};
@@ -1992,7 +1995,7 @@ document.addEventListener("click",function(e){var t=e.target;
   if(ac==="greset"){["gpos2","gpos3"].forEach(function(k){try{localStorage.removeItem("@@PREFIX@@"+k)}catch(e4){}delete mem[k]});toast("أُعيد الترتيب");return render()}
   if(ac==="wipe"){["fav","mt","zs","visit","gpos","gpos2","gpos3","drpos","fw_dr","fw_gpop","fw_edl","tour","dl"].forEach(function(k){try{localStorage.removeItem("@@PREFIX@@"+k)}catch(e3){}delete mem[k]});FAV=[];MT={a:null,b:null};Z={lvl:{},mute:{},solo:{},sel:1};toast("مُسح");return}
  }
- if(t.id==="th"){return setPref("theme",MODES[(MODES.indexOf(ST.theme)+1)%3])}
+ if(t.closest("#th")){return setPref("theme",MODES[(MODES.indexOf(ST.theme)+1)%3])}
  if(t.id==="pr"){return setPref("pres",!ST.pres)}
  if(t.id==="sq"){return palOpen()}
  if(t.closest("#drx")){return closeD()}
@@ -2017,7 +2020,7 @@ document.addEventListener("drop",function(e){var s=e.target.closest&&e.target.cl
  function cs(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
  function Pp(){return{sp:+cs("--dsp"),R:+cs("--dR"),lo:+cs("--dlo"),nc:cs("--dotn"),lc:cs("--dotl"),hc:cs("--doth")}}
  function init(){var p=Pp(),d=Math.min(devicePixelRatio||1,1.5);W=innerWidth;Hh=innerHeight;cv.width=W*d;cv.height=Hh*d;ctx.setTransform(d,0,0,d,0,0);cols=Math.ceil(W/p.sp)+1;rows=Math.ceil(Hh/p.sp)+1;N=[];key=p.sp+"|"+W+"|"+Hh;
-  for(var i=0;i<cols;i++)for(var j=0;j<rows;j++)N.push({x:i*p.sp,y:j*p.sp,bx:i*p.sp,by:j*p.sp,vx:0,vy:0,r:Math.random()*.6+.7,p:Math.random()*6.283})}
+  for(var i=0;i<cols;i++)for(var j=0;j<rows;j++)N.push({x:i*p.sp,y:j*p.sp,bx:i*p.sp,by:j*p.sp,vx:0,vy:0,r:Math.random()*.35+.45,p:Math.random()*6.283})}
  function frame(now){requestAnimationFrame(frame);if(document.hidden||!ST.dots)return;var p=Pp();if(key!==p.sp+"|"+W+"|"+Hh)init();
   var dt=Math.min((now-last)/1000,.05)||.016;last=now;var vx=(ms.x-ms.px)/(dt*1000||1),vy=(ms.y-ms.py)/(dt*1000||1);ms.px=ms.x;ms.py=ms.y;var sp=Math.sqrt(vx*vx+vy*vy),R=p.R,MC=1.2*p.sp,i,j,n,dx,dy,d,a,pw;ctx.clearRect(0,0,W,Hh);
   for(i=0;i<N.length;i++){n=N[i];n.p+=dt*3;dx=ms.x-n.x;dy=ms.y-n.y;d=Math.sqrt(dx*dx+dy*dy);if(!rm&&d<R&&d>0){pw=1-d/R;a=pw*(1500+sp*150);n.vx-=dx/d*a*dt;n.vy-=dy/d*a*dt}n.vx+=(n.bx-n.x)*18*dt;n.vy+=(n.by-n.y)*18*dt;var df=Math.pow(.82,dt*60);n.vx*=df;n.vy*=df;n.x+=n.vx*dt*60;n.y+=n.vy*dt*60}
@@ -2093,7 +2096,7 @@ nav#nav{flex-wrap:nowrap!important;gap:clamp(3px,.5vw,8px)!important;min-width:0
 
 .pg{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:flex-start}
 .pc{position:relative;flex:none;border:1px solid var(--line);border-radius:10px;background-color:var(--card,#1a1440);background-repeat:no-repeat;cursor:pointer;padding:0;overflow:hidden;background-color:rgba(255,255,255,.04)}
-.pc b{position:absolute;inset-inline-end:4px;bottom:4px;font-size:11px;background:rgba(10,8,30,.78);color:#ffd27a;border-radius:20px;padding:0 6px;font-weight:500}
+.pc b{position:absolute;inset-inline-end:4px;bottom:4px;font-size:11px;background:rgba(10,8,30,.78);color:#BCD6FF;border-radius:20px;padding:0 6px;font-weight:500}
 .pc:focus-visible{outline:2px solid var(--accent,#8FB4FF);outline-offset:2px}
 #rv{position:fixed;inset:0;z-index:900;display:none;place-items:center;background:rgba(5,4,18,.72);padding:16px}
 #rv.on{display:grid}
@@ -2101,7 +2104,7 @@ nav#nav{flex-wrap:nowrap!important;gap:clamp(3px,.5vw,8px)!important;min-width:0
 #rv .big{border-radius:14px;background-color:#0e0b26;background-repeat:no-repeat;image-rendering:auto}
 #rv .stars{display:flex;gap:6px;justify-content:center;direction:ltr}
 #rv .stars button{font-size:30px;line-height:1;background:none;border:0;color:#6c6697;cursor:pointer;padding:2px}
-#rv .stars button.on{color:#ffc857}
+#rv .stars button.on{color:#B9A2FF}
 #rv textarea{width:100%;min-height:78px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:inherit;padding:10px;font:inherit;resize:vertical}
 
 /* الصف 19: عند «الصفحة مفتوحة» مع التعويم يبقى شعاع الزر بلون حالة المفتوحة (الافتراضي)، ويمكن إعادته للون التعويم من الإعدادات */

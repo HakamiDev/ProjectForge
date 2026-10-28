@@ -222,6 +222,52 @@ class ForgeTests(unittest.TestCase):
         self.assertTrue(all(d["plat"] in core.PLATFORMS for d in core.site_data(root2)["team"]))
         self.assertIn("العربية", core.lang_note(""))
 
+    def test_attention_and_status(self):
+        import datetime as dt
+        root = new_project(self.tmp)
+        self.assertEqual(core.attention(root), [])
+
+        def add(to, task, after="—", due="—"):
+            core.cmd_add_row(argparse.Namespace(root=str(root), frm="البوصلة", to=to, task=task, inputs="—", output="—", after=after, due=due, next="—", cap=5, force=False))
+
+        add("رئيس المنتج", "كتابة المرجع", due="2026-10-01")
+        add("رئيس المنتج", "مراجعة المرجع", after="2")
+        add("رئيس المنتج", "مهمة معطلة", after="99")
+        kinds = {(i["kind"], i["n"]) for i in core.attention(root)}
+        self.assertIn(("overdue", 2), kinds)
+        self.assertIn(("blocked", 3), kinds)
+        self.assertIn(("dead", 4), kinds)
+        later = core.now() + dt.timedelta(days=5)
+        kinds = {(i["kind"], i["n"]) for i in core.attention(root, at=later)}
+        self.assertIn(("stalled", 1), kinds)
+        att = core.attention(root)
+        self.assertEqual([i["sev"] for i in att], sorted(i["sev"] for i in att))
+        d = core.site_data(root)
+        self.assertEqual(len(d["att"]), len(att))
+        self.assertIn("تجاوز موعده", core.report_md(core.metrics(root)))
+        self.assertEqual(core.parse_due("٣٠ أكتوبر ٢٠٢٦").day, 30)
+        self.assertEqual(core.parse_due("2026/11/05").month, 11)
+        self.assertIsNone(core.parse_due("—"))
+        self.assertEqual([core.human_span(h) for h in (0.2, 1, 2, 5, 30, 48, 72, 24 * 11)], ["أقل من ساعة", "ساعة", "ساعتان", "5 ساعات", "30 ساعة", "يومان", "3 أيام", "11 يومًا"])
+        with self.assertRaises(SystemExit) as cm:
+            core.cmd_status(argparse.Namespace(root=str(root), json=False, strict=True))
+        self.assertEqual(cm.exception.code, 2)
+        core.cmd_status(argparse.Namespace(root=str(root), json=True, strict=False))
+
+    def test_no_private_traces(self):
+        """المستودع عام: لا يجوز أن تتسرب أسماء ملفات أو مسارات أو قرارات داخلية إلى القوالب."""
+        import re
+        bad = ["مرسال", "Mersal", "Shared Assets", "Hyperiux", "Brand Tokens", "UI Motion Kit",
+               "Glass Button 1", "Glass Extras", "Office Glass Element", "Framer Components", "رقم 1\\\""]
+        pat = re.compile(r"القرار \d+(?![\d ]*ساعة)|Templates/")
+        d = Path(core.__file__).parent / "templates"
+        for f in d.iterdir():
+            if f.suffix in (".html", ".css"):
+                t = f.read_text(encoding="utf-8")
+                for b in bad:
+                    self.assertNotIn(b, t, (f.name, b))
+                self.assertIsNone(pat.search(t), f.name)
+
     def test_single_file_build(self):
         src = core.single_source()
         self.assertIn('_TEMPLATE_Z = """', src)
