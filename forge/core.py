@@ -2044,7 +2044,6 @@ LANGUAGES = [
     ("Ελληνικά (Greek)", "Ελληνικά", "اليونانية", "Greek"),
     ("فارسی (Persian)", "فارسی", "الفارسية", "Persian"),
     ("اردو (Urdu)", "اردو", "الأردية", "Urdu"),
-    ("עברית (Hebrew)", "עברית", "العبرية", "Hebrew"),
     ("हिन्दी (Hindi)", "हिन्दी", "الهندية", "Hindi"),
     ("বাংলা (Bengali)", "বাংলা", "البنغالية", "Bengali"),
     ("Bahasa Indonesia", "Bahasa Indonesia", "الإندونيسية", "Indonesian"),
