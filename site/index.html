@@ -99,11 +99,11 @@ footer a{color:inherit}
 .hero>*{animation:up .8s cubic-bezier(.2,.8,.2,1) both}
 .hero>*:nth-child(2){animation-delay:.08s}.hero>*:nth-child(3){animation-delay:.16s}.hero>*:nth-child(4){animation-delay:.24s}.hero>*:nth-child(5){animation-delay:.32s}
 @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-h1 em{background-size:200% 100%;animation:shimmer 7s linear infinite}
-@keyframes shimmer{to{background-position:200% 0}}
+h1 em{background-size:200% 100%;animation:shimmer-ltr 7s linear infinite}
+@keyframes shimmer-ltr{from{background-position:0% 0}to{background-position:-200% 0}}
 /* اتجاه اللون المتحرك يتبع اتجاه اللغة: يبدأ من اليسار في اللغات اليسارية ومن اليمين في اليمينية */
-html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7B4DFF);animation-name:shimmer}
-@keyframes shimmerr{to{background-position:-200% 0}}
+html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7B4DFF);animation-name:shimmer-rtl}
+@keyframes shimmer-rtl{from{background-position:0% 0}to{background-position:200% 0}}
 .btn.p{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--glow)))}
 .btn.p:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
 .btn.p:hover:after{transform:translateX(120%)}
