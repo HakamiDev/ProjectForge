@@ -1,9 +1,12 @@
 import argparse
+import contextlib
+import io
 import json
 import re
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -15,6 +18,27 @@ def new_project(tmp, preset="general", owner="الرئيس"):
 
 
 class ForgeTests(unittest.TestCase):
+    def test_gui_terminal_messages_are_english(self):
+        output = io.StringIO()
+        with mock.patch("http.server.ThreadingHTTPServer") as server, mock.patch("threading.Thread"), contextlib.redirect_stdout(output):
+            server.return_value.server_address = ("127.0.0.1", 54207)
+            server.return_value.serve_forever.side_effect = KeyboardInterrupt
+            core.cmd_gui(argparse.Namespace(port=0, no_browser=True))
+        text = output.getvalue()
+        self.assertIn("Project Forge is running.", text)
+        self.assertIn("http://127.0.0.1:54207/", text)
+        self.assertIn("Ctrl+C", text)
+        self.assertIn("Stopped.", text)
+        self.assertNotRegex(text, r"[\u0600-\u06ff]")
+        server.return_value.server_close.assert_called_once()
+
+    def test_cli_help_and_errors_are_english(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output), self.assertRaises(SystemExit):
+            core.main(["--help"])
+        self.assertNotRegex(output.getvalue(), r"[\u0600-\u06ff]")
+        self.assertEqual(core.terminal_diagnostic("الصف 4: اسم غير معروف «Alice»"), "Row 4: unknown team member Alice")
+
     def setUp(self):
         self._t = tempfile.TemporaryDirectory(prefix="forge test ")
         self.tmp = Path(self._t.name)

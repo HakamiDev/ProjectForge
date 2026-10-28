@@ -16,7 +16,7 @@ Project Forge 1: أداة بناء مشروع بفريق ذكاء اصطناعي
   add-role   يضيف دورًا جديدًا ويحدّث القواعد والأوامر والموقع.
   decide     يسجّل قرارًا في سجل القرارات.
   report     تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة.
-  export     يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV جاهزة لـ Power BI وExcel.
+  export     يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV بترميز UTF-8 مع BOM.
   check      يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.
   register   يسجّل المشروع في سجل مركز البوصلات (Registry.md).
   selftest   يختبر الأداة على مشروع مؤقت.
@@ -674,7 +674,7 @@ PRESET_META = {
     "software": ("برمجي", "تطبيقات ومواقع: واجهات وخلفية وتجربة ونشر.", "💻", "تقنية وبيانات"),
     "transformation": ("تحول بالذكاء الاصطناعي", "أتمتة وتحول رقمي: عمليات وبيانات وامتثال وتبنٍّ.", "🤖", "تقنية وبيانات"),
     "operations": ("عمليات وأداء", "إجراءات ومؤشرات أداء وأتمتة العمل المتكرر.", "⚙️", "عمليات وإمداد وجودة"),
-    "data": ("بيانات وذكاء أعمال", "نماذج بيانات ولوحات Power BI وجودة البيانات.", "🗃️", "تقنية وبيانات"),
+    "data": ("بيانات وذكاء أعمال", "نماذج بيانات ولوحات مؤشرات وجودة البيانات.", "🗃️", "تقنية وبيانات"),
     "content": ("محتوى", "كتابة وبحث وتصميم ونشر ومتابعة الأثر.", "✍️", "محتوى وإبداع وإعلام"),
     "design": ("تصميم وإبداع", "هوية وتجربة ومفاهيم وإنتاج.", "🎨", "محتوى وإبداع وإعلام"),
     "media": ("إنتاج إعلامي", "سيناريو وتحرير وضيوف ونشر.", "🎬", "محتوى وإبداع وإعلام"),
@@ -757,7 +757,7 @@ GOAL_EXAMPLES = {
     "software": ["بناء تطبيق ويب لإدارة الطلبات", "إعادة بناء الموقع بتصميم جديد"],
     "transformation": ["أتمتة إجراء متكرر مع قياس الزمن والأخطاء قبل وبعد", "خارطة طريق للتحول بالذكاء الاصطناعي في الإدارة"],
     "operations": ["تبسيط إجراءات الإدارة وخفض زمن الدورة", "بناء مؤشرات أداء شهرية للعمليات"],
-    "data": ["لوحة Power BI لمؤشرات المبيعات", "تنظيف مصادر البيانات وتوحيد تعريفات المؤشرات"],
+    "data": ["لوحة مؤشرات المبيعات", "تنظيف مصادر البيانات وتوحيد تعريفات المؤشرات"],
     "content": ["إطلاق نشرة أسبوعية خلال شهر", "إنتاج 12 مقالًا موثقًا لربع سنة"],
     "design": ["هوية بصرية كاملة لعلامة جديدة", "إعادة تصميم تجربة التطبيق"],
     "media": ["إطلاق بودكاست من عشر حلقات", "إنتاج سلسلة فيديو تعريفية"],
@@ -1235,7 +1235,7 @@ NEW_SKILLS_3 = {
     'cohort-analysis': ('تحليل الأفواج', 'تتبع سلوك مجموعات العملاء بحسب تاريخ انضمامهم لقياس الاحتفاظ والقيمة.', 'بيانات',
         '## متى\nعند الحاجة إلى معرفة ما إذا كان الاحتفاظ بالعملاء يتحسن أو يتراجع عبر الزمن، أو لقياس أثر تغيير في المنتج أو التسعير.\n\n## الخطوات\n1. عرّف الفوج بتاريخ أول عملية للعميل مجمّعًا شهريًا، وعرّف حدث العودة بدقة في جملة واحدة مثل «عملية شراء مدفوعة».\n2. حضّر جدولًا بالأعمدة: معرّف العميل، شهر الانضمام، شهر النشاط، وتأكد أن كل فوج يضم 50 عميلًا على الأقل وإلا فادمجه مع الفوج المجاور.\n3. ابنِ مصفوفة الاحتفاظ: الصفوف أفواج، والأعمدة الشهر 1 إلى 12 بعد الانضمام، والقيم نسبة العملاء النشطين.\n4. قارن الأفواج عند نقاط ثابتة: الشهر 1، والشهر 3، والشهر 6، وعلّم أي فوج ينحرف عن متوسط الأفواج السابقة بأكثر من 5 نقاط مئوية.\n5. اربط كل انحراف ملحوظ بحدث موثق بتاريخه مثل حملة أو تغيير سعر أو عطل، أو اكتب صراحة أن السبب غير معروف.\n6. اختم بثلاث نتائج قابلة للتنفيذ على الأكثر، ولكل نتيجة الفوج الذي تستند إليه.\n\n## المخرج\nملف في `Outputs/` باسم «تحليل الأفواج [المنتج] [الفترة].md» مع مصفوفة الاحتفاظ في `Data/`.\n\n## معيار القبول\nلا يُقبل تحليل بفوج يقل عن 50 عميلًا، أو بانحراف ملحوظ لم يُربط بحدث أو يُصرَّح بجهل سببه.\n'),
     'dashboard-spec': ('مواصفة لوحة مؤشرات', 'كتابة مواصفة كاملة للوحة مؤشرات قبل بنائها: المؤشرات والمصادر والتحديث والصلاحيات.', 'بيانات',
-        '## متى\nقبل بناء أي لوحة مؤشرات في Power BI أو ما يماثله، أو عند طلب تعديل جوهري على لوحة قائمة.\n\n## الخطوات\n1. حدّد الجمهور والقرار الذي تخدمه اللوحة في جملة واحدة، واقصر المؤشرات الرئيسة على 6 على الأكثر في الصفحة الأولى.\n2. اكتب لكل مؤشر: الاسم، والمعادلة، والوحدة، والمصدر، وجدول البيانات وعموده، والاتجاه المرغوب، وحد التنبيه.\n3. حدّد مصادر البيانات ونمط التحديث لكل مصدر: يومي أو أسبوعي أو لحظي، والمسؤول عن جودته.\n4. ارسم تخطيط الصفحات: الصفحة الأولى للملخص، وصفحة لكل محور تحليل، مع عوامل التصفية المشتركة.\n5. حدّد الصلاحيات: من يرى كل صفحة، وأي صفوف تُقيَّد بحسب المستخدم.\n6. اكتب قائمة اختبارات القبول: مطابقة كل مؤشر بالمصدر الأصلي لعيّنة من 3 فترات، وزمن تحميل لا يتجاوز 5 ثوانٍ.\n\n## المخرج\nملف في `Docs/` باسم «مواصفة لوحة [الاسم].md».\n\n## معيار القبول\nلا تُقبل مواصفة بمؤشر بلا معادلة ومصدر محددين، أو بأكثر من 6 مؤشرات رئيسة في الصفحة الأولى.\n'),
+        '## متى\nقبل بناء أي لوحة مؤشرات لتحليل البيانات، أو عند طلب تعديل جوهري على لوحة قائمة.\n\n## الخطوات\n1. حدّد الجمهور والقرار الذي تخدمه اللوحة في جملة واحدة، واقصر المؤشرات الرئيسة على 6 على الأكثر في الصفحة الأولى.\n2. اكتب لكل مؤشر: الاسم، والمعادلة، والوحدة، والمصدر، وجدول البيانات وعموده، والاتجاه المرغوب، وحد التنبيه.\n3. حدّد مصادر البيانات ونمط التحديث لكل مصدر: يومي أو أسبوعي أو لحظي، والمسؤول عن جودته.\n4. ارسم تخطيط الصفحات: الصفحة الأولى للملخص، وصفحة لكل محور تحليل، مع عوامل التصفية المشتركة.\n5. حدّد الصلاحيات: من يرى كل صفحة، وأي صفوف تُقيَّد بحسب المستخدم.\n6. اكتب قائمة اختبارات القبول: مطابقة كل مؤشر بالمصدر الأصلي لعيّنة من 3 فترات، وزمن تحميل لا يتجاوز 5 ثوانٍ.\n\n## المخرج\nملف في `Docs/` باسم «مواصفة لوحة [الاسم].md».\n\n## معيار القبول\nلا تُقبل مواصفة بمؤشر بلا معادلة ومصدر محددين، أو بأكثر من 6 مؤشرات رئيسة في الصفحة الأولى.\n'),
     'data-quality-check': ('فحص جودة البيانات', 'فحص منهجي لمجموعة بيانات قبل استخدامها في تحليل أو تقرير.', 'بيانات',
         '## متى\nعند استلام مجموعة بيانات جديدة، أو قبل الاعتماد على بيانات في قرار أو تقرير تنفيذي.\n\n## الخطوات\n1. وثّق المصدر وتاريخ الاستخراج وعدد الصفوف والأعمدة، وقارن عدد الصفوف بالمتوقع من النظام الأصلي.\n2. افحص كل عمود على ستة أبعاد: الاكتمال، والتفرد، والنوع، والنطاق، والاتساق، والحداثة، وسجّل النتيجة في جدول.\n3. علّم كل عمود تتجاوز نسبة القيم المفقودة فيه 5%، وكل مفتاح مكرر، وكل قيمة خارج نطاقها المنطقي مثل تاريخ مستقبلي أو كمية سالبة.\n4. اختر عيّنة عشوائية من 30 صفًا وطابقها يدويًا بالمصدر الأصلي، وسجّل عدد الصفوف المطابقة.\n5. صنّف كل مشكلة: حرجة تمنع الاستخدام، أو متوسطة تحتاج تصحيحًا، أو منخفضة تُوثَّق فقط، مع الإجراء المقترح ومالكه.\n6. اكتب حكمًا نهائيًا في سطر واحد: صالحة للاستخدام، أو صالحة بشروط، أو غير صالحة.\n\n## المخرج\nملف في `Docs/QA/` باسم «فحص جودة [مجموعة البيانات].md».\n\n## معيار القبول\nلا يُقبل فحص بلا مطابقة عيّنة بالمصدر الأصلي، أو بلا حكم نهائي صريح على صلاحية البيانات.\n'),
     'procurement-rfq': ('طلب عروض أسعار', 'إعداد طلب عروض أسعار موحد للموردين ومقارنة العروض بمعايير معلنة.', 'عمليات',
@@ -1317,7 +1317,7 @@ PRESET_SYNONYMS = {
     "aiproduct": "ذكاء اصطناعي شات بوت مساعد ذكي نموذج لغوي GPT وكيل",
     "nocode": "أتمتة Power Automate Zapier Make بلا كود تدفق",
     "transformation": "تحول رقمي أتمتة إجراءات ذكاء اصطناعي مؤسسي",
-    "data": "بيانات داتا Power BI لوحة مؤشرات داشبورد تقارير تحليل",
+    "data": "بيانات داتا لوحة مؤشرات داشبورد تقارير تحليل",
     "cyber": "أمن سيبراني أمن معلومات حماية اختراق سياسات أمنية",
     "itops": "دعم فني تقني هيلب ديسك صيانة أجهزة شبكة",
     "operations": "عمليات إجراءات أداء مؤشرات تشغيل",
@@ -1446,7 +1446,7 @@ def commands_library(team):
         {"label": "تحديث الموقع", "text": "%s build" % tool},
         {"label": "تحديث تلقائي", "text": "%s watch" % tool},
         {"label": "تقرير أداء", "text": "%s report" % tool},
-        {"label": "تصدير إلى Power BI", "text": "%s export" % tool},
+        {"label": "تصدير CSV", "text": "%s export" % tool},
         {"label": "فحص المشروع", "text": "%s check" % tool},
         {"label": "إضافة دور", "text": "%s add-role \"اسم الدور\" --title \"المجال\" --scope \"المهام\"" % tool},
         {"label": "إضافة مهارة", "text": "%s add-skill measure" % tool},
@@ -1534,6 +1534,39 @@ def write_new(path, text, report=None):
     return True
 
 
+def terminal_label(value):
+    """Use English catalogue labels in the CLI; leave user-authored values intact."""
+    if not hasattr(terminal_label, "catalogue"):
+        wizard = load_wizard()
+        match = re.search(r"\bvar CAT\s*=\s*", wizard)
+        terminal_label.catalogue = json.JSONDecoder().raw_decode(wizard[match.end():])[0] if match else {}
+    return terminal_label.catalogue.get(value, value)
+
+
+def terminal_diagnostic(text):
+    """Translate application diagnostics; preserve project names and user-authored values."""
+    templates = [
+        ("اسم فيه شرطة سفلية: %s", "Name contains an underscore: %s"),
+        ("لا يوجد %s في الفريق: لا يمكن ضمان أن مخرجًا يصل إلى %s بحكم مستقل", "Missing %s in the team: independent quality review for %s cannot be guaranteed"),
+        ("ملف الدور ناقص: %s", "Missing role file: %s"),
+        ("ترقيم اللوحة مكرر أو غير مرتب", "Board row numbers are duplicated or out of order"),
+        ("الترقيم يجب أن يبدأ من 1", "Row numbering must start at 1"),
+        ("الصف %d: اسم غير معروف «%s»", "Row %d: unknown team member %s"),
+        ("الصف %d: حالة غير معتمدة «%s»", "Row %d: invalid status %s"),
+        ("الصف %d: يبدأ بعد صف غير موجود %s", "Row %d: missing dependency %s"),
+        ("%s: %d صفوف مفتوحة (السقف 5)", "%s: %d open rows (limit 5)"),
+        ("القرارات المعلقة %d (السقف %d)", "%d pending decisions (limit %d)"),
+        ("القرار المعلق %d تجاوز %d ساعة: يؤخذ بالتوصية ويُسجَّل بـ decide", "Pending decision %d is over %d hours old: follow the recommendation and record it with decide"),
+    ]
+    for source, target in templates:
+        pattern = "(.*?)".join(re.escape(part) for part in re.split(r"%[sd]", source))
+        match = re.fullmatch(pattern, text, re.S)
+        if match:
+            values = iter(match.groups())
+            return re.sub(r"%[sd]", lambda _: next(values), target)
+    return text
+
+
 def die(msg, code=1):
     print(msg, file=sys.stderr)
     sys.exit(code)
@@ -1549,7 +1582,7 @@ def find_root(start=None):
         for p in [c] + list(c.parents):
             if (p / "Agents" / "Team.json").exists():
                 return p
-    die("لم أجد مشروعًا هنا (لا يوجد Agents/Team.json). شغّل الأمر من داخل مجلد المشروع أو مرّر --root.")
+    die("No project found (Agents/Team.json is missing). Run from the project folder or pass --root.")
 
 
 def load_team(root):
@@ -2154,7 +2187,7 @@ def create_project(parent, name, goal, owner, preset, roles, accent, report, ski
     project = clean_name(name)
     root = Path(parent).resolve() / project
     if (root / "Agents" / "Team.json").exists():
-        die("المشروع موجود أصلًا في: %s" % root)
+        die("Project already exists: %s" % root)
     for d in ["Agents/Roles", "Agents/Handoffs", "Agents/Row Drafts", "Docs/QA", "Docs/Reports", "Outputs", "Data", "Archive", "Office", "Tools"]:
         (root / d).mkdir(parents=True, exist_ok=True)
     preset_roles = roles if roles else PRESETS[preset]
@@ -2217,7 +2250,7 @@ def load_template():
         import base64
         import zlib
         return zlib.decompress(base64.b64decode(_TEMPLATE_Z)).decode("utf-8")
-    die("قالب الموقع غير موجود")
+    die("Site template not found")
 
 
 def load_wizard():
@@ -2228,7 +2261,7 @@ def load_wizard():
         import base64
         import zlib
         return zlib.decompress(base64.b64decode(_WIZARD_Z)).decode("utf-8")
-    die("واجهة الإنشاء غير موجودة")
+    die("Creation wizard not found")
 
 
 def single_source():
@@ -2502,12 +2535,12 @@ def choose_roles_interactive(base):
     """يعرض الفريق المقترح ويتيح الحذف والإضافة قبل الإنشاء."""
     roles = list(base)
     while True:
-        print("\nالفريق المقترح (البوصلة تُضاف تلقائيًا، ودور ضمان الجودة لا يُحذف):")
+        print("\nSuggested team (Compass is added automatically; the QA role cannot be removed):")
         for i, r in enumerate(roles, 1):
-            print("  %d) %s: %s" % (i, r[0], r[1]))
-        print("اضغط Enter للموافقة، أو اكتب:")
-        print("  -2        لحذف الدور رقم 2 (ويصح -2,3)")
-        print("  +اسم الدور | مجاله     لإضافة دور")
+            print("  %d) %s: %s" % (i, terminal_label(r[0]), terminal_label(r[1])))
+        print("Press Enter to accept, or type:")
+        print("  -2        Remove role 2 (or -2,3 for multiple roles)")
+        print("  +Role name | Scope     Add a role")
         cmd = input("> ").strip()
         if not cmd:
             return roles
@@ -2518,7 +2551,7 @@ def choose_roles_interactive(base):
         elif cmd[0] == "+":
             roles = customize_roles(roles, [], [cmd[1:]])
         else:
-            print("لم أفهم الأمر. اضغط Enter للموافقة على الفريق كما هو.")
+            print("Unknown command. Press Enter to accept the current team.")
 
 
 def cmd_new(a):
@@ -2530,29 +2563,29 @@ def cmd_new(a):
         v = input("%s%s: " % (prompt, (" [%s]" % default) if default else "")).strip()
         return v or default
 
-    name = a.name or ask("اسم المشروع")
+    name = a.name or ask("Project name")
     if not name:
-        die("اسم المشروع مطلوب: new \"الاسم\" --goal \"الهدف بجملة\"")
-    goal = a.goal or ask("هدف المشروع بجملة واحدة")
+        die("Project name is required: new \"Name\" --goal \"One-sentence goal\"")
+    goal = a.goal or ask("Project goal in one sentence")
     if not goal:
-        die("هدف المشروع مطلوب: --goal \"...\"")
-    owner = a.owner or ask("كيف تحب أن يخاطبك الفريق", "الرئيس")
+        die("Project goal is required: --goal \"...\"")
+    owner = a.owner or ask("How should the team address you?", "الرئيس")
     preset = a.preset
     if not preset:
         names = list(PRESETS)
-        labels = PRESET_LABELS
+        labels = {k: k for k in PRESETS}
         if interactive:
-            print("نوع الفريق:")
+            print("Team type:")
             for g in PRESET_GROUPS:
                 items = ["%d) %s" % (i, labels.get(k, k)) for i, k in enumerate(names, 1) if PRESET_META[k][3] == g]
                 if items:
-                    print("  %s:  %s" % (g, "   ".join(items)))
-            pick = ask("اختر الرقم", "1")
+                    print("  " + "   ".join(items))
+            pick = ask("Choose a number", "1")
             preset = names[int(pick) - 1] if pick.isdigit() and 1 <= int(pick) <= len(names) else (pick if pick in PRESETS else "general")
         else:
             preset = "general"
     if preset not in PRESETS and not a.roles_file:
-        die("نوع الفريق غير معروف: %s. المتاح: %s" % (preset, ", ".join(PRESETS)))
+        die("Unknown team type: %s. Available: %s" % (preset, ", ".join(PRESETS)))
     roles = None
     if a.roles_file:
         data = json.loads(Path(a.roles_file).read_text(encoding="utf-8"))
@@ -2573,10 +2606,10 @@ def cmd_new(a):
         skills = [k.strip() for k in a.skills.split(",")]
     pv = a.platform
     if not pv and interactive:
-        pv = {"2": "chatgpt", "3": "grok", "4": "gemini"}.get(ask("المنصة: 1) Claude  2) ChatGPT  3) Grok  4) Gemini", "1"), "claude")
+        pv = {"2": "chatgpt", "3": "grok", "4": "gemini"}.get(ask("Platform: 1) Claude  2) ChatGPT  3) Grok  4) Gemini", "1"), "claude")
     platform = norm_platform(pv) if pv else "Claude"
     if not a.language and interactive:
-        a.language = ask("لغة العمل (العربية أو English أو أي لغة)", "العربية")
+        a.language = ask("Working language (Arabic, English, or any language)", "العربية")
     if platform != "Claude":
         base = roles if roles else PRESETS[preset]
         roles = [(n, t, sc, platform if norm_platform(pl) == "Claude" else pl) for (n, t, sc, pl) in base]
@@ -2585,22 +2618,22 @@ def cmd_new(a):
         try_register(root, a.registry)
     if interactive:
         compass = next(r for r in load_team(root)["roster"] if r["id"] == "compass")
-        print("\nتم إنشاء مشروعك بنجاح (%d ملفًا)." % len(report))
-        print("المكان: %s\n" % root)
-        print("الخطوات التالية:")
-        print("1. سيفتح موقع الإدارة الآن في المتصفح (وهو أيضًا في Office/%s)." % OFFICE_FILE)
-        print("2. أنشئ مشروعًا باسم المشروع في %s، وأضف إليه مجلد المشروع من مكانه الأصلي." % platform)
-        print("3. ألصق هذا الأمر في المحادثة لتبدأ مع البوصلة:\n")
+        print("\nProject created successfully (%d files)." % len(report))
+        print("Location: %s\n" % root)
+        print("Next steps:")
+        print("1. The management site will open in your browser (also available at Office/%s)." % OFFICE_FILE)
+        print("2. Create a project with the same name in %s and add the project folder from its original location." % platform)
+        print("3. Paste this command into the chat to start with Compass:\n")
         print("    " + start_cmd(compass, load_team(root).get("language")))
     else:
-        print("تم إنشاء المشروع: %s\n" % root)
+        print("Project created: %s\n" % root)
         for k, p in report:
             try:
                 rel = p.relative_to(root)
             except ValueError:
                 rel = p
-            print("  %s  %s" % (k, rel))
-        print("\nالخطوة التالية: افتح Office/%s ثم كلّم البوصلة وحدها." % OFFICE_FILE)
+            print("  %s  %s" % ({"أُنشئ": "Created", "تُرك": "Kept"}.get(k, k), rel))
+        print("\nNext: open Office/%s, then start with Compass." % OFFICE_FILE)
     if interactive:
         try:
             import webbrowser
@@ -2668,7 +2701,7 @@ def install_shortcut():
 
 def cmd_shortcut(a):
     path = install_shortcut()
-    print("تم. ستجد «Project Forge» على سطح المكتب، وتفتحه بنقرتين:\n    %s" % path)
+    print("Done. Double-click Project Forge on your desktop to open it:\n    %s" % path)
 
 
 def cmd_gui(a):
@@ -2799,8 +2832,8 @@ def cmd_gui(a):
         srv = http.server.ThreadingHTTPServer(("127.0.0.1", a.port), H)
     except OSError:
         if not a.port:
-            die("تعذّر فتح منفذ محلي. تحقق من إعدادات جدار الحماية ثم أعد المحاولة.")
-        print("المنفذ %d مشغول، سأختار منفذًا آخر." % a.port)
+            die("Could not open a local port. Check your firewall settings and try again.")
+        print("Port %d is busy. Choosing another port." % a.port)
         srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
     state["port"] = srv.server_address[1]
     url = "http://127.0.0.1:%d/" % state["port"]
@@ -2815,8 +2848,8 @@ def cmd_gui(a):
                 return
 
     threading.Thread(target=watchdog, daemon=True).start()
-    print("Project Forge يعمل الآن. إن لم تُفتح الصفحة تلقائيًا فافتح هذا الرابط:\n\n    %s\n" % url)
-    print("تتوقف الأداة وحدها عند إغلاق الصفحة. (للإيقاف الفوري: Ctrl+C)")
+    print("Project Forge is running. If the page does not open automatically, open this URL:\n\n    %s\n" % url)
+    print("The tool stops automatically after the page is closed. To stop immediately, press Ctrl+C.")
     if not a.no_browser:
         try:
             webbrowser.open(url)
@@ -2827,13 +2860,13 @@ def cmd_gui(a):
     except KeyboardInterrupt:
         pass
     srv.server_close()
-    print("تم الإغلاق.")
+    print("Stopped.")
 
 
 def cmd_build(a):
     root = find_root(a.root)
     out = build_site(root, None, a.open)
-    print("بُني: %s" % out)
+    print("Built: %s" % out)
 
 
 def mtimes(root):
@@ -2844,17 +2877,17 @@ def mtimes(root):
 def cmd_watch(a):
     root = find_root(a.root)
     last = None
-    print("أراقب %s (إيقاف: Ctrl+C)" % root)
+    print("Watching %s (stop: Ctrl+C)" % root)
     try:
         while True:
             m = mtimes(root)
             if m != last:
                 last = m
                 build_site(root)
-                print("%s  أُعيد بناء الموقع" % now().strftime("%H:%M:%S"))
+                print("%s  Site rebuilt" % now().strftime("%H:%M:%S"))
             time.sleep(a.every)
     except KeyboardInterrupt:
-        print("\nتوقفت المراقبة.")
+        print("\nStopped watching.")
 
 
 def cmd_rows(a):
@@ -2862,14 +2895,14 @@ def cmd_rows(a):
     b = read_board(root)
     mine = [t for t in b["tasks"] if role_key(t["to"]) == role_key(a.role)]
     ready = ready_tasks(b["tasks"], a.role)
-    print("صفوف «%s»: %d جاهزة من %d" % (a.role, len(ready), len(mine)))
+    print("Rows for %s: %d ready out of %d" % (a.role, len(ready), len(mine)))
     for t in ready:
-        print("\n%d. %s\n   من: %s | المدخلات: %s\n   المخرج: %s" % (t["n"], t["task"], t["from"], t["inputs"], t["output"]))
+        print("\n%d. %s\n   From: %s | Inputs: %s\n   Output: %s" % (t["n"], t["task"], t["from"], t["inputs"], t["output"]))
     cont = [t for t in mine if norm(t["status"]).startswith("قيد التنفيذ") or norm(t["status"]).startswith("اعيدت") or norm(t["status"]).startswith("أعيدت")]
     for t in cont:
-        print("\n(%s) %d. %s\n   للتالي: %s" % (t["status"], t["n"], t["task"], t["next"]))
+        print("\n(%s) %d. %s\n   Next: %s" % (t["status"], t["n"], t["task"], t["next"]))
     if not ready and not cont:
-        print("لا مهام جاهزة")
+        print("No tasks ready")
 
 
 def sha(p):
@@ -2886,7 +2919,7 @@ def board_write(root, mutate, by):
     if sha(p) != before:
         draft = root / "Agents" / "Row Drafts" / ("Draft %s.md" % now().strftime("%Y-%m-%d %H%M%S"))
         atomic_write(draft, new)
-        die("تغيّرت اللوحة أثناء الكتابة؛ لم أكتب شيئًا. حُفظت المسودة في: %s" % draft, 2)
+        die("The board changed during writing. No changes were made. Draft saved to: %s" % draft, 2)
     atomic_write(p, new)
 
 
@@ -2929,14 +2962,14 @@ def cmd_add_row(a):
     names = {role_key(r["name"]) for r in team["roster"]} | {role_key(team["owner"])}
     for f in (a.frm, a.to):
         if role_key(f) not in names:
-            die("اسم غير معروف في الفريق: «%s». المتاح: %s" % (f, "، ".join(sorted(names))))
+            die("Unknown team member: %s. Available: %s" % (f, "، ".join(sorted(names))))
     b = read_board(root)
     dup = [t for t in b["tasks"] if t["task"].strip() == a.task.strip() and role_key(t["to"]) == role_key(a.to) and not is_done(t["status"])]
     if dup:
-        die("صف مطابق موجود: %d. لم أضف شيئًا." % dup[0]["n"])
+        die("An identical row already exists: %d. Nothing was added." % dup[0]["n"])
     opened = [t for t in b["tasks"] if role_key(t["to"]) == role_key(a.to) and not (is_done(t["status"]) or norm(t["status"]).startswith(("ملغ", "مؤجل")))]
     if len(opened) >= a.cap and not a.force:
-        die("«%s» عنده %d صفوف مفتوحة (السقف %d). أغلق منها أو أضف --force." % (a.to, len(opened), a.cap))
+        die("%s has %d open rows (limit %d). Close some rows or pass --force." % (a.to, len(opened), a.cap))
     n = max([t["n"] for t in b["tasks"]] + [0]) + 1
     row = [n, a.frm, a.to, a.task, a.inputs, a.output, a.after, a.due, "محالة", a.next]
     line = "| " + " | ".join(esc_cell(c) for c in row) + " |"
@@ -2944,20 +2977,20 @@ def cmd_add_row(a):
     def mutate(lines):
         r = section_range(lines, 3)
         if not r:
-            die("لا يوجد القسم 3 في اللوحة")
+            die("Board section 3 not found")
         last = None
         for i in range(r[0] + 1, r[1]):
             if lines[i].strip().startswith("|"):
                 last = i
         if last is None:
-            die("لا يوجد جدول مهام في القسم 3")
+            die("No task table found in section 3")
         return lines[:last + 1] + [line] + lines[last + 1:]
 
     board_write(root, mutate, a.frm)
     audit(root, a.frm, "أضاف الصف %d إلى %s: %s" % (n, a.to, a.task))
     history_add(root, n, "محالة", a.frm)
     build_site(root)
-    print("أُضيف الصف %d: %s ← %s" % (n, a.frm, a.to))
+    print("Added row %d: %s -> %s" % (n, a.frm, a.to))
 
 
 def cmd_set_status(a):
@@ -2968,10 +3001,10 @@ def cmd_set_status(a):
     canon = [s.replace("بانتظار اعتماد", "بانتظار اعتماد %s" % owner) if s == "بانتظار اعتماد" else s for s in STATUSES]
     match = [s for s in canon if norm(s) == norm(st)]
     if not match:
-        die("حالة غير معتمدة: «%s». المتاح: %s" % (st, "، ".join(canon)))
+        die("Invalid status: %s. Available: %s" % (st, "، ".join(canon)))
     st = match[0]
     if norm(st) in ("معتمدة", "ملغاة") and not a.owner_order:
-        die("«%s» بأمر %s الصريح فقط. أضف --owner-order إن أمر بذلك." % (st, owner), 3)
+        die("%s requires an explicit instruction from %s. Add --owner-order only when authorized." % (st, owner), 3)
     def mutate(lines):
         r = section_range(lines, 3)
         hdr = None
@@ -2993,14 +3026,14 @@ def cmd_set_status(a):
                 out[i] = "| " + " | ".join(esc_cell(c) for c in cells) + " |"
                 hit = True
         if not hit:
-            die("لا يوجد صف بالرقم %d" % a.n)
+            die("Row %d not found" % a.n)
         return out
 
     board_write(root, mutate, a.by or COMPASS)
     audit(root, a.by or COMPASS, "غيّر حالة الصف %d إلى «%s»%s" % (a.n, st, (": " + a.note) if a.note else ""))
     history_add(root, a.n, st, a.by or COMPASS)
     build_site(root)
-    print("الصف %d ← %s" % (a.n, st))
+    print("Row %d -> %s" % (a.n, st))
 
 
 def regenerate_claude_table(root, team):
@@ -3017,7 +3050,7 @@ def cmd_add_role(a):
     team = load_team(root)
     name = clean_name(a.name)
     if any(role_key(r["name"]) == role_key(name) for r in team["roster"]):
-        die("الدور موجود: %s" % name)
+        die("Role already exists: %s" % name)
     n = max(r["n"] for r in team["roster"]) + 1
     r = {"id": "r%d" % n, "n": n, "name": name, "title": a.title or name, "scope": a.scope or "(اكتب الاختصاص)", "platform": a.platform,
          "chat": "%d. %s: %s" % (n, name, a.title or name)}
@@ -3036,7 +3069,7 @@ def cmd_add_role(a):
 
     board_write(root, mutate, COMPASS)
     build_site(root)
-    print("أُضيف الدور %d. %s وحُدّثت القواعد والأوامر واللوحة والموقع." % (n, name))
+    print("Added role %d. %s; updated rules, commands, board and site." % (n, name))
 
 
 def cmd_skills(a):
@@ -3047,10 +3080,10 @@ def cmd_skills(a):
     except SystemExit:
         have = set()
     for g in SKILL_GROUPS:
-        print("\n%s:" % g)
+        print("\n%s:" % terminal_label(g))
         for k, (n, d, gg, _) in SKILLS.items():
             if gg == g:
-                print("  %s %-18s %s: %s" % ("✓" if k in have else " ", k, n, d))
+                print("  %s %-18s %s: %s" % ("✓" if k in have else " ", k, terminal_label(n), terminal_label(d)))
 
 
 def cmd_add_skill(a):
@@ -3059,7 +3092,7 @@ def cmd_add_skill(a):
     keys = [k.strip() for k in a.keys.split(",") if k.strip()]
     bad = [k for k in keys if k not in SKILLS]
     if bad:
-        die("مهارات غير معروفة: %s. اعرض القائمة بأمر skills." % ", ".join(bad))
+        die("Unknown skills: %s. Run skills to list available skills." % ", ".join(bad))
     team["skills"] = [k for k in team.get("skills", []) if k in SKILLS]
     for k in keys:
         if k not in team["skills"]:
@@ -3067,7 +3100,7 @@ def cmd_add_skill(a):
     save_team(root, team)
     write_skills(root, team["skills"])
     audit(root, team["owner"], "أُضيفت مهارات: %s" % "، ".join(SKILLS[k][0] for k in keys))
-    print("أُضيفت: %s" % "، ".join(SKILLS[k][0] for k in keys))
+    print("Added: %s" % ", ".join(terminal_label(SKILLS[k][0]) for k in keys))
 
 
 def cmd_decide(a):
@@ -3082,7 +3115,7 @@ def cmd_decide(a):
     atomic_write(p, text.rstrip("\n") + "\n" + line + "\n")
     audit(root, a.source or team["owner"], "سجّل القرار %d (%s): %s" % (n, tag, a.text))
     build_site(root)
-    print("سُجّل القرار %d (%s)" % (n, tag))
+    print("Recorded decision %d (%s)" % (n, tag))
 
 
 # ---------------------------------------------------------------- التقارير والتصدير
@@ -3264,22 +3297,22 @@ def cmd_status(a):
                           "assigned": m["assigned"], "returned": m["returned"], "pending": [{"n": d["n"], "late": d["late"]} for d in m["pending"]],
                           "attention": att}, ensure_ascii=False, indent=2))
         return
-    print("%s · %s" % (m["project"], m["at"]))
-    print("الهدف: %s" % m["goal"])
+    print("%s · %s" % (m["project"], now().isoformat(timespec="seconds")))
+    print("Goal: %s" % m["goal"])
     print("")
-    print("%d صفًا: %d مسلّمة · %d قيد التنفيذ · %d بانتظار · %d محالة · %d أعيدت" % (m["total"], m["done"], m["doing"], m["waiting"], m["assigned"], m["returned"]))
+    print("%d rows: %d delivered · %d in progress · %d waiting · %d assigned · %d returned" % (m["total"], m["done"], m["doing"], m["waiting"], m["assigned"], m["returned"]))
     print("")
-    print("ينتظر قرارك (%d):" % len(m["pending"]))
+    print("Pending your decision (%d):" % len(m["pending"]))
     for d in m["pending"]:
         print("  %d. %s" % (d["n"], d["text"]))
     if not m["pending"]:
-        print("  لا شيء")
+        print("  None")
     print("")
-    print("يحتاج انتباهًا (%d):" % len(att))
+    print("Needs attention (%d):" % len(att))
     for i, x in enumerate(att, 1):
-        print("  %d. [%s] %s" % (i, x["label"], x["text"]))
+        print("  %d. [%s] %s %s | Owner: %s%s" % (i, x["kind"], "Decision" if x["kind"] == "late" else "Row", x["n"] if x["n"] is not None else "-", x["who"], " | Age: %.1f hours" % x["hours"] if x["hours"] is not None else ""))
     if not att:
-        print("  لا شيء: المشروع يسير بلا عوائق")
+        print("  None: no blockers")
     if a.strict and any(x["sev"] == 1 for x in att):
         sys.exit(2)
 
@@ -3324,12 +3357,14 @@ def cmd_report(a):
     out = root / "Docs" / "Reports" / ("Report %s.md" % now().strftime("%Y-%m-%d"))
     out.parent.mkdir(parents=True, exist_ok=True)
     atomic_write(out, text)
-    print(text)
-    print("حُفظ في: %s" % out.relative_to(root))
+    print("Performance report: %s" % m["project"])
+    print("Tasks: %d | Delivered: %d | In progress: %d | Waiting: %d" % (m["total"], m["done"], m["doing"], m["waiting"]))
+    print("QA pass rate: %s | Pending decisions: %d" % ("n/a" if m["qa_rate"] is None else "%.1f%%" % m["qa_rate"], len(m["pending"])))
+    print("Saved to: %s" % out.relative_to(root))
 
 
 def cmd_export(a):
-    """يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV (بعلامة BOM ليفتحها Excel وPower BI مباشرة)."""
+    """يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV (بترميز UTF-8 مع BOM)."""
     root = find_root(a.root)
     team = load_team(root)
     b = read_board(root)
@@ -3365,8 +3400,8 @@ def cmd_export(a):
                                                             ["cycle hours avg", "" if m["cycle_avg"] is None else round(m["cycle_avg"], 1)], ["delivered last 7 days", m["delivered_week"]],
                                                             ["pending decisions", len(m["pending"])], ["decisions", m["decisions"]], ["outputs", m["outputs"]], ["generated at", m["at"]]]))
     for f in files:
-        print("صُدّر: %s" % f.relative_to(root))
-    print("افتح المجلد Data في Power BI أو Excel؛ الملفات UTF-8 مع BOM.")
+        print("Exported: %s" % f.relative_to(root))
+    print("CSV files are available in Data (UTF-8 with BOM).")
 
 
 def check_project(root):
@@ -3414,11 +3449,11 @@ def cmd_check(a):
     root = find_root(a.root)
     pr = check_project(root)
     if not pr:
-        print("سليم: لا ملاحظات.")
+        print("OK: no issues found.")
         return
-    print("%d ملاحظة:" % len(pr))
+    print("%d issues:" % len(pr))
     for i, p in enumerate(pr, 1):
-        print("%d. %s" % (i, p))
+        print("%d. %s" % (i, terminal_diagnostic(p)))
     sys.exit(1)
 
 
@@ -3431,19 +3466,19 @@ def try_register(root, registry=None):
                 reg = c
                 break
     if reg is None or not reg.exists():
-        print("لم أجد Registry.md لمركز البوصلات؛ مرّر --registry أو شغّل register لاحقًا.")
+        print("Registry.md not found. Pass --registry or run register later.")
         return False
     team = load_team(root)
     text = reg.read_text(encoding="utf-8")
     rel = "%s/%s" % (reg.parent.parent.name, os.path.relpath(root, reg.parent.parent))
     if "`%s`" % rel in text:
-        print("المشروع مسجّل في %s" % reg)
+        print("Project already registered in %s" % reg)
         return True
     nums = [int(m.group(1)) for m in re.finditer(r"^\|\s*(\d+)\s*\|", text, re.M)]
     n = max(nums + [0]) + 1
     row = "| %d | %s | `%s` | %s | فعّال | %s | %s |" % (n, team["project"], rel, esc_cell(team["goal"]), fmt_date(now()), fmt_dt(now()))
     atomic_write(reg, text.rstrip("\n") + "\n" + row + "\n")
-    print("سُجّل في %s (الرقم %d)" % (reg, n))
+    print("Registered in %s (number %d)" % (reg, n))
     return True
 
 
@@ -3457,91 +3492,91 @@ def cmd_selftest(a):
 
     def step(name, cond):
         nonlocal ok
-        print("%s  %s" % ("ناجح" if cond else "فشل ", name))
+        print("%s  %s" % ("PASS" if cond else "FAIL", name))
         ok = ok and bool(cond)
 
     try:
         rep = []
         root = create_project(tmp, "مشروع تجريبي", "اختبار الأداة", "الرئيس", "general", None, None, rep)
-        step("إنشاء المشروع والملفات", (root / "CLAUDE.md").exists() and (root / "Agents" / "Board.md").exists() and (root / "Office" / OFFICE_FILE).exists())
-        step("نسخة الأداة داخل المشروع", (root / "Tools" / TOOL_NAME).exists())
-        step("لا شرطة سفلية في الأسماء", not [p for p in root.rglob("*") if "_" in p.name])
-        step("الفحص سليم عند الإنشاء", check_project(root) == [])
+        step("Create project and files", (root / "CLAUDE.md").exists() and (root / "Agents" / "Board.md").exists() and (root / "Office" / OFFICE_FILE).exists())
+        step("Bundled project tool", (root / "Tools" / TOOL_NAME).exists())
+        step("No underscores in names", not [p for p in root.rglob("*") if "_" in p.name])
+        step("Initial project checks", check_project(root) == [])
         ns = argparse.Namespace(root=str(root), frm="البوصلة", to="رئيس المنتج", task="كتابة المرجع", inputs="—", output="`Outputs/x.md`", after="1", due="—", next="—", cap=5, force=False)
         cmd_add_row(ns)
         b = read_board(root)
-        step("إضافة صف برقم متسلسل", [t["n"] for t in b["tasks"]] == [1, 2])
-        step("المهمة غير جاهزة قبل تسليم السابقة", ready_tasks(b["tasks"], "رئيس المنتج") == [])
+        step("Sequential row numbering", [t["n"] for t in b["tasks"]] == [1, 2])
+        step("Dependency blocks task before delivery", ready_tasks(b["tasks"], "رئيس المنتج") == [])
         cmd_set_status(argparse.Namespace(root=str(root), n=1, status="مسلّمة", note="تم", by=None, owner_order=False))
-        step("تصبح جاهزة بعد التسليم", len(ready_tasks(read_board(root)["tasks"], "رئيس المنتج")) == 1)
+        step("Task becomes ready after delivery", len(ready_tasks(read_board(root)["tasks"], "رئيس المنتج")) == 1)
         try:
             cmd_set_status(argparse.Namespace(root=str(root), n=1, status="معتمدة", note=None, by=None, owner_order=False))
             blocked = False
         except SystemExit as e:
             blocked = e.code == 3
-        step("«معتمدة» ممنوعة دون أمر الصاحب", blocked)
+        step("Approval requires owner authorization", blocked)
         cmd_add_role(argparse.Namespace(root=str(root), name="المحلل", title="محلل البيانات", scope="التحليل", platform="Claude"))
-        step("إضافة دور تحدّث الجدول والموقع", "المحلل" in (root / "CLAUDE.md").read_text(encoding="utf-8") and (root / "Agents" / "Roles" / "المحلل.md").exists())
+        step("Adding a role updates rules and site", "المحلل" in (root / "CLAUDE.md").read_text(encoding="utf-8") and (root / "Agents" / "Roles" / "المحلل.md").exists())
         cmd_decide(argparse.Namespace(root=str(root), text="اختبار قرار", tag=None, source=None))
         html = (root / "Office" / OFFICE_FILE).read_text(encoding="utf-8")
-        step("الموقع يحمل البيانات", "اختبار قرار" in html and "كتابة المرجع" in html and "المحلل" in html)
-        step("الفحص سليم بعد التعديلات", check_project(root) == [])
-        step("لا رموز قالب متبقية في الموقع", "@@" not in html)
+        step("Site contains project data", "اختبار قرار" in html and "كتابة المرجع" in html and "المحلل" in html)
+        step("Project checks after edits", check_project(root) == [])
+        step("No unresolved site placeholders", "@@" not in html)
         m = re.search(r"var D=(\{.*?\});\nvar \$=", html, re.S)
         try:
             d = json.loads(m.group(1)) if m else None
         except ValueError:
             d = None
-        step("بيانات الموقع JSON سليمة وتحمل الفريق والمهام", bool(d) and len(d["team"]) >= 7 and d["nt"] == 2 and d["dec"][0]["text"] == "اختبار قرار")
+        step("Valid site JSON with team and tasks", bool(d) and len(d["team"]) >= 7 and d["nt"] == 2 and d["dec"][0]["text"] == "اختبار قرار")
         tool_copy = (root / "Tools" / TOOL_NAME).read_text(encoding="utf-8")
-        step("نسخة الأداة داخل المشروع مكتفية بنفسها", '_TEMPLATE_Z = """' in tool_copy and len(tool_copy) > 100000)
+        step("Project tool is standalone", '_TEMPLATE_Z = """' in tool_copy and len(tool_copy) > 100000)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    print("\n" + ("كل الاختبارات ناجحة" if ok else "فيه اختبارات فاشلة"))
+    print("\n" + ("All tests passed" if ok else "Some tests failed"))
     sys.exit(0 if ok else 1)
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(prog=TOOL_NAME, description="Project Forge: أداة بناء مشروع بفريق ذكاء اصطناعي وموقع إدارته")
-    ap.add_argument("--root", help="جذر المشروع (يُكتشف تلقائيًا)")
+    ap = argparse.ArgumentParser(prog=TOOL_NAME, description="Project Forge: create an AI team project and its management site")
+    ap.add_argument("--root", help="Project root (detected automatically)")
     sp = ap.add_subparsers(dest="cmd")
 
-    p = sp.add_parser("new", help="إنشاء مشروع كامل")
+    p = sp.add_parser("new", help="Create a complete project")
     p.add_argument("name", nargs="?")
     p.add_argument("--goal")
     p.add_argument("--owner")
     p.add_argument("--preset", choices=list(PRESETS))
-    p.add_argument("--platform", choices=["claude", "chatgpt", "grok", "gemini"], help="منصة المحادثات: claude (الافتراضي) أو chatgpt أو grok أو gemini")
-    p.add_argument("--language", help="لغة العمل: العربية (الافتراضي) أو English أو أي لغة تكتبها")
-    p.add_argument("--roles-file", help="ملف JSON بقائمة أدوار: [{name,title,scope,platform}]")
-    p.add_argument("--drop-role", action="append", help="حذف دور من القالب (يتكرر)")
-    p.add_argument("--add-role", action="append", help="إضافة دور بصيغة «الاسم | المجال | المهام» (يتكرر)")
-    p.add_argument("--skills", help="المهارات: all أو none أو مفاتيح مفصولة بفاصلة (الافتراضي: الموصى بها للتخصص)")
-    p.add_argument("--dest", help="المجلد الأب الذي يُنشأ فيه المشروع")
-    p.add_argument("--accent", help="لون أساسي بصيغة #RRGGBB للوضع الفاتح")
-    p.add_argument("--register", action="store_true", help="سجّل المشروع في مركز البوصلات")
-    p.add_argument("--registry", help="مسار Registry.md")
-    p.add_argument("--yes", action="store_true", help="بلا أسئلة")
+    p.add_argument("--platform", choices=["claude", "chatgpt", "grok", "gemini"], help="Chat platform: claude (default), chatgpt, grok or gemini")
+    p.add_argument("--language", help="Working language: Arabic (default), English or any language")
+    p.add_argument("--roles-file", help="JSON role list: [{name,title,scope,platform}]")
+    p.add_argument("--drop-role", action="append", help="Remove a preset role (repeatable)")
+    p.add_argument("--add-role", action="append", help="Add a role as \"name | title | scope\" (repeatable)")
+    p.add_argument("--skills", help="Skills: all, none, or comma-separated keys (default: preset recommendations)")
+    p.add_argument("--dest", help="Parent directory for the new project")
+    p.add_argument("--accent", help="Accent color as #RRGGBB for light mode")
+    p.add_argument("--register", action="store_true", help="Register the project in the Compass hub")
+    p.add_argument("--registry", help="Path to Registry.md")
+    p.add_argument("--yes", action="store_true", help="Skip interactive prompts")
     p.set_defaults(fn=cmd_new)
 
-    p = sp.add_parser("gui", help="واجهة رسومية لإنشاء المشروع (الافتراضي عند التشغيل بلا أوامر)")
+    p = sp.add_parser("gui", help="Open the creation wizard (default when no command is given)")
     p.add_argument("--no-browser", action="store_true")
     p.add_argument("--port", type=int, default=0)
     p.set_defaults(fn=cmd_gui)
 
-    sp.add_parser("shortcut", help="أيقونة على سطح المكتب تفتح الواجهة بنقرتين").set_defaults(fn=cmd_shortcut)
+    sp.add_parser("shortcut", help="Create a desktop shortcut for the wizard").set_defaults(fn=cmd_shortcut)
 
-    p = sp.add_parser("build", help="بناء موقع الإدارة")
+    p = sp.add_parser("build", help="Build the management site")
     p.add_argument("--open", action="store_true")
     p.set_defaults(fn=cmd_build)
-    p = sp.add_parser("watch", help="إعادة البناء تلقائيًا")
+    p = sp.add_parser("watch", help="Rebuild automatically")
     p.add_argument("--every", type=float, default=2.0)
     p.set_defaults(fn=cmd_watch)
-    p = sp.add_parser("rows", help="الصفوف الجاهزة لدور")
+    p = sp.add_parser("rows", help="List ready rows for a role")
     p.add_argument("role")
     p.set_defaults(fn=cmd_rows)
 
-    p = sp.add_parser("add-row", help="إضافة صف إلى اللوحة")
+    p = sp.add_parser("add-row", help="Add a board row")
     p.add_argument("--from", dest="frm", required=True)
     p.add_argument("--to", required=True)
     p.add_argument("--task", required=True)
@@ -3554,7 +3589,7 @@ def main(argv=None):
     p.add_argument("--force", action="store_true")
     p.set_defaults(fn=cmd_add_row)
 
-    p = sp.add_parser("set-status", help="تغيير حالة صف")
+    p = sp.add_parser("set-status", help="Change a row status")
     p.add_argument("n", type=int)
     p.add_argument("status")
     p.add_argument("--note")
@@ -3562,34 +3597,34 @@ def main(argv=None):
     p.add_argument("--owner-order", action="store_true")
     p.set_defaults(fn=cmd_set_status)
 
-    p = sp.add_parser("add-role", help="إضافة دور")
+    p = sp.add_parser("add-role", help="Add a role")
     p.add_argument("name")
     p.add_argument("--title")
     p.add_argument("--scope")
     p.add_argument("--platform", default="Claude")
     p.set_defaults(fn=cmd_add_role)
 
-    p = sp.add_parser("decide", help="تسجيل قرار")
+    p = sp.add_parser("decide", help="Record a decision")
     p.add_argument("text")
     p.add_argument("--tag")
     p.add_argument("--source")
     p.set_defaults(fn=cmd_decide)
 
-    sp.add_parser("skills", help="قائمة المهارات الجاهزة").set_defaults(fn=cmd_skills)
-    p = sp.add_parser("add-skill", help="إضافة مهارة جاهزة إلى المشروع: add-skill measure,deck")
+    sp.add_parser("skills", help="List available skills").set_defaults(fn=cmd_skills)
+    p = sp.add_parser("add-skill", help="Add skills to the project: add-skill measure,deck")
     p.add_argument("keys")
     p.set_defaults(fn=cmd_add_skill)
-    sp.add_parser("report", help="تقرير أداء: المؤشرات والحمل والقرارات المتأخرة").set_defaults(fn=cmd_report)
-    p = sp.add_parser("status", help="إحاطة سريعة: الأرقام وما ينتظرك وما يحتاج انتباهًا")
-    p.add_argument("--json", action="store_true", help="مخرج JSON للآلة")
-    p.add_argument("--strict", action="store_true", help="رمز خروج 2 عند وجود بند عاجل")
+    sp.add_parser("report", help="Performance report: metrics, workload and overdue decisions").set_defaults(fn=cmd_report)
+    p = sp.add_parser("status", help="Status: metrics, pending decisions and items needing attention")
+    p.add_argument("--json", action="store_true", help="Machine-readable JSON output")
+    p.add_argument("--strict", action="store_true", help="Exit with code 2 when urgent items exist")
     p.set_defaults(fn=cmd_status)
-    sp.add_parser("export", help="تصدير اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI").set_defaults(fn=cmd_export)
-    sp.add_parser("check", help="فحص المشروع").set_defaults(fn=cmd_check)
-    p = sp.add_parser("register", help="تسجيل في مركز البوصلات")
+    sp.add_parser("export", help="Export board, team, decisions and metrics as CSV").set_defaults(fn=cmd_export)
+    sp.add_parser("check", help="Check the project").set_defaults(fn=cmd_check)
+    p = sp.add_parser("register", help="Register in the Compass hub")
     p.add_argument("--registry")
     p.set_defaults(fn=cmd_register)
-    sp.add_parser("selftest", help="اختبار ذاتي").set_defaults(fn=cmd_selftest)
+    sp.add_parser("selftest", help="Run a self-test").set_defaults(fn=cmd_selftest)
 
     a = ap.parse_args(argv)
     if not getattr(a, "cmd", None):

@@ -29,7 +29,7 @@ cli = [
     ("decide", "يسجّل قرارًا في سجل القرارات بترقيم تلقائي.", RUN + ' decide "اعتماد النسخة الأولى" --tag "قابل للتراجع"'),
     ("status", "إحاطة سريعة من الطرفية: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر أو راكد أو محجوب). أضف --json لمخرج الآلة.", RUN + " status"),
     ("report", "تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل على الأدوار والقرارات المتأخرة. يُحفظ في Docs/Reports.", RUN + " report"),
-    ("export", "يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV (UTF-8 مع BOM) جاهزة لـ Power BI وExcel.", RUN + " export"),
+    ("export", "يصدّر اللوحة والفريق والقرارات والمؤشرات إلى ملفات CSV بترميز UTF-8 مع BOM.", RUN + " export"),
     ("check", "يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.", RUN + " check"),
     ("register", "يسجّل المشروع في سجل مركز البوصلات (Registry.md).", RUN + " register"),
     ("selftest", "يختبر الأداة على مشروع مؤقت ويبلغ بنجاح كل خطوة.", RUN + " selftest"),
@@ -58,7 +58,7 @@ tools = [
     ("Project Office", "موقع إدارة يُولَّد لكل مشروع في ملف HTML واحد: الرئيسية والمتابعة والمهام والفريق والمخطط والأوامر والإعدادات.", RUN + " build --open", "جاهز"),
     ("Start Office", "سكربت تشغيل يفتح الموقع ويبقيه محدّثًا تلقائيًا (macOS).", "Tools/Start Office.command", "جاهز"),
     ("Report", "تقرير أداء دوري من اللوحة وتاريخ الحالات: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات.", RUN + " report", "جاهز"),
-    ("Export to Power BI", "أربعة ملفات CSV جاهزة لنموذج بيانات في Power BI أو Excel.", RUN + " export", "جاهز"),
+    ("Export CSV", "أربعة ملفات CSV للتحليل وإعداد التقارير.", RUN + " export", "جاهز"),
     ("Smoke test", "اختبار متصفح (Playwright) يفحص كل صفحة وتبويب في الفاتح والداكن والجوال.", "NODE_PATH=$(npm root -g) node tests/smoke.js \"Office/Project Office.html\" shots", "جاهز"),
 ]
 
@@ -80,4 +80,4 @@ en = (root / "site" / "en.json").read_text(encoding="utf-8")
 langs = json.dumps([list(x) for x in core.LANGUAGES], ensure_ascii=False)
 html = html.replace("@@EN@@", en.replace("</", "<\\/")).replace("@@LANGS@@", langs).replace("@@NSK@@", str(len(core.SKILLS)))
 out.write_text(html.replace("@@LIB@@", payload).replace("@@SITEURL@@", site_url), encoding="utf-8")
-print("بُني", out, out.stat().st_size, "بايت")
+print("Built", out, out.stat().st_size, "bytes")

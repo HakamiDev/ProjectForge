@@ -2,7 +2,7 @@
 
 # Project Forge
 
-**نظام تشغيل لفريق وكلاء الذكاء الاصطناعي.** أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء على أي منصة، وبوابة جودة مستقلة، وحوكمة قرارات، وأثر تدقيق، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف HTML واحد.
+**نظام تشغيل لفريق وكلاء الذكاء الاصطناعي.** أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء على أي منصة، وبوابة جودة مستقلة، وحوكمة قرارات، وأثر تدقيق، ومؤشرات أداء قابلة للتصدير بصيغة CSV، وموقع إدارة يعمل من ملف HTML واحد.
 
 بايثون 3.9 فما فوق، بلا أي مكتبة خارجية، وبلا خادم. [English below](#english).
 
@@ -34,7 +34,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 | وكيلان يعملان على الشيء نفسه | لوحة واحدة بصفوف مرقمة، و«قيد التنفيذ» تحجز الصف، وبصمة تمنع الكتابة المتعارضة |
 | مخرجات تصل إليك بلا فحص | رئيس ضمان الجودة يحكم «يمر أو لا يمر» قبل أن يصل أي مخرج إلى صاحب المشروع |
 | قرارات معلقة تعطّل الفريق | سقف خمسة قرارات، ومهلة 48 ساعة تؤخذ بعدها التوصية، وسجل موسوم |
-| لا أحد يعرف ما أُنجز | `report` يعطي نسبة التسليم وزمن الدورة ومرور الجودة والحمل، و`export` يصدّرها إلى Power BI |
+| لا أحد يعرف ما أُنجز | `report` يعطي نسبة التسليم وزمن الدورة ومرور الجودة والحمل، و`export` يصدّرها بصيغة CSV |
 | من غيّر ماذا؟ | `Agents/Audit Log.md` يسجّل كل كتابة، و`Data/Status History.csv` كل تغيّر حالة |
 | بيانات حساسة في أدوات خارجية | `Docs/Data Policy.md` ملزم: تصنيف البيانات والأدوات المعتمدة |
 
@@ -107,10 +107,12 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 | `decide` | يسجّل قرارًا موسومًا في سجل القرارات |
 | `status` | إحاطة سريعة من الطرفية: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر، راكد، محجوب، تبعية معطّلة). `--json` للآلة و`--strict` لرمز خروج 2 عند وجود بند عاجل |
 | `report` | تقرير أداء: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة |
-| `export` | يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV لـ Power BI وExcel |
+| `export` | يصدّر اللوحة والفريق والقرارات والمؤشرات إلى ملفات CSV |
 | `check` | يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات |
 | `register` | يسجّل المشروع في سجل مركزي للمشاريع |
 | `selftest` | يختبر الأداة على مشروع مؤقت |
+
+رسائل التثبيت وسطر الأوامر بالإنجليزية، مستقلة عن لغة واجهة المعالج ولغة عمل الفريق. يحمّل أمر التثبيت الحزمة الحالية من الفرع `main`.
 
 ## حالة النسخة
 
@@ -144,7 +146,7 @@ MIT.
 
 ## English
 
-**Project Forge is an operating system for a team of AI agents.** One command turns a plain folder into a disciplined office: a single board every agent works from (on any platform), an independent QA gate, decision governance, a full audit trail, performance metrics exported to Power BI, and a management site that runs from a single HTML file.
+**Project Forge is an operating system for a team of AI agents.** One command turns a plain folder into a disciplined office: a single board every agent works from (on any platform), an independent QA gate, decision governance, a full audit trail, performance metrics exported as CSV, and a management site that runs from a single HTML file.
 
 Python 3.9+, no runtime dependencies. The creation wizard runs a temporary local server; the generated office is a standalone HTML file. The public site and wizard support **27 interface languages**. Generated project files and the office UI remain primarily Arabic; agents are instructed to use the selected working language. Role, preset and skill labels use English outside the Arabic interface. Translations have automated review, not a native-speaker guarantee. See `Language Coverage.md`.
 
@@ -166,7 +168,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 - Agents collide: one numbered board, "in progress" locks a row, a checksum guard prevents conflicting writes.
 - Unchecked output: a QA lead rules pass/fail before anything reaches the owner.
 - Stalled decisions: a cap of five open decisions and a 48-hour rule after which the recommendation stands.
-- Nothing is measured: `report` gives delivery rate, cycle time, QA pass rate and load per role; `export` writes CSVs for Power BI.
+- Nothing is measured: `report` gives delivery rate, cycle time, QA pass rate and load per role; `export` writes CSV files.
 - No accountability: every board write is logged with who, when and what.
 - Sensitive data in external tools: a binding data policy with classification and approved tools.
 
