@@ -114,7 +114,9 @@ html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7
 @media (prefers-reduced-motion:reduce){.aurora i,.hero>*,h1 em,.brand i{animation:none!important}.rv{opacity:1;transform:none}}
 .prefs{max-width:720px;margin:26px auto 22px;padding:16px 18px;text-align:start;display:grid;gap:12px}
 .prefs .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.prefs .row b{min-width:92px}
-.prefs select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 14px;font:inherit}
+.prefs .language-select{position:relative;display:inline-grid;max-width:100%;min-width:0}
+.prefs .language-select:after{content:"";position:absolute;inset-inline-end:16px;top:50%;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-75%) rotate(45deg);pointer-events:none}
+.prefs select{appearance:none;-webkit-appearance:none;min-height:40px;max-width:100%;min-width:0;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding-block:0;padding-inline:14px 42px;font:inherit}
 .prefs input{min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 14px;font:inherit;width:150px}
 .prefs p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.7}.prefs .tabs{margin:0}
 
@@ -154,7 +156,7 @@ html:not([data-theme="dark"]) .aurora i{opacity:.22}
   <p class="lead">أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء تُصدَّر إلى Power BI، وموقع إدارة يعمل من ملف واحد.</p>
   <div class="cta"><a class="btn p" href="#install">ابدأ التثبيت</a><a class="btn" href="#library">تصفّح المكتبة</a></div>
   <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button><button class="tab pl" role="tab" data-p="Grok" aria-selected="false" type="button">Grok</button><button class="tab pl" role="tab" data-p="Gemini" aria-selected="false" type="button">Gemini</button></div></div>
-  <div class="row"><b>اللغة المفضلة</b><select id="lg" aria-label="اللغة المفضلة"></select><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
+  <div class="row"><b>اللغة المفضلة</b><span class="language-select"><select id="lg" aria-label="اللغة المفضلة"></select></span><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
   <p>اللغة المفضلة هي لغة إدارة النظام كاملًا، وهي التي تُستخدم مع الموظفين: بها يخاطبك الفريق وتُكتب المخرجات والتقارير. تُضمَّن في أمر التثبيت وتُختار مسبقًا في المعالج، وتستطيع تغييرها هناك. يمكن لكل موظف أن يعمل على منصة مختلفة.</p></div>
   <div class="quick"></div>
 </div>
