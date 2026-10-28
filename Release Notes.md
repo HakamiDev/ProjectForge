@@ -1,4 +1,4 @@
-# Proposed v1.1.3 — Site copy and dropdown alignment
+# Proposed v1.1.6 — Site copy and dropdown alignment
 
 - Public homepage leads with the unified agent-team promise, followed by six concrete capabilities in Arabic and English.
 - Dropdown indicators align with the reading direction on the public site, wizard, and generated project office.
