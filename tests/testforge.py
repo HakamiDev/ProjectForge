@@ -333,6 +333,18 @@ class ForgeTests(unittest.TestCase):
         actual = json.JSONDecoder().raw_decode(wizard[match.end():])[0]
         self.assertEqual(actual, [list(row) for row in choices])
 
+    def test_readme_languages(self):
+        root = Path(__file__).resolve().parent.parent
+        files = [root / "README.md"] + sorted((root / "docs").glob("README.*.md"))
+        self.assertEqual(len(files), 27)
+        for f in files:
+            t = f.read_text(encoding="utf-8")
+            self.assertIn("install.sh | bash", t, f.name)
+            for h in re.findall(r"\]\(([^)#]+\.md)\)", t):
+                self.assertTrue((f.parent / h).resolve().exists(), (f.name, h))
+            for h in re.findall(r'src="([^"]+)"', t):
+                self.assertTrue((f.parent / h).resolve().exists(), (f.name, h))
+
     def test_standalone_preserves_integrated_templates_and_catalog(self):
         """A distributed tool must contain the same reviewed UI and data as source."""
         import runpy

@@ -63,7 +63,23 @@
   "الأدوات": "Tools",
   "المستودع": "Repository",
   "تم النسخ": "Copied",
-  "بعد الإنشاء افتح <b>Office/Project Office.html</b> ثم كلّم البوصلة وحدها، وهي توزع العمل على الفريق.": "After creation, open <b>Office/Project Office.html</b>, then talk to the Compass alone; it distributes the work across the team."
+  "بعد الإنشاء افتح <b>Office/Project Office.html</b> ثم كلّم البوصلة وحدها، وهي توزع العمل على الفريق.": "After creation, open <b>Office/Project Office.html</b>, then talk to the Compass alone; it distributes the work across the team.",
+  "فريقك من وكلاء الذكاء الاصطناعي. <em>تحت إدارة واحدة.</em>": "Your team of AI agents. <em>Under one roof.</em>",
+  "من محادثات متفرقة إلى عمل يُنجَز ويُراجَع ويُقاس. حوّل مجلد مشروعك إلى مكتب عمل واضح الأدوار، تُنسَّق فيه المهام، وتُراجع المخرجات، ويظهر التقدم بالأرقام.": "Turn scattered AI chats into work you can deliver, review, and measure. Give your project clear roles, coordinated tasks, independent review, and visible progress.",
+  "ما الذي يميز Project Forge": "What makes Project Forge different",
+  "من أول تكليف إلى آخر قرار، يعرف كل عضو في الفريق ما عليه، وتعرف أنت ما أُنجز وما ينتظر مراجعتك.": "From the first assignment to the latest decision, each team member knows their role and you can see what was done and what awaits review.",
+  "بوصلة تجمع عمل الفريق": "A compass for your team",
+  "تبدأ مع البوصلة: توزّع المهام على المختصين، وتتابع التسليم، وتحرك العمل العالق من لوحة واحدة.": "Start with the Compass: assign work to the right specialists, track delivery, and move blocked tasks forward from one board.",
+  "استمرارية تتجاوز المحادثة": "Continuity beyond one chat",
+  "تُحفظ التعليمات والأدوار والقرارات في ملفات المشروع، فيرجع إليها الوكلاء عند استئناف العمل.": "Instructions, roles, and decisions live in project files that agents can read when work resumes.",
+  "مسؤولية واضحة لكل مهمة": "Clear ownership for every task",
+  "تعرف من يتولى كل مهمة، وما المطلوب تسليمه، وما الذي ينتظر إنجاز مهمة أخرى.": "See who owns each task, what they must deliver, and which work depends on another task.",
+  "مراجعة مستقلة للمخرجات": "Independent review of deliverables",
+  "رئيس ضمان الجودة يفحص التسليم ويعيد ما يحتاج إلى تعديل قبل عرضه عليك.": "A quality reviewer checks deliverables and returns work that needs revision before it reaches you.",
+  "تقدّم تراه بالأرقام": "Progress you can measure",
+  "تابع نسبة التسليم، وزمن الإنجاز، والحمل على الأدوار، والقرارات المتأخرة؛ وصدّر البيانات بصيغة CSV.": "Track delivery rate, cycle time, workload, and overdue decisions, then export the data as CSV.",
+  "فريق قابل للتخصيص": "A team you can shape",
+  "ابدأ من 80 تخصصًا، و334 دورًا، و130 مهارة جاهزة؛ ثم عدّل الفريق بما يناسب مشروعك.": "Start with 80 specialties, 334 roles, and 130 ready-made skills, then shape the team around your project."
  },
  "dyn": {
   "copy": [

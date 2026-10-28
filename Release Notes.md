@@ -1,3 +1,11 @@
+# Proposed v1.1.3 — Site copy and dropdown alignment
+
+- Public homepage leads with the unified agent-team promise, followed by six concrete capabilities in Arabic and English.
+- Dropdown indicators align with the reading direction on the public site, wizard, and generated project office.
+- Project-office settings now include working section order and visibility, labels, accent, font size, density, and local export/import, alongside the existing appearance controls.
+- This release builds on the unified 27-language tool (80 specialties, 334 roles, 130 skills). Interface translations beyond Arabic and English retain their existing coverage.
+- Local validation: 25 unit tests, 3 release checks, standalone selftest. Browser QA and an actual Windows install remain separate checks.
+
 # Local candidate 1.1.0
 
 Updated: 28 October 2026. This document does not claim a published release.

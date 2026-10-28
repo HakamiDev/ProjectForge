@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Project Forge | نظام تشغيل لفريق وكلاء الذكاء الاصطناعي</title>
-<meta name="description" content="أداة مفتوحة المصدر تحوّل مجلدًا عاديًا إلى نظام تشغيل لفريق وكلاء ذكاء اصطناعي: لوحة واحدة، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء، وموقع إدارة. بلا خادم ولا مكتبات.">
+<title>Project Forge | فريقك من وكلاء الذكاء الاصطناعي تحت إدارة واحدة</title>
+<meta name="description" content="أداة مفتوحة المصدر تجمع فريق وكلاء الذكاء الاصطناعي في مكتب عمل واحد: مهام واضحة، ومراجعة مستقلة، وتقدم قابل للقياس. بلا خادم ولا مكتبات.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Project Forge: نظام تشغيل لفريق وكلاء الذكاء الاصطناعي">
+<meta property="og:title" content="Project Forge: فريقك من وكلاء الذكاء الاصطناعي تحت إدارة واحدة">
 <meta property="og:description" content="لوحة واحدة، وبوابة جودة مستقلة، وحوكمة قرارات بمهلة 48 ساعة، ومؤشرات أداء قابلة للتصدير بصيغة CSV. أمر واحد يبني كل شيء.">
 <meta property="og:image" content="@@SITEURL@@og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -121,8 +121,8 @@ html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7
 .prefs{max-width:720px;margin:26px auto 22px;padding:16px 18px;text-align:start;display:grid;gap:12px}
 .prefs .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.prefs .row b{min-width:92px}
 .prefs .language-select{position:relative;display:inline-grid;max-width:100%;min-width:0}
-.prefs .language-select:after{content:"";position:absolute;inset-inline-end:16px;top:50%;width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-75%) rotate(45deg);pointer-events:none}
-.prefs select{appearance:none;-webkit-appearance:none;min-height:40px;max-width:100%;min-width:0;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding-block:0;padding-inline:14px 42px;font:inherit}
+.prefs select{appearance:none;-webkit-appearance:none;min-height:40px;max-width:100%;min-width:0;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding-block:0;padding-inline:14px 38px;font:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:12px 12px;background-position:right 14px center;padding-inline-end:38px}
+.prefs select:dir(rtl){background-position:left 14px center}
 .prefs input{min-height:40px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 14px;font:inherit;width:150px}
 .prefs p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.7}.prefs .tabs{margin:0}
 </style>
@@ -141,8 +141,8 @@ html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7
 <main>
 <div class="hero">
   <span class="eyebrow">مفتوح المصدر · بايثون وحده · بلا خادم ولا مكتبات</span>
-  <h1>نظام تشغيل لفريق <em>وكلاء</em> الذكاء الاصطناعي</h1>
-  <p class="lead">أمر واحد يحوّل مجلدًا عاديًا إلى مكتب عمل منضبط: لوحة واحدة يعمل منها كل الوكلاء، وبوابة جودة مستقلة، وحوكمة قرارات، ومؤشرات أداء قابلة للتصدير بصيغة CSV، وموقع إدارة يعمل من ملف واحد.</p>
+  <h1>فريقك من وكلاء الذكاء الاصطناعي. <em>تحت إدارة واحدة.</em></h1>
+  <p class="lead">من محادثات متفرقة إلى عمل يُنجَز ويُراجَع ويُقاس. حوّل مجلد مشروعك إلى مكتب عمل واضح الأدوار، تُنسَّق فيه المهام، وتُراجع المخرجات، ويظهر التقدم بالأرقام.</p>
   <div class="cta"><a class="btn p" href="#install">ابدأ التثبيت</a><a class="btn" href="#library">تصفّح المكتبة</a></div>
   <div class="gl prefs" id="prefs"><div class="row"><b>منصتك</b><div class="tabs" role="tablist" aria-label="المنصة"><button class="tab pl" role="tab" data-p="Claude" aria-selected="true" type="button">Claude</button><button class="tab pl" role="tab" data-p="ChatGPT" aria-selected="false" type="button">ChatGPT</button><button class="tab pl" role="tab" data-p="Grok" aria-selected="false" type="button">Grok</button><button class="tab pl" role="tab" data-p="Gemini" aria-selected="false" type="button">Gemini</button></div></div>
   <div class="row"><b>اللغة المفضلة</b><span class="language-select"><select id="lg" aria-label="اللغة المفضلة"></select></span><input id="lg2" class="hide" hidden placeholder="اكتب اسم اللغة" aria-label="اسم اللغة"></div>
@@ -151,18 +151,15 @@ html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7
 </div>
 
 <section id="features">
-  <h2>ما الذي يحله</h2>
-  <p class="sub">المحادثات مع الذكاء الاصطناعي تنسى، وتتعارض، ولا تُقاس. Project Forge يجعل المجلد هو الذاكرة، واللوحة هي العقل المشترك، والأرقام هي الحكم.</p>
+  <h2>ما الذي يميز Project Forge</h2>
+  <p class="sub">من أول تكليف إلى آخر قرار، يعرف كل عضو في الفريق ما عليه، وتعرف أنت ما أُنجز وما ينتظر مراجعتك.</p>
   <div class="grid g3">
-    <div class="gl card"><div class="ico">🧭</div><h3>لوحة واحدة لكل الوكلاء</h3><p>صفوف مرقمة بحالاتها ومتطلباتها ومواعيدها. كل وكيل يقرأ اللوحة ويعدّل صفوفه فقط، على أي منصة.</p></div>
-    <div class="gl card"><div class="ico">🛡️</div><h3>بوابة جودة مستقلة</h3><p>رئيس ضمان الجودة يحكم «يمر أو لا يمر» قبل أن يصل أي مخرج إليك. ونسبة المرور مؤشر يُقاس.</p></div>
-    <div class="gl card"><div class="ico">⚖️</div><h3>حوكمة القرارات</h3><p>سقف خمسة قرارات مفتوحة، ومهلة 48 ساعة تؤخذ بعدها التوصية، وسجل قرارات موسوم: قابل للتراجع أو لا.</p></div>
-    <div class="gl card"><div class="ico">📊</div><h3>مؤشرات أداء جاهزة</h3><p>أمر <code>report</code> يعطيك نسبة التسليم وزمن الدورة والحمل على كل دور، و<code>export</code> يصدّرها بصيغة CSV.</p></div>
-    <div class="gl card"><div class="ico">🧾</div><h3>أثر تدقيق كامل</h3><p>كل كتابة في اللوحة تُسجَّل: من، ومتى، وماذا. وكل تغيّر حالة يُحفظ لحساب زمن الدورة.</p></div>
-    <div class="gl card"><div class="ico">🔐</div><h3>سياسة بيانات مضمّنة</h3><p>تصنيف البيانات والأدوات المعتمدة ملف ملزم لكل وكيل: لا بيانات شخصية في أداة غير معتمدة.</p></div>
-    <div class="gl card"><div class="ico">🖥️</div><h3>موقع إدارة من ملف واحد</h3><p>مركز الصباح والمهام والفريق والمخطط والأوامر القادمة، يعمل بلا خادم في الفاتح والداكن والجوال.</p></div>
-    <div class="gl card"><div class="ico">🧩</div><h3>80 تخصصًا و@@NSK@@ مهارة</h3><p>من الاستراتيجية إلى المطاعم والعقارات والحج والعمرة والرسائل الجامعية. صف مشروعك بجملة فتقترح الأداة الأقرب، ومعها أكثر من 330 دورًا تضيفها بنقرة ومهارات جاهزة.</p></div>
-    <div class="gl card"><div class="ico">🔒</div><h3>آمن بالتصميم</h3><p>لا يكتب فوق ملف موجود، والكتابة ذرّية، وكتابة اللوحة محروسة ببصمة تمنع التعارض بين وكيلين.</p></div>
+    <div class="gl card"><div class="ico">🧭</div><h3>بوصلة تجمع عمل الفريق</h3><p>تبدأ مع البوصلة: توزّع المهام على المختصين، وتتابع التسليم، وتحرك العمل العالق من لوحة واحدة.</p></div>
+    <div class="gl card"><div class="ico">🛡️</div><h3>استمرارية تتجاوز المحادثة</h3><p>تُحفظ التعليمات والأدوار والقرارات في ملفات المشروع، فيرجع إليها الوكلاء عند استئناف العمل.</p></div>
+    <div class="gl card"><div class="ico">⚖️</div><h3>مسؤولية واضحة لكل مهمة</h3><p>تعرف من يتولى كل مهمة، وما المطلوب تسليمه، وما الذي ينتظر إنجاز مهمة أخرى.</p></div>
+    <div class="gl card"><div class="ico">📊</div><h3>مراجعة مستقلة للمخرجات</h3><p>رئيس ضمان الجودة يفحص التسليم ويعيد ما يحتاج إلى تعديل قبل عرضه عليك.</p></div>
+    <div class="gl card"><div class="ico">🧾</div><h3>تقدّم تراه بالأرقام</h3><p>تابع نسبة التسليم، وزمن الإنجاز، والحمل على الأدوار، والقرارات المتأخرة؛ وصدّر البيانات بصيغة CSV.</p></div>
+    <div class="gl card"><div class="ico">🔐</div><h3>فريق قابل للتخصيص</h3><p>ابدأ من 80 تخصصًا، و334 دورًا، و130 مهارة جاهزة؛ ثم عدّل الفريق بما يناسب مشروعك.</p></div>
   </div>
 </section>
 
