@@ -333,6 +333,15 @@ class ForgeTests(unittest.TestCase):
         actual = json.JSONDecoder().raw_decode(wizard[match.end():])[0]
         self.assertEqual(actual, [list(row) for row in choices])
 
+    def test_office_language_flag(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as t:
+            for lang, want in (("English", True), ("العربية", False)):
+                root = core.create_project(t, "Probe " + lang[:2], "goal", "Owner", "general", core.PRESETS["general"], None, [], None, language=lang)
+                page = (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8")
+                self.assertEqual('"en":true' in page, want, lang)
+                self.assertEqual("/*OENG*/{}" in page, not want, lang)
+
     def test_readme_languages(self):
         root = Path(__file__).resolve().parent.parent
         files = [root / "README.md"] + sorted((root / "docs").glob("README.*.md"))

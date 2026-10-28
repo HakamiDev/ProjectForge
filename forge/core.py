@@ -2465,7 +2465,7 @@ def site_data(root):
         "circs": circs, "dec": dec, "pend": pend,
         "ideas": [], "ch": [], "labels": {}, "dropped": [], "disc": [],
         "imgs": imgs, "nimg": nimg, "th": [], "png": [], "out": out, "links": {}, "att": [{"k": x["kind"], "l": x["label"], "s": x["sev"], "n": x["n"], "who": x["who"], "t": x["text"]} for x in attention(root)],
-        "tpl": {"close": CLOSE_T if is_ar(team.get("language")) else CLOSE_EN, "resume": RESUME_T if is_ar(team.get("language")) else RESUME_EN}, "ico": ICONS, "ei": ei}
+        "en": not is_ar(team.get("language")), "tpl": {"close": CLOSE_T if is_ar(team.get("language")) else CLOSE_EN, "resume": RESUME_T if is_ar(team.get("language")) else RESUME_EN}, "ico": ICONS, "ei": ei}
 
 
 def safe_name(s):
@@ -2480,6 +2480,10 @@ def render_site(root):
     title = "مكتب إدارة %s" % project
     prefix = "of%s." % hashlib.sha256(project.encode("utf-8")).hexdigest()[:6]
     html = load_template()
+    if not data.get("en"):
+        a, b = html.find("/*OENG*/"), html.find("/*END*/", html.find("/*OENG*/"))
+        if a > 0 and b > a:
+            html = html[:a] + "/*OENG*/{}" + html[b:]
     # بدائل نصية داخل شيفرة JS: تُحقن بعد إزالة الرموز المخلة بالنصوص
     for k, v in (("@@TITLE@@", title), ("@@PROJECT@@", project), ("@@OWNER@@", owner), ("@@COMPASSCHAT@@", next((r["chat"] for r in team["roster"] if r["id"] == "compass"), COMPASS)),
                  ("@@COMPASS@@", COMPASS), ("@@PREFIX@@", prefix), ("@@ROOTURI@@", root.resolve().as_uri() + "/")):
@@ -2819,7 +2823,12 @@ def cmd_gui(a):
                 try:
                     return self._send(200, json.dumps({"ok": True, "path": str(install_shortcut())}, ensure_ascii=False))
                 except OSError as e:
-                    return self._send(200, json.dumps({"ok": False, "error": str(e)}, ensure_ascii=False))
+                    msg = str(e)
+                    if getattr(e, "errno", None) in (1, 13):
+                        msg = ("منع النظام تحديث الأيقونة الموجودة على سطح المكتب. احذف «Project Forge» من سطح المكتب "
+                               "ثم اضغط الزر مرة أخرى، أو أعطِ الطرفية إذن «إدارة التطبيقات» في إعدادات الخصوصية والأمان. "
+                               "macOS blocked updating the existing desktop icon: delete \"Project Forge\" from the Desktop and press the button again.")
+                    return self._send(200, json.dumps({"ok": False, "error": msg}, ensure_ascii=False))
             if self.path == "/api/open":
                 try:
                     open_path(d.get("what"))
