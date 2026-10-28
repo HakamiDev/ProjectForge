@@ -6,19 +6,19 @@ DIR="${FORGE_DIR:-$HOME/Documents/Project Forge}"
 FILE="$DIR/Project Forge 1.py"
 
 if ! command -v python3 >/dev/null 2>&1; then
-  echo "لم أجد Python على جهازك."
-  echo "سيظهر الآن طلب من Apple لتثبيت الأدوات اللازمة: اضغط «تثبيت»، وبعد انتهائه أعد لصق السطر نفسه."
-  xcode-select --install 2>/dev/null || echo "ثبّت Python 3 من https://www.python.org/downloads ثم أعد المحاولة."
+  echo "Python was not found on your computer."
+  echo "Apple will prompt you to install the required tools. Click Install, then run the same command again when installation finishes."
+  xcode-select --install 2>/dev/null || echo "Install Python 3 from https://www.python.org/downloads, then try again."
   exit 1
 fi
 
 mkdir -p "$DIR" || exit 1
-echo "جارٍ تنزيل الأداة..."
+echo "Downloading Project Forge..."
 if ! curl -fsSL -o "$FILE" "$URL"; then
-  echo "تعذّر التنزيل. تحقق من الاتصال بالإنترنت وأعد المحاولة."
+  echo "Download failed. Check your internet connection and try again."
   exit 1
 fi
 cd "$DIR" || exit 1
 export PYTHONUTF8=1
-echo "للتشغيل لاحقًا: python3 -I \"$FILE\""
+echo "To run later: python3 -I \"$FILE\""
 python3 -I "$FILE" "$@"

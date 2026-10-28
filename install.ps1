@@ -12,18 +12,18 @@ foreach ($c in @("py", "python", "python3")) {
   if (Get-Command $c -ErrorAction SilentlyContinue) { $py = $c; break }
 }
 if (-not $py) {
-  Write-Host "لم أجد Python. جارٍ تثبيته..."
+  Write-Host "Python was not found. Installing Python..."
   if (Get-Command winget -ErrorAction SilentlyContinue) {
     winget install -e --id Python.Python.3.12 --accept-package-agreements --accept-source-agreements
-    Write-Host "تم التثبيت. أغلق هذه النافذة وافتح PowerShell جديدة ثم أعد لصق السطر نفسه."
+    Write-Host "Installation finished. Close this window, open a new PowerShell window, and run the same command again."
   } else {
-    Write-Host "ثبّت Python من https://www.python.org/downloads (فعّل خيار Add Python to PATH) ثم أعد المحاولة."
+    Write-Host "Install Python from https://www.python.org/downloads (enable Add Python to PATH), then try again."
   }
   return
 }
 
 New-Item -ItemType Directory -Force -Path $Dir | Out-Null
-Write-Host "جارٍ تنزيل الأداة..."
+Write-Host "Downloading Project Forge..."
 Invoke-WebRequest -Uri $Url -OutFile $File -UseBasicParsing
 Set-Location $Dir
 if ($py -eq "py") { & py -3 -I $File @args } else { & $py -I $File @args }
