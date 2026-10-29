@@ -1,3 +1,13 @@
+# v1.2.0 — Launch version 1: final liquid-glass design
+
+- Office, wizard and public site share one calm liquid-glass design: soft backgrounds (light #E3E9F2, dark #12181F), no aurora, strong text contrast, and a thin static edge shine.
+- Dark surfaces use a translucent indigo tint instead of neutral gray in all three pages.
+- The logo is the original mark as a real 3D molecule tumbling in space; it scales fluidly with the window width and links to the home page.
+- Cairo is the interface font in the office, wizard and public site.
+- The staff graph follows the new palette in both themes; settings that had no effect in the glass design are hidden; the presentation-mode button and setting are removed.
+- Fixed: glass turning transparent while scrolling.
+- Local validation: unit tests, release checks, standalone selftest. Browser QA and an actual Windows install remain separate checks.
+
 # v1.1.9 — Site copy and dropdown alignment
 
 - Interface languages reduced to 13 across the site, wizard and README (Arabic, English, French, Spanish, German, Portuguese, Turkish, Russian, Macedonian, Hindi, Indonesian, Chinese, Japanese); the others were removed so that every listed language can be completed in full.
