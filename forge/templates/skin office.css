@@ -86,22 +86,22 @@ html[data-skin="glass"] .gl::before,html[data-skin="glass"] .gl::after{display:n
 html[data-skin="glass"] #lyr{display:none!important}
 @keyframes edgeRun{from{background-position:-100% calc(100% - 1px),0 0}to{background-position:200% calc(100% - 1px),0 0}}
 /* مخطط الموظفين بألوان التصميم الجديد */
-html[data-skin="glass"] .stage{--gnf:#FFFFFF;--gns:#8E9BC4;--gic:#1C2338;--ged:#5B6BD6;--gbm:#4C1BC4;--ggl:#5B21E6;--gbg:#EEF2F9;background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff,transparent) -100% calc(100% - 1px)/50% 1px no-repeat,var(--gbg)!important;animation:edgeRun 8s linear infinite}
-@media (prefers-color-scheme:dark){.stage{--gnf:#161B28;--gns:#4A5296;--gic:#EAEEFB;--ged:#7C8CFF;--gbm:#FFFFFF;--ggl:#A9B7FF;--gbg:#0E131A}}
+html[data-skin="glass"] .stage{--gnf:#FFFFFF;--gns:#5FB4D2;--gic:#10384A;--ged:#0A8FB5;--gbm:#006C8A;--ggl:#2AA3B8;--gbg:#E9F6F9;background:linear-gradient(90deg,transparent,#00dbb7,#00b8e6,#8affe2,#02a7ed,#0fb7ff,transparent) -100% calc(100% - 1px)/50% 1px no-repeat,var(--gbg)!important;animation:edgeRun 8s linear infinite}
+@media (prefers-color-scheme:dark){.stage{--gnf:#001d29;--gns:#0088c3;--gic:#EAF6FA;--ged:#02a7ed;--gbm:#FFFFFF;--ggl:#0fb7ff;--gbg:#031b21}}
 html[data-skin="glass"] .stage{}
-html[data-theme="dark"] .stage{--gnf:#161B28;--gns:#4A5296;--gic:#EAEEFB;--ged:#7C8CFF;--gbm:#FFFFFF;--ggl:#A9B7FF;--gbg:#0E131A}
-html[data-theme="light"] .stage{--gnf:#FFFFFF;--gns:#8E9BC4;--gic:#1C2338;--ged:#5B6BD6;--gbm:#4C1BC4;--ggl:#5B21E6;--gbg:#EEF2F9}
+html[data-theme="dark"] .stage{--gnf:#001d29;--gns:#0088c3;--gic:#EAF6FA;--ged:#02a7ed;--gbm:#FFFFFF;--ggl:#0fb7ff;--gbg:#031b21}
+html[data-theme="light"] .stage{--gnf:#FFFFFF;--gns:#5FB4D2;--gic:#10384A;--ged:#0A8FB5;--gbm:#006C8A;--ggl:#2AA3B8;--gbg:#E9F6F9}
 /* لمعة الحافة: خط رفيع يتحرك بالتحويل فقط (بلا إعادة رسم)، فلا يتأثر الزجاج بالتمرير */
 @keyframes edgeSlide{from{transform:translate3d(-100%,0,0)}to{transform:translate3d(300%,0,0)}}
-html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{content:""!important;display:block!important;position:absolute!important;left:0!important;right:auto!important;top:auto!important;bottom:0!important;width:50%!important;height:var(--grimh,1px)!important;border-radius:0!important;filter:none!important;opacity:.9!important;pointer-events:none;z-index:1;background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff,transparent)!important;animation:edgeSlide 8s linear infinite!important;will-change:transform}
+html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{content:""!important;display:block!important;position:absolute!important;left:0!important;right:auto!important;top:auto!important;bottom:0!important;width:50%!important;height:var(--grimh,1px)!important;border-radius:0!important;filter:none!important;opacity:.9!important;pointer-events:none;z-index:1;background:linear-gradient(90deg,transparent,#00dbb7,#00b8e6,#8affe2,#02a7ed,#0fb7ff,transparent)!important;animation:edgeSlide 8s linear infinite!important;will-change:transform}
 html[data-skin="glass"] .kpi::after{animation-duration:9s!important}.tc::after{animation-duration:10s!important}.tk::after{animation-duration:7s!important}
 @media (prefers-reduced-motion:reduce){.card::after,.kpi::after,.tc::after,.th::after,.tk::after,.strip::after,.fc::after,.slot::after,.cmp::after,.menu::after,#dr::after,.pal .box::after,#gpop::after,.kanw .kc::after{animation:none!important;left:25%!important}}
 /* أسطح الصفوف الداكنة: بدل الرمادي المعتم → بنفسجي/أزرق شفاف أنيق */
 @media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--rw:linear-gradient(135deg,rgba(0,184,230,.15),rgba(0,219,183,.06));--rwb:rgba(0,207,235,.26)}}
 html[data-skin="glass"][data-theme="dark"]{--rw:linear-gradient(135deg,rgba(0,184,230,.15),rgba(0,219,183,.06));--rwb:rgba(0,207,235,.26)}
 html[data-skin="glass"] .mrow,html[data-skin="glass"] .circ,html[data-skin="glass"] .att .mrow{background:var(--rw,rgba(255,255,255,.18))!important;border-color:var(--rwb,rgba(28,35,56,.1))!important}
-@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]) #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}}
-html[data-skin="glass"][data-theme="dark"] #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}
+@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]) #pq{background:linear-gradient(135deg,rgba(0,184,230,.18),rgba(0,219,183,.07))!important}}
+html[data-skin="glass"][data-theme="dark"] #pq{background:linear-gradient(135deg,rgba(0,184,230,.18),rgba(0,219,183,.07))!important}
 /* اللمعة ثابتة بلا حركة */
 html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{animation:none!important;transform:none!important;left:25%!important}
 html[data-skin="glass"] .stage{animation:none!important;background-position:50% calc(100% - 1px),0 0!important}
@@ -111,7 +111,7 @@ html[data-skin="glass"] .brand i{width:var(--lg)!important;height:var(--lg)!impo
 html[data-skin="glass"] .brand i canvas{width:100%!important;height:100%!important}
 html[data-skin="glass"] .brand span.tx{line-height:1.2}
 /* بطاقات الأرقام (KPI): بطاقات صلبة لا زجاج */
-html[data-skin="glass"]{--kbg:#F6FBFD;--kbd:rgba(28,35,56,.1);--ksh:0 8px 20px -12px rgba(47,80,160,.4)}
+html[data-skin="glass"]{--kbg:#F4FBFD;--kbd:rgba(10,143,181,.22);--ksh:0 8px 20px -12px rgba(30,110,135,.4);--rw:linear-gradient(135deg,rgba(255,255,255,.55),rgba(42,163,184,.1));--rwb:rgba(10,143,181,.2)}
 @media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--kbg:#0A252E;--kbd:rgba(0,207,235,.2);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}}
 html[data-skin="glass"][data-theme="dark"]{--kbg:#0A252E;--kbd:rgba(0,207,235,.2);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}
 html[data-skin="glass"] .kpi{background:var(--kbg)!important;border:1px solid var(--kbd)!important;box-shadow:var(--ksh)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;isolation:auto}
