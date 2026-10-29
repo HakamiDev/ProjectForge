@@ -86,11 +86,11 @@ html[data-skin="glass"] .gl::before,html[data-skin="glass"] .gl::after{display:n
 html[data-skin="glass"] #lyr{display:none!important}
 @keyframes edgeRun{from{background-position:-100% calc(100% - 1px),0 0}to{background-position:200% calc(100% - 1px),0 0}}
 /* مخطط الموظفين بألوان التصميم الجديد */
-html[data-skin="glass"] .stage{--gnf:#FFFFFF;--gns:#5FB4D2;--gic:#10384A;--ged:#0A8FB5;--gbm:#006C8A;--ggl:#2AA3B8;--gbg:#E9F6F9;background:linear-gradient(90deg,transparent,#00dbb7,#00b8e6,#8affe2,#02a7ed,#0fb7ff,transparent) -100% calc(100% - 1px)/50% 1px no-repeat,var(--gbg)!important;animation:edgeRun 8s linear infinite}
+html[data-skin="glass"] .stage{--gnf:#FFFFFF;--gns:#7DBBDD;--gic:#10384A;--ged:#399fcf;--gbm:#1F7FAE;--ggl:#399fcf;--gbg:#EAF6FA;background:linear-gradient(90deg,transparent,#00dbb7,#00b8e6,#8affe2,#02a7ed,#0fb7ff,transparent) -100% calc(100% - 1px)/50% 1px no-repeat,var(--gbg)!important;animation:edgeRun 8s linear infinite}
 @media (prefers-color-scheme:dark){.stage{--gnf:#001d29;--gns:#0088c3;--gic:#EAF6FA;--ged:#02a7ed;--gbm:#FFFFFF;--ggl:#0fb7ff;--gbg:#031b21}}
 html[data-skin="glass"] .stage{}
 html[data-theme="dark"] .stage{--gnf:#001d29;--gns:#0088c3;--gic:#EAF6FA;--ged:#02a7ed;--gbm:#FFFFFF;--ggl:#0fb7ff;--gbg:#031b21}
-html[data-theme="light"] .stage{--gnf:#FFFFFF;--gns:#5FB4D2;--gic:#10384A;--ged:#0A8FB5;--gbm:#006C8A;--ggl:#2AA3B8;--gbg:#E9F6F9}
+html[data-theme="light"] .stage{--gnf:#FFFFFF;--gns:#7DBBDD;--gic:#10384A;--ged:#399fcf;--gbm:#1F7FAE;--ggl:#399fcf;--gbg:#EAF6FA}
 /* لمعة الحافة: خط رفيع يتحرك بالتحويل فقط (بلا إعادة رسم)، فلا يتأثر الزجاج بالتمرير */
 @keyframes edgeSlide{from{transform:translate3d(-100%,0,0)}to{transform:translate3d(300%,0,0)}}
 html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{content:""!important;display:block!important;position:absolute!important;left:0!important;right:auto!important;top:auto!important;bottom:0!important;width:50%!important;height:var(--grimh,1px)!important;border-radius:0!important;filter:none!important;opacity:.9!important;pointer-events:none;z-index:1;background:linear-gradient(90deg,transparent,#00dbb7,#00b8e6,#8affe2,#02a7ed,#0fb7ff,transparent)!important;animation:edgeSlide 8s linear infinite!important;will-change:transform}
