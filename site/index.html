@@ -543,22 +543,25 @@ function mount(el){
 }
 function tile(x,S){var r=S*60/256,g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#34F5A0");g.addColorStop(.5,"#3EC7FF");g.addColorStop(1,"#7B4DFF");
  x.fillStyle=g;x.beginPath();x.moveTo(r,0);x.arcTo(S,0,S,S,r);x.arcTo(S,S,0,S,r);x.arcTo(0,S,0,0,r);x.arcTo(0,0,S,0,r);x.closePath();x.fill()}
+/* المقاسات من logo.svg حرفيًا (وحدة 256): النواة نصف قطرها 24، والعقد 15، والساق سمكها 14؛ المراكز (128,128) و(128,56) و(66,164) و(190,164). الألوان ثابتة كما هي: أبيض صافٍ على البلاطة المتدرّجة. */
 function draw(a){
- var x=a.x,S=a.s,R=a.R,cx=S/2,sc=S/2*1.12,D=6,items=[];
- function P(v){var X=R[0]*v[0]+R[1]*v[1]+R[2]*v[2],Y=R[3]*v[0]+R[4]*v[1]+R[5]*v[2],Z=R[6]*v[0]+R[7]*v[1]+R[8]*v[2],f=D/(D-Z);return[cx+X*f*sc,cx+Y*f*sc,Z,f]}
+ var x=a.x,S=a.s,R=a.R,cx=S/2,sc=S/2,D=6,items=[];
+ function T(v){return[R[0]*v[0]+R[1]*v[1]+R[2]*v[2],R[3]*v[0]+R[4]*v[1]+R[5]*v[2],R[6]*v[0]+R[7]*v[1]+R[8]*v[2]]}
+ function P(V){var f=D/(D-V[2]);return[cx+V[0]*f*sc,cx+V[1]*f*sc,V[2],f]}
  x.clearRect(0,0,S,S);tile(x,S);
- var c0=P(C);items.push({z:c0[2],k:"s",p:c0,r:RC});
- NO.forEach(function(n){var p=P(n);items.push({z:p[2],k:"s",p:p,r:RN});items.push({z:(p[2]+c0[2])/2-.001,k:"b",a:c0,b:p,w:RS})});
+ var c3=T(C),c0=P(c3);items.push({z:c3[2],k:"s",p:c0,r:RC});
+ NO.forEach(function(n){var n3=T(n),d=[n3[0]-c3[0],n3[1]-c3[1],n3[2]-c3[2]],L=Math.hypot(d[0],d[1],d[2]);d=[d[0]/L,d[1]/L,d[2]/L];
+  /* الساق تبدأ من سطح النواة وتنتهي عند سطح العقدة، فنقطة الالتصاق تظهر حين تتجه الساق نحو الناظر وتختفي خلف الكرة حين تبتعد */
+  var s0=Math.sqrt(Math.max(0,RC*RC-RS*RS)),s1=L-Math.sqrt(Math.max(0,RN*RN-RS*RS)),A=[c3[0]+d[0]*s0,c3[1]+d[1]*s0,c3[2]+d[2]*s0],B=[c3[0]+d[0]*s1,c3[1]+d[1]*s1,c3[2]+d[2]*s1];
+  items.push({z:n3[2],k:"s",p:P(n3),r:RN});
+  items.push({z:(A[2]+B[2])/2,k:"b",a:P(A),b:P(B),dz:d[2]});
+ });
+ /* ترتيب الرسم من الأبعد إلى الأقرب */
  items.sort(function(m,n){return m.z-n.z});
+ x.fillStyle=x.strokeStyle="#ffffff";x.lineCap="butt";
  for(var i=0;i<items.length;i++){var it=items[i];
-  if(it.k==="b"){var dx=it.b[0]-it.a[0],dy=it.b[1]-it.a[1],f=(it.a[3]+it.b[3])/2,w=it.w*sc*2*f;
-   x.lineCap="round";x.strokeStyle="rgba(60,40,150,.28)";x.lineWidth=w*1.12;x.beginPath();x.moveTo(it.a[0],it.a[1]);x.lineTo(it.b[0],it.b[1]);x.stroke();
-   x.strokeStyle="#ffffff";x.lineWidth=w*.86;x.beginPath();x.moveTo(it.a[0],it.a[1]);x.lineTo(it.b[0],it.b[1]);x.stroke();
-   x.strokeStyle="rgba(255,255,255,.0)";}
-  else{var r=it.r*sc*it.p[3],px=it.p[0],py=it.p[1],g=x.createRadialGradient(px-r*.38,py-r*.42,r*.08,px,py,r);
-   g.addColorStop(0,"#ffffff");g.addColorStop(.55,"#f3f4ff");g.addColorStop(.86,"#c9cdf2");g.addColorStop(1,"#8f86d6");
-   x.fillStyle=g;x.beginPath();x.arc(px,py,r,0,TAU);x.fill();
-   x.fillStyle="rgba(255,255,255,.9)";x.beginPath();x.ellipse(px-r*.36,py-r*.42,r*.2,r*.12,-.6,0,TAU);x.fill()}
+  if(it.k==="b"){var f=(it.a[3]+it.b[3])/2;x.lineWidth=2*RS*sc*f;x.beginPath();x.moveTo(it.a[0],it.a[1]);x.lineTo(it.b[0],it.b[1]);x.stroke()}
+  else{x.beginPath();x.arc(it.p[0],it.p[1],it.r*sc*it.p[3],0,TAU);x.fill()}
  }
 }
 var raf=0,prevT=0,inkT=0;
