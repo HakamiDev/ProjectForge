@@ -97,8 +97,8 @@ html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[da
 html[data-skin="glass"] .kpi::after{animation-duration:9s!important}.tc::after{animation-duration:10s!important}.tk::after{animation-duration:7s!important}
 @media (prefers-reduced-motion:reduce){.card::after,.kpi::after,.tc::after,.th::after,.tk::after,.strip::after,.fc::after,.slot::after,.cmp::after,.menu::after,#dr::after,.pal .box::after,#gpop::after,.kanw .kc::after{animation:none!important;left:25%!important}}
 /* أسطح الصفوف الداكنة: بدل الرمادي المعتم → بنفسجي/أزرق شفاف أنيق */
-@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--rw:linear-gradient(135deg,rgba(123,77,255,.16),rgba(62,199,255,.07));--rwb:rgba(143,180,255,.24)}}
-html[data-skin="glass"][data-theme="dark"]{--rw:linear-gradient(135deg,rgba(123,77,255,.16),rgba(62,199,255,.07));--rwb:rgba(143,180,255,.24)}
+@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--rw:linear-gradient(135deg,rgba(0,184,230,.15),rgba(0,219,183,.06));--rwb:rgba(0,207,235,.26)}}
+html[data-skin="glass"][data-theme="dark"]{--rw:linear-gradient(135deg,rgba(0,184,230,.15),rgba(0,219,183,.06));--rwb:rgba(0,207,235,.26)}
 html[data-skin="glass"] .mrow,html[data-skin="glass"] .circ,html[data-skin="glass"] .att .mrow{background:var(--rw,rgba(255,255,255,.18))!important;border-color:var(--rwb,rgba(28,35,56,.1))!important}
 @media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]) #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}}
 html[data-skin="glass"][data-theme="dark"] #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}
@@ -111,9 +111,9 @@ html[data-skin="glass"] .brand i{width:var(--lg)!important;height:var(--lg)!impo
 html[data-skin="glass"] .brand i canvas{width:100%!important;height:100%!important}
 html[data-skin="glass"] .brand span.tx{line-height:1.2}
 /* بطاقات الأرقام (KPI): بطاقات صلبة لا زجاج */
-html[data-skin="glass"]{--kbg:#F6F8FD;--kbd:rgba(28,35,56,.1);--ksh:0 8px 20px -12px rgba(47,80,160,.4)}
-@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--kbg:#171E2B;--kbd:rgba(143,180,255,.16);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}}
-html[data-skin="glass"][data-theme="dark"]{--kbg:#171E2B;--kbd:rgba(143,180,255,.16);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}
+html[data-skin="glass"]{--kbg:#F6FBFD;--kbd:rgba(28,35,56,.1);--ksh:0 8px 20px -12px rgba(47,80,160,.4)}
+@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--kbg:#0A252E;--kbd:rgba(0,207,235,.2);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}}
+html[data-skin="glass"][data-theme="dark"]{--kbg:#0A252E;--kbd:rgba(0,207,235,.2);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}
 html[data-skin="glass"] .kpi{background:var(--kbg)!important;border:1px solid var(--kbd)!important;box-shadow:var(--ksh)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;isolation:auto}
 html[data-skin="glass"] .kpi::before,html[data-skin="glass"] .kpi::after{display:none!important}
 html[data-skin="glass"] .kpi.key{border-color:color-mix(in srgb,var(--accent) 55%,var(--kbd))!important}
