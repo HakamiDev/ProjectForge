@@ -91,3 +91,9 @@ html[data-skin="glass"] .card,html[data-skin="glass"] .kpi,html[data-skin="glass
 html[data-skin="glass"] .kpi{animation-duration:9s}.tc{animation-duration:10s}.tk{animation-duration:7s}
 html.scrl .card,html.scrl .kpi,html.scrl .tc,html.scrl .th,html.scrl .tk,html.scrl .strip,html.scrl .fc,html.scrl .slot,html.scrl .cmp,html.scrl .kanw .kc{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.card,.kpi,.tc,.th,.tk,.strip,.fc,.slot,.cmp,.kanw .kc,.pal .box,.menu,#dr,#gpop{animation:none}}
+/* مخطط الموظفين بألوان التصميم الجديد */
+html[data-skin="glass"] .stage{--gnf:#FFFFFF;--gns:#8E9BC4;--gic:#1C2338;--ged:#5B6BD6;--gbm:#4C1BC4;--ggl:#5B21E6;--gbg:#EEF2F9;background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,#6bb7ff,#b98cff,transparent) -100% calc(100% - 1px)/50% 1px no-repeat,var(--gbg)!important;animation:edgeRun 8s linear infinite}
+@media (prefers-color-scheme:dark){.stage{--gnf:#161B28;--gns:#4A5296;--gic:#EAEEFB;--ged:#7C8CFF;--gbm:#FFFFFF;--ggl:#A9B7FF;--gbg:#0E131A}}
+html[data-skin="glass"] .stage{}
+html[data-theme="dark"] .stage{--gnf:#161B28;--gns:#4A5296;--gic:#EAEEFB;--ged:#7C8CFF;--gbm:#FFFFFF;--ggl:#A9B7FF;--gbg:#0E131A}
+html[data-theme="light"] .stage{--gnf:#FFFFFF;--gns:#8E9BC4;--gic:#1C2338;--ged:#5B6BD6;--gbm:#4C1BC4;--ggl:#5B21E6;--gbg:#EEF2F9}
