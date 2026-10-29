@@ -105,3 +105,8 @@ html[data-skin="glass"][data-theme="dark"] #pq{background:linear-gradient(135deg
 /* اللمعة ثابتة بلا حركة */
 html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{animation:none!important;transform:none!important;left:25%!important}
 html[data-skin="glass"] .stage{animation:none!important;background-position:50% calc(100% - 1px),0 0!important}
+/* الشعار: مقاس انسيابي يتبع عرض النافذة، مربّع دائمًا ويتوسّط الترويسة */
+html[data-skin="glass"] .brand{--lg:clamp(26px,1.2vw + 18px,38px);align-items:center;gap:clamp(6px,.8vw,10px)}
+html[data-skin="glass"] .brand i{width:var(--lg)!important;height:var(--lg)!important;min-width:var(--lg);flex:none!important;aspect-ratio:1/1;display:block!important;line-height:0;margin:0!important;border-radius:24%}
+html[data-skin="glass"] .brand i canvas{width:100%!important;height:100%!important}
+html[data-skin="glass"] .brand span.tx{line-height:1.2}
