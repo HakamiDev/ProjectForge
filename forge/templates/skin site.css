@@ -36,3 +36,4 @@ html:root[data-theme="light"]{--e1:#ED1212;--e2:#1B7FAF;--e3:#001B27;--e4:#1B7FA
 html:root h1 em,html:root[dir="rtl"] h1 em{background-image:linear-gradient(90deg,var(--e3),var(--e2),var(--e1))!important}
 html:root[data-theme="light"] h1 em,html:root[data-theme="light"][dir="rtl"] h1 em{background-image:linear-gradient(90deg,#001B27,#1B7FAF,#ED1212)!important}
 @media (prefers-color-scheme:light){html:root:not([data-theme="dark"]) h1 em{background-image:linear-gradient(90deg,#001B27,#1B7FAF,#ED1212)!important}}
+html .ico{filter:grayscale(1) brightness(1.1)}

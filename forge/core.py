@@ -2475,7 +2475,7 @@ def render_site(root):
                  ("@@COMPASS@@", COMPASS), ("@@PREFIX@@", prefix), ("@@ROOTURI@@", root.resolve().as_uri() + "/")):
         html = html.replace(k, v.replace("&", "&amp;").replace("<", "&lt;") if k in ("@@TITLE@@",) else v)
     if team.get("accent"):
-        html = html.replace("#2F6BE0", team["accent"])
+        html = html.replace("#2FA5E0", team["accent"])
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/").replace("<!--", "<\\!--").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     return html.replace("@@DATA@@", payload)
 

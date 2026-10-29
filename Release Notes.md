@@ -1,6 +1,7 @@
 # v1.2.0 — Launch version 1: final liquid-glass design
 
 - Office, wizard and public site share one calm liquid-glass design and one teal colour system in light and dark (dark #031B21, light #E6F5F8, accent #00B8E6 / #087E9C), no aurora, strong text contrast, and a thin static edge shine.
+- The only colours in the product are navy #001B27, sky #C5ECFF and red #ED1212 and their tints and shades; no purple, green, amber or pink remains in the office, wizard, site, logo or share image.
 - Status colours are distinct in both themes: done mint, in progress cyan, waiting amber, returned red.
 - Dark surfaces use a translucent teal tint instead of neutral gray in all three pages.
 - The logo is the original mark as a real 3D molecule tumbling in space; it scales fluidly with the window width and links to the home page.
