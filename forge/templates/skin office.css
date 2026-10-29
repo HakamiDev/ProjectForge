@@ -117,3 +117,5 @@ html[data-skin="glass"][data-theme="dark"]{--kbg:#171E2B;--kbd:rgba(143,180,255,
 html[data-skin="glass"] .kpi{background:var(--kbg)!important;border:1px solid var(--kbd)!important;box-shadow:var(--ksh)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;isolation:auto}
 html[data-skin="glass"] .kpi::before,html[data-skin="glass"] .kpi::after{display:none!important}
 html[data-skin="glass"] .kpi.key{border-color:color-mix(in srgb,var(--accent) 55%,var(--kbd))!important}
+/* لون موحّد لكل الصفحات كالصفحة الرئيسية */
+html[data-skin="glass"][data-sec]{--l1:var(--glow);--l2:var(--s1);--l3:var(--prog)}
