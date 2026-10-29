@@ -287,5 +287,71 @@ if(!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add(
 var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{rootMargin:"0px 0px -8% 0px",threshold:.08});
 els.forEach(function(e){io.observe(e)})})();
 </script>
-</body>
+<script>/*ATOM*/(function(){
+if(window.ForgeAtom)return;
+var TAU=Math.PI*2,RED=false;try{RED=matchMedia("(prefers-reduced-motion:reduce)").matches}catch(e){}
+function mul(a,b){var r=[0,0,0,0,0,0,0,0,0],i,j,k;for(i=0;i<3;i++)for(j=0;j<3;j++){var s=0;for(k=0;k<3;k++)s+=a[i*3+k]*b[k*3+j];r[i*3+j]=s}return r}
+function rot(ax,ay,az,ang){var l=Math.sqrt(ax*ax+ay*ay+az*az)||1;ax/=l;ay/=l;az/=l;var c=Math.cos(ang),s=Math.sin(ang),t=1-c;
+return[t*ax*ax+c,t*ax*ay-s*az,t*ax*az+s*ay,t*ax*ay+s*az,t*ay*ay+c,t*ay*az-s*ax,t*ax*az-s*ay,t*ay*az+s*ax,t*az*az+c]}
+function ortho(m){/* يمنع تراكم الخطأ العددي */var a=[m[0],m[1],m[2]],b=[m[3],m[4],m[5]],l=Math.hypot(a[0],a[1],a[2]);a=a.map(function(v){return v/l});
+var d=a[0]*b[0]+a[1]*b[1]+a[2]*b[2];b=[b[0]-d*a[0],b[1]-d*a[1],b[2]-d*a[2]];l=Math.hypot(b[0],b[1],b[2]);b=b.map(function(v){return v/l});
+var c=[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];return[a[0],a[1],a[2],b[0],b[1],b[2],c[0],c[1],c[2]]}
+var NODES=["#8B5CFF","#6CC4FF","#5EF2C0"];
+/* حلقات: ثلاثة مستويات تتقاطع على محور واحد وبينها 60° (شكل الذرة)، وعلى كل حلقة عقدة؛ العقد الثلاث تشكّل مثلثًا متساوي الأضلاع */
+var RINGS=[0,1,2].map(function(k){var th=k*TAU/3;return{u:[Math.cos(th),0,Math.sin(th)],col:NODES[k]}});
+var SEG=48,CH=3,all=[];
+function mount(el){
+ if(!el||el.__atom)return;el.__atom=1;
+ var sz=Math.max(24,Math.round(el.getBoundingClientRect().width||el.offsetWidth||34)),dpr=Math.min(window.devicePixelRatio||1,2);
+ var cv=document.createElement("canvas");cv.width=cv.height=Math.round(sz*dpr);cv.style.cssText="width:"+sz+"px;height:"+sz+"px;display:block;pointer-events:none";cv.setAttribute("aria-hidden","true");
+ el.style.background="none";el.style.webkitMaskImage="none";el.style.maskImage="none";el.style.boxShadow="none";el.style.animation="none";el.style.filter="none";el.style.transform="none";
+ Array.prototype.forEach.call(el.children,function(c){c.style.display="none"});
+ el.appendChild(cv);
+ var st={cv:cv,x:cv.getContext("2d"),s:sz*dpr,R:ortho(rot(.4,1,.2,.7)),w:[.5,.8,.3],t:0,seed:[Math.random()*9,Math.random()*9,Math.random()*9],ink:ink(),last:0};
+ all.push(st);draw(st);start();
+}
+function ink(){try{var v=getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();return v||"#c9d3ee"}catch(e){return"#c9d3ee"}}
+function draw(a){
+ var x=a.x,S=a.s,R=a.R,cx=S/2,sc=S*.36,D=5,items=[],i,k,p,q;
+ function P(v){var X=R[0]*v[0]+R[1]*v[1]+R[2]*v[2],Y=R[3]*v[0]+R[4]*v[1]+R[5]*v[2],Z=R[6]*v[0]+R[7]*v[1]+R[8]*v[2],f=D/(D-Z);return[cx+X*f*sc,cx+Y*f*sc,Z,f]}
+ x.clearRect(0,0,S,S);
+ RINGS.forEach(function(r){var u=r.u,pts=[];
+  for(i=0;i<=SEG;i++){var ang=i/SEG*TAU,c=Math.cos(ang),s=Math.sin(ang);pts.push(P([u[0]*c,s,u[2]*c]))}
+  for(i=0;i<SEG;i+=CH){var ch=pts.slice(i,Math.min(SEG,i+CH)+1),z=0;ch.forEach(function(q){z+=q[2]});items.push({z:z/ch.length,t:0,ch:ch})}
+  var nv=[u[0],0,u[2]];p=P(nv);items.push({z:p[2],t:1,p:p,col:r.col});
+ });
+ p=P([0,0,0]);items.push({z:p[2],t:2,p:p});
+ items.sort(function(m,n){return m.z-n.z});
+ x.lineCap="butt";x.lineJoin="round";x.lineWidth=Math.max(1.3,S*.017);
+ for(i=0;i<items.length;i++){var it=items[i];
+  if(it.t===0){var d=(it.z+1)/2;x.globalAlpha=.2+.7*d;x.strokeStyle=a.ink;x.beginPath();x.moveTo(it.ch[0][0],it.ch[0][1]);for(k=1;k<it.ch.length;k++)x.lineTo(it.ch[k][0],it.ch[k][1]);x.stroke()}
+  else{var r=(it.t===1?S*.085:S*.06)*it.p[3],px=it.p[0],py=it.p[1],g=x.createRadialGradient(px-r*.35,py-r*.4,r*.1,px,py,r),col=it.t===1?it.col:"#FFFFFF";
+   x.globalAlpha=.55+.45*((it.z+1)/2);
+   if(it.t===1){x.shadowColor=col;x.shadowBlur=S*.12}
+   g.addColorStop(0,"#ffffff");g.addColorStop(.35,col);g.addColorStop(1,it.t===1?"rgba(20,16,60,.9)":"rgba(120,130,200,.95)");
+   x.fillStyle=g;x.beginPath();x.arc(px,py,r,0,TAU);x.fill();x.shadowBlur=0}
+ }
+ x.globalAlpha=1;
+}
+var raf=0,prevT=0,inkT=0;
+function tick(t){
+ raf=requestAnimationFrame(tick);
+ var dt=Math.min(.05,(t-prevT)/1000);if(t-prevT<30)return;prevT=t;
+ if(t-inkT>1500){inkT=t;var c=ink();all.forEach(function(a){a.ink=c})}
+ all.forEach(function(a){
+  a.t+=dt;var s=a.seed,w=a.w;
+  /* سرعة زاويّة تتغيّر عشوائيًا وبنعومة: دوران متوسط (نحو 1.1 راديان/ث) في اتجاه متقلّب كأنه في الفضاء */
+  w[0]=Math.sin(a.t*.37+s[0])*.8+Math.sin(a.t*.91+s[1])*.5;w[1]=Math.sin(a.t*.43+s[1])*.8+Math.sin(a.t*1.07+s[2])*.5;w[2]=Math.sin(a.t*.29+s[2])*.8+Math.sin(a.t*.83+s[0])*.5;
+  var m=Math.hypot(w[0],w[1],w[2])||1,sp=1.1;
+  a.R=ortho(mul(rot(w[0],w[1],w[2],sp*dt),a.R));
+  draw(a);
+ });
+}
+function start(){if(RED||raf)return;raf=requestAnimationFrame(tick)}
+document.addEventListener("visibilitychange",function(){if(document.hidden){cancelAnimationFrame(raf);raf=0}else start()});
+window.ForgeAtom={mount:mount};
+function init(){Array.prototype.forEach.call(document.querySelectorAll(".brand i,.logo"),mount)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
+/*ENDATOM*/</script></body>
 </html>
