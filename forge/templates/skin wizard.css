@@ -28,3 +28,4 @@ html .card{background:linear-gradient(90deg,transparent,#ff7ab6,#7FC8FF,#7bffd0,
 @media (prefers-color-scheme:dark){html:not([data-theme="light"]) .steps div:not(.on) i{background:rgba(143,180,255,.2)}}
 @media (prefers-color-scheme:dark){html:not([data-theme="light"]):not(.z):not(.y){--card:rgba(130,140,255,.075)}}
 html[data-theme="dark"]:not(.z):not(.y){--card:rgba(130,140,255,.075)}
+html .card{animation:none!important;background-position:50% calc(100% - 1px),0 0!important}

@@ -102,3 +102,6 @@ html[data-skin="glass"][data-theme="dark"]{--rw:linear-gradient(135deg,rgba(123,
 html[data-skin="glass"] .mrow,html[data-skin="glass"] .circ,html[data-skin="glass"] .att .mrow{background:var(--rw,rgba(255,255,255,.18))!important;border-color:var(--rwb,rgba(28,35,56,.1))!important}
 @media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]) #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}}
 html[data-skin="glass"][data-theme="dark"] #pq{background:linear-gradient(135deg,rgba(123,77,255,.2),rgba(62,199,255,.09))!important}
+/* اللمعة ثابتة بلا حركة */
+html[data-skin="glass"] .card::after,html[data-skin="glass"] .kpi::after,html[data-skin="glass"] .tc::after,html[data-skin="glass"] .th::after,html[data-skin="glass"] .tk::after,html[data-skin="glass"] .strip::after,html[data-skin="glass"] .fc::after,html[data-skin="glass"] .slot::after,html[data-skin="glass"] .cmp::after,html[data-skin="glass"] .menu::after,html[data-skin="glass"] #dr::after,html[data-skin="glass"] .pal .box::after,html[data-skin="glass"] #gpop::after,html[data-skin="glass"] .kanw .kc::after{animation:none!important;transform:none!important;left:25%!important}
+html[data-skin="glass"] .stage{animation:none!important;background-position:50% calc(100% - 1px),0 0!important}
