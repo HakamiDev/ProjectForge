@@ -110,3 +110,10 @@ html[data-skin="glass"] .brand{--lg:clamp(26px,1.2vw + 18px,38px);align-items:ce
 html[data-skin="glass"] .brand i{width:var(--lg)!important;height:var(--lg)!important;min-width:var(--lg);flex:none!important;aspect-ratio:1/1;display:block!important;line-height:0;margin:0!important;border-radius:24%}
 html[data-skin="glass"] .brand i canvas{width:100%!important;height:100%!important}
 html[data-skin="glass"] .brand span.tx{line-height:1.2}
+/* بطاقات الأرقام (KPI): بطاقات صلبة لا زجاج */
+html[data-skin="glass"]{--kbg:#F6F8FD;--kbd:rgba(28,35,56,.1);--ksh:0 8px 20px -12px rgba(47,80,160,.4)}
+@media (prefers-color-scheme:dark){html[data-skin="glass"]:not([data-theme="light"]){--kbg:#171E2B;--kbd:rgba(143,180,255,.16);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}}
+html[data-skin="glass"][data-theme="dark"]{--kbg:#171E2B;--kbd:rgba(143,180,255,.16);--ksh:0 8px 20px -12px rgba(0,0,0,.7)}
+html[data-skin="glass"] .kpi{background:var(--kbg)!important;border:1px solid var(--kbd)!important;box-shadow:var(--ksh)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;isolation:auto}
+html[data-skin="glass"] .kpi::before,html[data-skin="glass"] .kpi::after{display:none!important}
+html[data-skin="glass"] .kpi.key{border-color:color-mix(in srgb,var(--accent) 55%,var(--kbd))!important}
