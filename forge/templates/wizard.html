@@ -382,7 +382,7 @@ function mount(el){
  all.push(st);draw(st);start();
  if(window.ResizeObserver){new ResizeObserver(function(){var w=Math.round(el.getBoundingClientRect().width*dpr);if(w>8&&w!==cv.width){cv.width=cv.height=w;st.s=w;draw(st)}}).observe(el)}
 }
-function tile(x,S){var r=S*60/256,g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#34F5A0");g.addColorStop(.5,"#3EC7FF");g.addColorStop(1,"#7B4DFF");
+function tile(x,S){var r=S*60/256,g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#00DBB7");g.addColorStop(.5,"#00B8E6");g.addColorStop(1,"#2366AF");
  x.fillStyle=g;x.beginPath();x.moveTo(r,0);x.arcTo(S,0,S,S,r);x.arcTo(S,S,0,S,r);x.arcTo(0,S,0,0,r);x.arcTo(0,0,S,0,r);x.closePath();x.fill()}
 /* المقاسات من logo.svg حرفيًا (وحدة 256): النواة نصف قطرها 24، والعقد 15، والساق سمكها 14؛ المراكز (128,128) و(128,56) و(66,164) و(190,164). الألوان ثابتة كما هي: أبيض صافٍ على البلاطة المتدرّجة. */
 function draw(a){

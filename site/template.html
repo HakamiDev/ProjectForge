@@ -45,7 +45,7 @@ html[data-theme="dark"] #th .theme-moon{display:none}
 .hero{padding:72px 0 40px;text-align:center}
 .eyebrow{display:inline-block;padding:4px 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:.85rem;margin-bottom:18px}
 h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.25;margin:0 0 16px;font-weight:700;letter-spacing:-.01em}
-h1 em{font-style:normal;background:linear-gradient(90deg,#34F5A0,#3EC7FF,#7B4DFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 em{font-style:normal;background:linear-gradient(90deg,#00DBB7,#00B8E6,#2366AF);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{max-width:680px;margin:0 auto 28px;color:var(--muted);font-size:1.1rem}
 .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .quick{max-width:760px;margin:34px auto 0;text-align:start}
@@ -94,7 +94,7 @@ footer a{color:inherit}
 .aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 .aurora i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.42;will-change:transform;animation:drift 26s ease-in-out infinite alternate}
 .aurora i:nth-child(1){width:48vw;height:48vw;left:-10vw;top:-14vw;background:var(--accent)}
-.aurora i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:8vh;background:#34F5A0;opacity:.22;animation-duration:32s;animation-delay:-8s}
+.aurora i:nth-child(2){width:40vw;height:40vw;right:-8vw;top:8vh;background:#00DBB7;opacity:.22;animation-duration:32s;animation-delay:-8s}
 .aurora i:nth-child(3){width:46vw;height:46vw;left:28vw;bottom:-22vw;background:var(--glow);opacity:.28;animation-duration:38s;animation-delay:-16s}
 @keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6vw,5vh,0) scale(1.12)}}
 .gl{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
@@ -108,7 +108,7 @@ footer a{color:inherit}
 h1 em{background-size:200% 100%;animation:shimmer-ltr 7s linear infinite}
 @keyframes shimmer-ltr{from{background-position:0% 0}to{background-position:-200% 0}}
 /* اتجاه اللون المتحرك يتبع اتجاه اللغة: يبدأ من اليسار في اللغات اليسارية ومن اليمين في اليمينية */
-html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#34F5A0,#3EC7FF,#7B4DFF);animation-name:shimmer-rtl}
+html[dir="rtl"] h1 em{background-image:linear-gradient(270deg,#00DBB7,#00B8E6,#2366AF);animation-name:shimmer-rtl}
 @keyframes shimmer-rtl{from{background-position:0% 0}to{background-position:200% 0}}
 .btn.p{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 60%,var(--glow)))}
 .btn.p:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
@@ -316,7 +316,7 @@ function mount(el){
  all.push(st);draw(st);start();
  if(window.ResizeObserver){new ResizeObserver(function(){var w=Math.round(el.getBoundingClientRect().width*dpr);if(w>8&&w!==cv.width){cv.width=cv.height=w;st.s=w;draw(st)}}).observe(el)}
 }
-function tile(x,S){var r=S*60/256,g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#34F5A0");g.addColorStop(.5,"#3EC7FF");g.addColorStop(1,"#7B4DFF");
+function tile(x,S){var r=S*60/256,g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#00DBB7");g.addColorStop(.5,"#00B8E6");g.addColorStop(1,"#2366AF");
  x.fillStyle=g;x.beginPath();x.moveTo(r,0);x.arcTo(S,0,S,S,r);x.arcTo(S,S,0,S,r);x.arcTo(0,S,0,0,r);x.arcTo(0,0,S,0,r);x.closePath();x.fill()}
 /* المقاسات من logo.svg حرفيًا (وحدة 256): النواة نصف قطرها 24، والعقد 15، والساق سمكها 14؛ المراكز (128,128) و(128,56) و(66,164) و(190,164). الألوان ثابتة كما هي: أبيض صافٍ على البلاطة المتدرّجة. */
 function draw(a){

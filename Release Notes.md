@@ -1,7 +1,8 @@
 # v1.2.0 — Launch version 1: final liquid-glass design
 
-- Office, wizard and public site share one calm liquid-glass design: soft backgrounds (light #E3E9F2, dark #12181F), no aurora, strong text contrast, and a thin static edge shine.
-- Dark surfaces use a translucent indigo tint instead of neutral gray in all three pages.
+- Office, wizard and public site share one calm liquid-glass design and one teal colour system in light and dark (dark #031B21, light #E6F5F8, accent #00B8E6 / #087E9C), no aurora, strong text contrast, and a thin static edge shine.
+- Status colours are distinct in both themes: done mint, in progress cyan, waiting amber, returned red.
+- Dark surfaces use a translucent teal tint instead of neutral gray in all three pages.
 - The logo is the original mark as a real 3D molecule tumbling in space; it scales fluidly with the window width and links to the home page.
 - Cairo is the interface font in the office, wizard and public site.
 - The staff graph follows the new palette in both themes; settings that had no effect in the glass design are hidden; the presentation-mode button and setting are removed.
