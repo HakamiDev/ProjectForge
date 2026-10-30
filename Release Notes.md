@@ -1,3 +1,26 @@
+# Local candidate 1.2.0: full localization
+
+Updated: 29 October 2026. This document does not claim a published release.
+
+- Choosing a language at the start now localizes everything generated: project files and names, role briefs, skills, the command library, reports, the whole management site (including right-to-left to left-to-right layout) and the project's own tool. Seven languages beyond Arabic: English, Spanish, Macedonian, German, Simplified Chinese, Portuguese, Russian.
+- Implementation: the Arabic master is transformed into a language variant (every string constant translated from `forge/templates/loc.json`, 3627 entries per language) which creates the project and is saved as its `Tools/Project Forge 1.py`. A language guard stops a tool of one language from running on another language's project.
+- Wizard: the selector is reduced to the eight languages (no free-text language); preset, role, skill and goal-example labels are translated; the result page shows localized commands.
+- Management site: plural forms, relative times and word order use per-language helpers; the header wraps when labels are long.
+- Exempt programmatic text stays English: structural file and folder names, command names and options, terminal messages.
+- Checks: 26 unit tests including a full scan that no Arabic remains in any file, file name or site page in any of the seven languages; browser pass of all site pages and the wizard in each language.
+- Not claimed: native-speaker review, a clean-device install, publishing.
+- Final language pass (29 October): terminal messages and `--help` in the project's language for the seven non-Arabic tools; localized installer and launcher messages; per-language command examples on the public site (no Arabic left in non-Arabic pages); untranslated homepage copy translated in six languages; the wizard's project-description suggestion now works in Cyrillic and Chinese; language names in the selectors shown in the reader's language; skill files whose names contain a slash (A/B) no longer create a subfolder; corrected wording in English command library entries.
+- Final consistency pass (29 October): audit of all generated files, file names, the management site, the project tool's terminal output, the wizard and the public site in the eight languages found no Arabic and no mixed-language text outside user input; fixes: Portuguese status unified to «Em curso» (European), Chinese row counter «已分派» aligned with the status word, wizard command library entries now name skills, statuses and roles in the reader's language, public site discards a remembered language that is no longer offered, wizard accepts `FORGE_LANGUAGE` in native, English or Arabic names. 26 unit tests, 3 release checks and selftest pass.
+- Terminal headings (29 October, by the owner's order): argparse's `usage`, `positional arguments`, `options` and its error messages are translated in the seven non-Arabic project tools and follow `FORGE_LANGUAGE` in the installer tool; the internal name of the design layer is now translated by meaning (Alloy) instead of transliterated.
+
+# Proposed v1.1.3 — Site copy and dropdown alignment
+
+- Public homepage leads with the unified agent-team promise, followed by six concrete capabilities in Arabic and English.
+- Dropdown indicators align with the reading direction on the public site, wizard, and generated project office.
+- Project-office settings now include working section order and visibility, labels, accent, font size, density, and local export/import, alongside the existing appearance controls.
+- This release builds on the unified 27-language tool (80 specialties, 334 roles, 130 skills). Interface translations beyond Arabic and English retain their existing coverage.
+- Local validation: 25 unit tests, 3 release checks, standalone selftest. Browser QA and an actual Windows install remain separate checks.
+
 # Local candidate 1.1.0
 
 Updated: 28 October 2026. This document does not claim a published release.

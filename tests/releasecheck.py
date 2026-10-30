@@ -22,6 +22,7 @@ class ReleaseChecks(unittest.TestCase):
     def test_built_tool_matches_source(self):
         path = ROOT / "dist" / core.TOOL_NAME
         self.assertEqual(path.read_text(encoding="utf-8"), core.single_source())
+        self.assertEqual((ROOT / core.TOOL_NAME).read_text(encoding="utf-8"), path.read_text(encoding="utf-8"))
         built = runpy.run_path(str(path))
         self.assertEqual(built["load_wizard"](), core.load_wizard())
         self.assertEqual(built["load_template"](), core.load_template())
@@ -44,7 +45,7 @@ class ReleaseChecks(unittest.TestCase):
         document = (ROOT / "Language Coverage.md").read_text(encoding="utf-8")
         for row in core.LANGUAGES:
             self.assertIn("| " + row[0] + " |", document)
-        self.assertEqual(len(core.LANGUAGES), 27)
+        self.assertEqual(len(core.LANGUAGES), 8)
         self.assertEqual((len(core.PRESETS), len(core.role_library()), len(core.SKILLS), len(core.SKILL_GROUPS)), (80, 334, 130, 18))
 
 

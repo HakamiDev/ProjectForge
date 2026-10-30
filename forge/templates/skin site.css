@@ -9,3 +9,5 @@ html{--bg:#E6E9F0;--bg2:#DFE4EE;--accent:#6200F5;--glow:#8E7CFF}
 html[data-theme="dark"]{--bg:#15191E;--bg2:#10131A;--accent:#6200F5;--glow:#8FB4FF}
 @media (prefers-color-scheme:dark){html:not([data-theme="light"]){--bg:#15191E;--bg2:#10131A;--accent:#6200F5;--glow:#8FB4FF}}
 html:not([data-theme="dark"]) .aurora i{opacity:.22}
+html select{-webkit-appearance:none;appearance:none;padding-inline:22px 46px!important;background-image:url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%238E9AB6%27%20stroke-width=%272.4%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27M6%209l6%206%206-6%27/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 22px center!important;background-size:14px!important;line-height:1.4}
+html[dir="rtl"] select{background-position:left 22px center!important}

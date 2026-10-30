@@ -1,9 +1,12 @@
 import argparse
+import contextlib
+import io
 import json
 import re
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -15,6 +18,27 @@ def new_project(tmp, preset="general", owner="الرئيس"):
 
 
 class ForgeTests(unittest.TestCase):
+    def test_gui_terminal_messages_are_english(self):
+        output = io.StringIO()
+        with mock.patch("http.server.ThreadingHTTPServer") as server, mock.patch("threading.Thread"), contextlib.redirect_stdout(output):
+            server.return_value.server_address = ("127.0.0.1", 54207)
+            server.return_value.serve_forever.side_effect = KeyboardInterrupt
+            core.cmd_gui(argparse.Namespace(port=0, no_browser=True))
+        text = output.getvalue()
+        self.assertIn("Project Forge is running.", text)
+        self.assertIn("http://127.0.0.1:54207/", text)
+        self.assertIn("Ctrl+C", text)
+        self.assertIn("Stopped.", text)
+        self.assertNotRegex(text, r"[\u0600-\u06ff]")
+        server.return_value.server_close.assert_called_once()
+
+    def test_cli_help_and_errors_are_english(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output), self.assertRaises(SystemExit):
+            core.main(["--help"])
+        self.assertNotRegex(output.getvalue(), r"[\u0600-\u06ff]")
+        self.assertEqual(core.terminal_diagnostic("الصف 4: اسم غير معروف «Alice»"), "Row 4: unknown team member Alice")
+
     def setUp(self):
         self._t = tempfile.TemporaryDirectory(prefix="forge test ")
         self.tmp = Path(self._t.name)
@@ -209,7 +233,7 @@ class ForgeTests(unittest.TestCase):
         self.assertEqual({r["name"]: r["platform"] for r in team["roster"]}["كاتب"], "Claude")
         self.assertIn("English", (root / "CLAUDE.md").read_text(encoding="utf-8"))
         self.assertIn("English", (root / "Agents" / "Roles" / "كاتب.md").read_text(encoding="utf-8"))
-        self.assertEqual(core.check_project(root), [])
+        self.assertEqual(core.loc_variant("en").check_project(root), [])
         self.assertEqual(core.norm_platform("chatgpt"), "ChatGPT")
         self.assertEqual(core.norm_platform(None), "Claude")
         for raw, want in (("grok", "Grok"), ("غروك", "Grok"), ("Gemini", "Gemini"), ("Google Gemini", "Gemini"), ("جيميناي", "Gemini"), ("xyz", "Claude")):
@@ -218,7 +242,7 @@ class ForgeTests(unittest.TestCase):
         root2 = core.create_project(self.tmp, "منصات", "هدف", "الرئيس", "blank", roles2, None, [], None, "Gemini", "English")
         plat = {r["name"]: r["platform"] for r in json.loads((root2 / "Agents" / "Team.json").read_text(encoding="utf-8"))["roster"]}
         self.assertEqual((plat["مدير"], plat["كاتب"]), ("Grok", "Gemini"))
-        self.assertEqual(core.check_project(root2), [])
+        self.assertEqual(core.loc_variant("en").check_project(root2), [])
         self.assertTrue(all(d["plat"] in core.PLATFORMS for d in core.site_data(root2)["team"]))
         self.assertIn("العربية", core.lang_note(""))
 
@@ -283,20 +307,21 @@ class ForgeTests(unittest.TestCase):
             return json.JSONDecoder().raw_decode(text[match.end():])[0]
 
         wizard = core.load_wizard()
-        site = (Path(core.__file__).parent.parent / "site" / "template.html").read_text(encoding="utf-8")
         choices = {row[0] for row in core.LANGUAGES}
-        for surface in (wizard, site):
-            codes = js_json(surface, "CODES")
-            translations = js_json(surface, "TR")
-            self.assertEqual(choices, {"العربية", "English"} | set(codes))
-            self.assertEqual(set(codes.values()), set(translations))
-            self.assertEqual(len(choices), 27)
-            self.assertNotIn("he", translations)
-            self.assertNotIn("Hebrew", surface)
-            keys = set(next(iter(translations.values())))
-            for code, strings in translations.items():
-                self.assertEqual(set(strings), keys, code)
-                self.assertTrue(all(isinstance(v, str) and v.strip() for v in strings.values()), code)
+        codes = js_json(wizard, "CODES")
+        translations = js_json(wizard, "TR")
+        self.assertEqual(choices, {"العربية", "English"} | set(codes))
+        self.assertEqual(set(codes.values()) - {"en"}, set(translations))
+        self.assertEqual(len(choices), 8)
+        keys = set(next(iter(translations.values())))
+        for code, strings in translations.items():
+            self.assertEqual(set(strings), keys, code)
+            self.assertTrue(all(isinstance(v, str) and v.strip() for v in strings.values()), code)
+        catl = js_json(wizard, "CATL")
+        self.assertEqual(set(catl), set(translations))
+        arabic = re.compile(r"[\u0600-\u06ff]")
+        for code, strings in catl.items():
+            self.assertFalse([v for v in strings.values() if arabic.search(v)], code)
         self.assertEqual(js_json(wizard, "LANGS"), [list(row) for row in core.LANGUAGES])
 
     def test_wizard_language_list_comes_from_core(self):
@@ -323,8 +348,26 @@ class ForgeTests(unittest.TestCase):
         for i, language in enumerate(built["LANGUAGES"]):
             root = built["create_project"](self.tmp, "Locale %d" % i, "Integration verification", "Test Owner", "general", None, None, [], None, "ChatGPT", language[0])
             self.assertEqual(built["load_team"](root)["language"], language[0])
-            self.assertEqual(built["check_project"](root), [], language[0])
+            code = built["loc_code"](language[0])
+            checker = built["loc_variant"](code) if code else built["check_project"]
+            self.assertEqual((checker.check_project if code else checker)(root), [], language[0])
             self.assertIn('var DEMO=0', (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8"))
+
+
+    def test_every_language_is_fully_localized(self):
+        """After choosing a language, no Arabic may remain in any file, file name or site page."""
+        arabic = re.compile(r"[\u0600-\u06ff]")
+        for row in core.LANGUAGES[1:]:
+            root = core.create_project(self.tmp, "Full %s" % row[3], "Goal", "Owner", "software", None, None, [], None, "Claude", row[0])
+            code = core.loc_code(row[0])
+            self.assertEqual(json.loads((root / "Agents" / "Team.json").read_text(encoding="utf-8"))["lang_code"], code)
+            for f in root.rglob("*"):
+                self.assertFalse(arabic.search(f.name), f.name)
+                if f.is_file() and f.suffix in (".md", ".json", ".csv", ".html", ".py", ".command"):
+                    self.assertFalse(arabic.findall(f.read_text(encoding="utf-8")), "%s %s" % (row[3], f.name))
+            html = (root / "Office" / core.OFFICE_FILE).read_text(encoding="utf-8")
+            self.assertIn('lang="%s"' % code, html)
+            self.assertIn('dir="ltr"', html)
 
 
 if __name__ == "__main__":
