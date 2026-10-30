@@ -1,4 +1,10 @@
-# v2.1.3: fixes
+# v2.1.4: desktop icon fix
+
+Released: 31 October 2026. Previous published release: v2.1.3.
+
+- macOS desktop icon: the launcher no longer rejects the Command Line Tools Python (the one installed with Xcode tools); it starts the Python that created it, then tries the common locations, and logs every attempt to `~/Library/Logs/Project Forge.log`. The failure alert now points to that log.
+
+## v2.1.3: fixes
 
 Released: 31 October 2026. Previous published release: v2.1.2.
 

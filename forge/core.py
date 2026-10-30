@@ -2944,19 +2944,22 @@ def install_shortcut():
         macos.mkdir(parents=True, exist_ok=True)
         res.mkdir(parents=True, exist_ok=True)
         run = macos / "ProjectForge"
-        py = sys.executable if sys.executable and os.path.isabs(sys.executable) and "/CommandLineTools/" not in sys.executable else ""
+        py = os.path.realpath(sys.executable) if sys.executable and os.path.isabs(sys.executable) else ""
         script = (
             '#!/bin/bash\n'
             'export PYTHONUTF8=1\n'
             'T="$HOME/Library/Application Support/Project Forge/%s"\n'
             'LOG="$HOME/Library/Logs/Project Forge.log"\n'
             'mkdir -p "$HOME/Library/Logs"\n'
-            'for P in "%s" /opt/homebrew/bin/python3 /usr/local/bin/python3 /Library/Frameworks/Python.framework/Versions/Current/bin/python3 "$HOME/miniconda3/bin/python3" "$HOME/anaconda3/bin/python3" /usr/bin/python3; do\n'
-            '  if [ -x "$P" ] && "$P" -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)" 2>/dev/null; then\n'
-            '    exec "$P" -I "$T" gui >>"$LOG" 2>&1\n'
+            'echo "--- $(date) ---" >>"$LOG"\n'
+            'for P in "%s" /Library/Developer/CommandLineTools/usr/bin/python3 /opt/homebrew/bin/python3 /usr/local/bin/python3 /Library/Frameworks/Python.framework/Versions/Current/bin/python3 "$HOME/miniconda3/bin/python3" "$HOME/anaconda3/bin/python3" /usr/bin/python3; do\n'
+            '  if [ -n "$P" ] && [ -x "$P" ]; then\n'
+            '    echo "using $P" >>"$LOG"\n'
+            '    "$P" -I "$T" gui >>"$LOG" 2>&1 && exit 0\n'
+            '    echo "failed with $P" >>"$LOG"\n'
             '  fi\n'
             'done\n'
-            '/usr/bin/osascript -e \'display alert "Project Forge" message "Python 3.9 or newer is required. Install it from python.org, then open Project Forge again."\' >/dev/null 2>&1\n'
+            '/usr/bin/osascript -e \'display alert "Project Forge" message "Project Forge could not start. Details are in ~/Library/Logs/Project Forge.log"\' >/dev/null 2>&1\n'
             'exit 1\n' % (TOOL_NAME, py))
         atomic_write(run, script)
         run.chmod(run.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
