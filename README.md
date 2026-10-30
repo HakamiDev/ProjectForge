@@ -62,7 +62,7 @@ irm https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/install.ps1 | 
 
 ## المنصة واللغة
 
-عند الإنشاء تختار منصة المحادثات: **Claude** أو **ChatGPT** أو **Grok** أو **Gemini** للجميع، ثم تغيّر منصة كل موظف على حدة إن أردت (الكاتب في ChatGPT والمحلل في Claude مثلًا). وتختار **لغة العمل**: العربية أو English أو أي لغة تكتب اسمها، فيخاطبك الفريق ويكتب مخرجاته وتقاريره بها. وفي سطر الأوامر:
+عند الإنشاء تختار منصة المحادثات: **Claude** أو **ChatGPT** أو **Grok** أو **Gemini** للجميع، ثم تغيّر منصة كل موظف على حدة إن أردت (الكاتب في ChatGPT والمحلل في Claude مثلًا). وتختار **لغة العمل** من اللغات الثماني، فيخاطبك الفريق ويكتب مخرجاته وتقاريره بها. وفي سطر الأوامر:
 
 ```
 python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt --language English
@@ -112,11 +112,11 @@ python3 -I "Project Forge 1.py" new "My Project" --goal "..." --platform chatgpt
 | `register` | يسجّل المشروع في سجل مركزي للمشاريع |
 | `selftest` | يختبر الأداة على مشروع مؤقت |
 
-رسائل التثبيت وسطر الأوامر بالإنجليزية، مستقلة عن لغة واجهة المعالج ولغة عمل الفريق. يحمّل أمر التثبيت الحزمة الحالية من الفرع `main`.
+رسائل التثبيت وطرفية الأداة بلغة المشروع في اللغات السبع غير العربية، وتبقى بالإنجليزية في المشاريع العربية لأن الطرفيات لا تعرض العربية سليمة. يحمّل أمر التثبيت الحزمة الحالية من الفرع `main`.
 
 ## حالة النسخة
 
-مرشح الإصدار **v1.1.3** يجمع نص الموقع المحدّث ومحاذاة قوائم الاختيار مع الحزمة الموحدة. تجربة Windows الفعلية لم تكتمل بعد. نتائج التحقق المحلي في `Verification Results.json`، وتفاصيل النسخة في `Release Notes.md`.
+الإصدار **v2.1.2**: توطين كامل بثماني لغات، وتصميم جديد لموقع الإدارة والمعالج والموقع العام. تجربة Windows الفعلية لم تكتمل بعد. تفاصيل النسخة في `Release Notes.md`.
 
 ## للمطورين
 
@@ -148,7 +148,7 @@ MIT.
 
 **Project Forge is an operating system for a team of AI agents.** One command turns a plain folder into a disciplined office: a single board every agent works from (on any platform), an independent QA gate, decision governance, a full audit trail, performance metrics exported as CSV, and a management site that runs from a single HTML file.
 
-Python 3.9+, no runtime dependencies. The creation wizard runs a temporary local server; the generated office is a standalone HTML file. The wizard and the public site support **8 languages** (Arabic, English, Spanish, Macedonian, German, Simplified Chinese, Portuguese, Russian). The language chosen at the start applies to everything generated: project files, role briefs, the management site and the project's own tool. Only programmatic text stays English (structural file and folder names, command names and options, terminal messages). Translations have automated review, not a native-speaker guarantee. See `Language Coverage.md`.
+Python 3.9+, no runtime dependencies. The creation wizard runs a temporary local server; the generated office is a standalone HTML file. The tool, the wizard and the public site support **8 languages** (Arabic, English, Spanish, Macedonian, German, Simplified Chinese, Portuguese, Russian). The language chosen at the start applies to everything generated: project files, role briefs, the management site and the project's own tool. Only programmatic text stays English (structural file and folder names, command names and options, terminal messages). Translations have automated review, not a native-speaker guarantee. See `Language Coverage.md`.
 
 **Install** (macOS/Linux):
 

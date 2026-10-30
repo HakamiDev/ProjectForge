@@ -31,15 +31,28 @@ class ReleaseChecks(unittest.TestCase):
 
     def test_built_site_languages_and_catalog(self):
         html = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
-        self.assertEqual(js_json(html, "LANGS"), [list(row) for row in core.LANGUAGES])
-        source = (ROOT / "site" / "template.html").read_text(encoding="utf-8").replace("@@NSK@@", str(len(core.SKILLS)))
-        for name in ("CODES", "TR"):
-            self.assertEqual(js_json(html, name), js_json(core.load_wizard(), name) if name == "CODES" else js_json(source, name))
+        sys.path.insert(0, str(ROOT / "tools" / "site"))
+        import i18n
+        langs = js_json(html, "LANGS")
+        self.assertEqual(sorted(name for _, name in langs), sorted(row[3] for row in core.LANGUAGES))
+        self.assertEqual([name for _, name in langs][:3], ["Arabic", "English", "Macedonian"])
+        self.assertEqual(sorted(js_json(html, "I18N")), sorted(name for _, name in langs))
+        self.assertEqual(set(js_json(html, "I18N")), set(i18n.U))
+        for name, strings in i18n.U.items():
+            self.assertEqual(sorted(strings), sorted(i18n.KEYS), name)
+            self.assertTrue(all(v.strip() for v in strings.values()), name)
+            for n in (len(core.PRESETS), len(core.role_library()), len(core.SKILLS)):
+                self.assertIn(str(n), " ".join(strings.values()), name)
+        for name in js_json(html, "I18N"):  # every FORGE_LANGUAGE value the site emits is accepted by the tool
+            self.assertIn(core.loc_code(name), [None] + list(core.LOC_NAMES), name)
         self.assertNotRegex(html, r"@@[A-Z]+@@")
-        self.assertTrue('%d skills' % len(core.SKILLS) in html)
         self.assertNotIn("Hebrew", html)
-        for skin in ("fonts.css", "skin site.css"):
-            self.assertIn((ROOT / "forge" / "templates" / skin).read_text(encoding="utf-8"), html)
+        self.assertNotIn("claude:", html)
+        self.assertIn('setLang("English",false)', html)
+        self.assertIn("https://raw.githubusercontent.com/HakamiDev/ProjectForge/main/", html)
+        for needle in ("install.sh", "install.ps1", "python3 -m forge", "FORGE_LANGUAGE", "FORGE_PLATFORM"):
+            self.assertIn(needle, html)
+        self.assertTrue((ROOT / "forge" / "__main__.py").is_file())
 
     def test_coverage_document_matches_registry(self):
         document = (ROOT / "Language Coverage.md").read_text(encoding="utf-8")

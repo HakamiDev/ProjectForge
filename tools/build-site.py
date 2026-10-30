@@ -1,159 +1,338 @@
 #!/usr/bin/env python3
-"""يبني site/index.html: صفحة تعريف وتثبيت ومكتبة أوامر ومهارات وأدوات، من site/template.html.
+"""Builds site/index.html, the public site, from this generator and tools/site/{i18n.py, atom.js}.
 
-    python3 -I tools/build-site.py [REPO_URL]
+    python3 -I tools/build-site.py [REPO_URL] [SITE_URL]
+
+The page opens in English, offers the eight interface languages and localizes every string from tools/site/i18n.py.
 """
 import json
-import re
 import sys
 from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root))
+sys.path.insert(0, str(root / "tools" / "site"))
 from forge import core  # noqa: E402
+from i18n import U, KEYS  # noqa: E402
 
 REPO = (sys.argv[1] if len(sys.argv) > 1 else "https://github.com/HakamiDev/ProjectForge").rstrip("/")
-T = core.TOOL_NAME
-RUN = 'python3 -I "%s"' % T
-RUNP = 'python3 -I "Tools/%s"' % T  # أوامر المشروع تُشغَّل من جذره بنسخة الأداة التي في Tools، وهي بلغة المشروع
-
-cli = [
-    ("new", "ينشئ مشروعًا كاملًا: المجلدات والقواعد واللوحة وملفات الأدوار وأوامر البدء وموقع الإدارة.",
-     RUN + ' new "اسم المشروع" --goal "هدف المشروع" --owner "الرئيس" --preset transformation --yes'),
-    ("build", "يعيد بناء موقع الإدارة من اللوحة. أضف --open لفتحه.", RUNP + " build --open"),
-    ("watch", "يعيد البناء تلقائيًا كلما تغيّرت اللوحة أو الفريق أو سجل القرارات.", RUNP + " watch"),
-    ("rows", "يعرض الصفوف الجاهزة للبدء لدور معيّن (التي اكتملت متطلباتها).", RUNP + ' rows "رئيس المنتج"'),
-    ("add-row", "يضيف صفًا إلى اللوحة بأمان: رقم تلقائي، ومنع للتعارض، وسقف للمفتوح.",
-     RUNP + ' add-row --from "البوصلة" --to "رئيس المنتج" --task "كتابة المرجع" --inputs "—" --output "`Outputs/Reference.md`"'),
-    ("set-status", "يغيّر حالة صف. «معتمدة» و«ملغاة» تشترطان --owner-order أي أمر صاحب المشروع.", RUNP + ' set-status 3 "مسلّمة" --note "تم"'),
-    ("add-role", "يضيف دورًا جديدًا ويحدّث القواعد والأوامر والموقع.", RUNP + ' add-role "المحلل" --title "تحليل البيانات" --scope "التحليل والتقارير"'),
-    ("decide", "يسجّل قرارًا في سجل القرارات بترقيم تلقائي.", RUNP + ' decide "اعتماد النسخة الأولى" --tag "قابل للتراجع"'),
-    ("status", "إحاطة سريعة من الطرفية: الأرقام وما ينتظر قرارك وما يحتاج انتباهًا (متأخر أو راكد أو محجوب). أضف --json لمخرج الآلة.", RUNP + " status"),
-    ("report", "تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل على الأدوار والقرارات المتأخرة. يُحفظ في Docs/Reports.", RUNP + " report"),
-    ("export", "يصدّر اللوحة والفريق والقرارات والمؤشرات إلى ملفات CSV بترميز UTF-8 مع BOM.", RUNP + " export"),
-    ("check", "يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.", RUNP + " check"),
-    ("register", "يسجّل المشروع في سجل مركز البوصلات (Registry.md).", RUNP + " register"),
-    ("selftest", "يختبر الأداة على مشروع مؤقت ويبلغ بنجاح كل خطوة.", RUN + " selftest"),
-]
-
-agents = [
-    ("بدء محادثة موظف", "الصقه في محادثة جديدة. يعرّف الموظف بدوره ويحيله إلى ملف أمر التكليف.",
-     "أنت «1. رئيس المنتج: المرجع والقرارات والخطة». اقرأ Agents/Roles/رئيس المنتج.md ثم تابع."),
-    ("تشغيل محادثة قائمة", "كلمة واحدة تجعل الموظف يقرأ اللوحة وينفّذ صفوفه الجاهزة.", "تابع"),
-    ("أمر الإغلاق", "قبل إغلاق محادثة طالت: يحفظ كل شيء في المجلد ويكتب ملف تسليم.", core.CLOSE_T),
-    ("أمر الاستئناف", "في محادثة جديدة بدل المغلقة: يكمل من حيث توقف السلف.", core.RESUME_T),
-    ("طلب حكم الجودة", "يطلب من رئيس ضمان الجودة حكمًا مستقلًا: يمر أو لا يمر.",
-     "أنت «رئيس ضمان الجودة». افحص مخرج الصف [رقم] من المسار المذكور في اللوحة بمعايير القبول في المرجع، واكتب حكمك في Docs/QA/ بصيغة: يمر / لا يمر مع الأسباب مرتبة بالخطورة، ثم حدّث حالة الصف."),
-    ("أول طلب إلى البوصلة", "بعد إنشاء المشروع: ابدأ بالبوصلة وحدها وهي توزع العمل.",
-     "أنت «البوصلة: التوجيه العام». اقرأ CLAUDE.md ثم Agents/Board.md. هدفنا: [الهدف]. حوّله إلى صفوف مكتملة في اللوحة، واحدًا لكل مختص، وأخبرني برقم كل صف ومن أبدأ معه أولًا."),
-    ("قياس قبل وبعد الأتمتة", "لمحلل العمليات: يقيس الإجراء قبل الأتمتة ليُقارن بعدها.",
-     "أنت «محلل العمليات». اختر الإجراء المتكرر المذكور في صفك، وارسمه خطوة خطوة، وقِس لكل خطوة: الزمن، ومن ينفذها، وعدد مرات التكرار أسبوعيًا، والأخطاء الشائعة. احفظ النتيجة في Data/Before.csv بالأعمدة: step, owner, minutes, weekly runs, errors. ثم اكتب في «للتالي» الخطوات المرشحة للأتمتة بترتيب الأثر."),
-    ("تصميم وكيل لإجراء", "لمهندس الأتمتة: يصمم الوكيل قبل بنائه بمواصفة تُراجَع.",
-     "أنت «مهندس الأتمتة». صمّم وكيلًا للإجراء في صفك بمواصفة من ستة بنود: المدخلات ومصدرها، والمخرجات وشكلها، والقواعد التي لا يتجاوزها، ونقاط تدخّل الإنسان، وطريقة القياس بعد التشغيل، والأدوات المعتمدة من Docs/Data Policy.md. احفظها في Outputs/ وأحِل الصف إلى رئيس ضمان الجودة بحالة «بانتظار التدقيق»."),
-    ("تقرير نهاية اليوم", "يلخص الحالة ويعرض ما ينتظر قرار صاحب المشروع.",
-     "اقرأ Agents/Board.md وقدّم لي في خمسة أسطر: ما سُلّم اليوم، وما ينتظر التدقيق، وما ينتظر قراري مع توصيتك لكل قرار، وأهم عائق."),
-]
-
-tools = [
-    ("Project Forge", "الأداة الأم: ملف بايثون واحد بلا مكتبات خارجية، يبني المشروع وفريقه وموقعه.", "python3 -I \"%s\" new" % T, "جاهز"),
-    ("Project Office", "موقع إدارة يُولَّد لكل مشروع في ملف HTML واحد: الرئيسية والمتابعة والمهام والفريق والمخطط والأوامر والإعدادات.", RUNP + " build --open", "جاهز"),
-    ("Start Office", "سكربت تشغيل يفتح الموقع ويبقيه محدّثًا تلقائيًا (macOS).", "Tools/Start Office.command", "جاهز"),
-    ("Report", "تقرير أداء دوري من اللوحة وتاريخ الحالات: التسليم وزمن الدورة ومرور الجودة والحمل والقرارات.", RUNP + " report", "جاهز"),
-    ("Export CSV", "أربعة ملفات CSV للتحليل وإعداد التقارير.", RUNP + " export", "جاهز"),
-    ("Smoke test", "اختبار متصفح (Playwright) يفحص كل صفحة وتبويب في الفاتح والداكن والجوال.", "NODE_PATH=$(npm root -g) node tests/smoke.js \"Office/Project Office.html\" shots", "جاهز"),
-]
-
-# أوامر الطرفية ونصوص أوامر الموظفين بكل لغة، بأسماء الأدوار والحالات كما تكتبها نسخة الأداة بتلك اللغة
-LANG_ARG = {"en": "English", "es": "Spanish", "mk": "Macedonian", "de": "German", "zh": "Chinese", "pt": "Portuguese", "ru": "Russian"}
-EX = {  # أمثلة لا مفتاح لها في حزمة اللغات
-    "اسم المشروع": {"en": "Project name", "es": "Nombre del proyecto", "mk": "Име на проектот", "de": "Projektname", "zh": "项目名称", "pt": "Nome do projeto", "ru": "Название проекта"},
-    "هدف المشروع": {"en": "Project goal", "es": "Objetivo del proyecto", "mk": "Цел на проектот", "de": "Projektziel", "zh": "项目目标", "pt": "Objetivo do projeto", "ru": "Цель проекта"},
-    "تحليل البيانات": {"en": "Data analysis", "es": "Análisis de datos", "mk": "Анализа на податоци", "de": "Datenanalyse", "zh": "数据分析", "pt": "Análise de dados", "ru": "Анализ данных"},
-    "التحليل والتقارير": {"en": "Analysis and reports", "es": "Análisis e informes", "mk": "Анализи и извештаи", "de": "Analysen und Berichte", "zh": "分析与报告", "pt": "Análises e relatórios", "ru": "Анализ и отчёты"},
-    "اعتماد النسخة الأولى": {"en": "Approve the first version", "es": "Aprobar la primera versión", "mk": "Одобрување на првата верзија", "de": "Erste Version freigeben", "zh": "批准第一个版本", "pt": "Aprovar a primeira versão", "ru": "Утвердить первую версию"},
+SITE = (sys.argv[2].rstrip("/") + "/") if len(sys.argv) > 2 else ""
+RAW = "https://raw.githubusercontent.com/" + "/".join(REPO.split("/")[-2:]) + "/main/"
+NPR, NRO, NSK = len(core.PRESETS), len(core.role_library()), len(core.SKILLS)
+for _lang, _t in U.items():  # the catalogue numbers quoted in every language must match the registry
+    assert all(str(n) in " ".join(_t.values()) for n in (NPR, NRO, NSK)), (_lang, NPR, NRO, NSK)
+ORDER = ["Arabic", "English", "Macedonian", "Spanish", "German", "Portuguese", "Russian", "Chinese"]  # approved order of the language bar
+_BY_EN = {row[3]: row for row in core.LANGUAGES}
+assert sorted(_BY_EN) == sorted(ORDER) and set(ORDER) == set(U), (sorted(_BY_EN), sorted(U))
+LANGS = [[_BY_EN[name][1], name] for name in ORDER]
+for _l,_v in {"Arabic":"الأقسام","English":"Sections","Spanish":"Secciones","German":"Bereiche","Portuguese":"Secções","Russian":"Разделы","Chinese":"栏目","Macedonian":"Делови"}.items(): U[_l]["navl"]=_v
+html='''<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Project Forge</title>
+<meta name="description" content="Open-source tool that turns a project folder into a managed office for a team of AI agents: clear roles, a shared board, measurable progress. Python only, no libraries.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Project Forge: your team of AI agents under one management">
+<meta property="og:description" content="One board, clear ownership for every task, review before delivery, and progress you can measure. One line installs everything.">
+<meta property="og:image" content="'''+SITE+'''og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="logo/logo.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* تخطيط: عمود واحد هادئ بعرض مقروء؛ ترتيب القراءة: ما هو، ماذا يعطيك، كيف يعمل، التثبيت، المكتبة */
+:root{
+  --bg:#FFFFFF;--soft:#F4F5F7;--fg:#0B0C0E;--mute:#586070;--line:rgba(11,12,14,.12);
+  --blue:#1F6FEB;--blue-ink:#FFFFFF;--blue-text:#1F6FEB;
+  --font:"IBM Plex Sans Arabic","IBM Plex Sans",system-ui,"PingFang SC","Microsoft YaHei","Noto Sans SC",-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
-AG = {  # أوامر الموظفين 5 إلى 9: {qa} {compass} {pa} {ae} {review} {next}
-    "en": ['You are the "{qa}". Review the output of row [number] at the path stated on the board against the acceptance criteria in the reference, write your verdict in Docs/QA/ in the form: pass / fail with the reasons ordered by severity, then update the row status.',
-           'You are "{compass}". Read CLAUDE.md, then Agents/Board.md. Our goal: [goal]. Turn it into complete rows on the board, one per specialist, and tell me each row number and whom to start with first.',
-           'You are the "{pa}". Choose the recurring process named in your row, map it step by step, and measure for each step: the time, who performs it, how many times it repeats each week, and the common errors. Save the result in Data/Before.csv with the columns: step, owner, minutes, weekly runs, errors. Then write in "{next}" the steps that are candidates for automation, ordered by impact.',
-           'You are the "{ae}". Design an agent for the process in your row with a six-part specification: the inputs and their source, the outputs and their form, the rules it never breaks, the points of human intervention, how it is measured after launch, and the approved tools from Docs/Data Policy.md. Save it in Outputs/ and hand the row to the {qa} with the status "{review}".',
-           'Read Agents/Board.md and give me in five lines: what was delivered today, what awaits review, what awaits my decision with your recommendation for each, and the main blocker.'],
-    "es": ['Eres el «{qa}». Revisa el resultado de la fila [número] en la ruta indicada en el tablero según los criterios de aceptación de la referencia, escribe tu dictamen en Docs/QA/ con la forma: aprobado / rechazado, con los motivos ordenados por gravedad, y luego actualiza el estado de la fila.',
-           'Eres «{compass}». Lee CLAUDE.md y luego Agents/Board.md. Nuestro objetivo: [objetivo]. Conviértelo en filas completas en el tablero, una por especialista, y dime el número de cada fila y con quién empezar primero.',
-           'Eres el «{pa}». Elige el proceso recurrente indicado en tu fila, represéntalo paso a paso y mide en cada paso: el tiempo, quién lo realiza, cuántas veces se repite por semana y los errores habituales. Guarda el resultado en Data/Before.csv con las columnas: step, owner, minutes, weekly runs, errors. Después escribe en «{next}» los pasos candidatos a automatizar, ordenados por impacto.',
-           'Eres el «{ae}». Diseña un agente para el proceso de tu fila con una especificación de seis apartados: las entradas y su origen, las salidas y su forma, las reglas que nunca incumple, los puntos de intervención humana, cómo se mide tras ponerlo en marcha y las herramientas aprobadas en Docs/Data Policy.md. Guárdala en Outputs/ y pasa la fila al {qa} con el estado «{review}».',
-           'Lee Agents/Board.md y dame en cinco líneas: lo que se entregó hoy, lo que espera revisión, lo que espera mi decisión con tu recomendación para cada caso y el principal obstáculo.'],
-    "mk": ['Ти си „{qa}“. Прегледај го излезот од редот [број] на патеката наведена на таблата според критериумите за прифаќање во референцата, запиши ја својата пресуда во Docs/QA/ во облик: поминува / не поминува, со причините подредени по сериозност, па ажурирај го статусот на редот.',
-           'Ти си „{compass}“. Прочитај CLAUDE.md, па Agents/Board.md. Нашата цел: [цел]. Претвори ја во целосни редови на таблата, по еден за секој специјалист, и кажи ми го бројот на секој ред и со кого да почнам прво.',
-           'Ти си „{pa}“. Избери ја повторливата постапка наведена во твојот ред, опиши ја чекор по чекор и за секој чекор измери: времето, кој го извршува, колку пати неделно се повторува и честите грешки. Зачувај го резултатот во Data/Before.csv со колоните: step, owner, minutes, weekly runs, errors. Потоа во „{next}“ запиши ги чекорите што се кандидати за автоматизација, подредени по влијание.',
-           'Ти си „{ae}“. Дизајнирај агент за постапката во твојот ред со спецификација од шест точки: влезовите и нивниот извор, излезите и нивната форма, правилата што никогаш не ги прекршува, точките на човечка интервенција, начинот на мерење по пуштањето во работа и одобрените алатки од Docs/Data Policy.md. Зачувај ја во Outputs/ и предај го редот на {qa} со статус „{review}“.',
-           'Прочитај Agents/Board.md и дај ми во пет реда: што е предадено денес, што чека преглед, што чека моја одлука со твоја препорака за секоја, и најголемата пречка.'],
-    "de": ['Du bist der „{qa}“. Prüfe das Ergebnis der Zeile [Nummer] unter dem auf der Tafel genannten Pfad anhand der Abnahmekriterien in der Referenz, schreibe dein Urteil in Docs/QA/ in der Form: bestanden / nicht bestanden, mit den Gründen nach Schwere geordnet, und aktualisiere dann den Status der Zeile.',
-           'Du bist „{compass}“. Lies CLAUDE.md und dann Agents/Board.md. Unser Ziel: [Ziel]. Mache daraus vollständige Zeilen auf der Tafel, eine pro Fachkraft, und nenne mir die Nummer jeder Zeile und mit wem ich zuerst beginne.',
-           'Du bist der „{pa}“. Wähle den wiederkehrenden Ablauf aus deiner Zeile, bilde ihn Schritt für Schritt ab und miss für jeden Schritt: die Zeit, wer ihn ausführt, wie oft er sich pro Woche wiederholt und die häufigen Fehler. Speichere das Ergebnis in Data/Before.csv mit den Spalten: step, owner, minutes, weekly runs, errors. Schreibe dann unter „{next}“ die Schritte, die sich zur Automatisierung eignen, nach Wirkung geordnet.',
-           'Du bist der „{ae}“. Entwirf einen Agenten für den Ablauf in deiner Zeile mit einer Spezifikation aus sechs Punkten: die Eingaben und ihre Quelle, die Ausgaben und ihre Form, die Regeln, die er nie bricht, die Punkte menschlichen Eingreifens, wie er nach dem Start gemessen wird, und die freigegebenen Werkzeuge aus Docs/Data Policy.md. Speichere sie in Outputs/ und übergib die Zeile an den {qa} mit dem Status „{review}“.',
-           'Lies Agents/Board.md und nenne mir in fünf Zeilen: was heute geliefert wurde, was auf Prüfung wartet, was auf meine Entscheidung wartet, jeweils mit deiner Empfehlung, und das größte Hindernis.'],
-    "zh": ['你是“{qa}”。根据参考文档中的验收标准，检查看板上所列路径中第 [编号] 行的成果，并在 Docs/QA/ 中写下你的结论，格式为：通过 / 不通过，原因按严重程度排列，然后更新该行状态。',
-           '你是“{compass}”。先阅读 CLAUDE.md，再阅读 Agents/Board.md。我们的目标：[目标]。把它拆成看板上的完整行，每位专员一行，并告诉我每行的编号以及应先从谁开始。',
-           '你是“{pa}”。选择你这一行中提到的重复流程，逐步梳理，并为每一步测量：耗时、执行人、每周重复次数和常见错误。把结果保存到 Data/Before.csv，列为：step, owner, minutes, weekly runs, errors。然后在“{next}”中写下适合自动化的步骤，按影响排序。',
-           '你是“{ae}”。为你这一行中的流程设计一个智能体，规格包含六部分：输入及其来源、输出及其形式、绝不违反的规则、人工介入点、上线后的衡量方式，以及 Docs/Data Policy.md 中批准的工具。把规格保存到 Outputs/，并将该行以“{review}”状态交给{qa}。',
-           '阅读 Agents/Board.md，用五行告诉我：今天交付了什么、什么在等待审核、什么在等待我决定（每项附上你的建议），以及最大的障碍。'],
-    "pt": ['És o «{qa}». Revê o resultado da linha [número] no caminho indicado no quadro com base nos critérios de aceitação da referência, escreve o teu parecer em Docs/QA/ na forma: aprovado / reprovado, com os motivos ordenados por gravidade, e depois atualiza o estado da linha.',
-           'És a «{compass}». Lê CLAUDE.md e depois Agents/Board.md. O nosso objetivo: [objetivo]. Transforma-o em linhas completas no quadro, uma por especialista, e diz-me o número de cada linha e com quem começar primeiro.',
-           'És o «{pa}». Escolhe o procedimento recorrente indicado na tua linha, descreve-o passo a passo e mede em cada passo: o tempo, quem o executa, quantas vezes se repete por semana e os erros habituais. Guarda o resultado em Data/Before.csv com as colunas: step, owner, minutes, weekly runs, errors. Depois escreve em «{next}» os passos candidatos a automatização, ordenados por impacto.',
-           'És o «{ae}». Concebe um agente para o procedimento da tua linha com uma especificação de seis pontos: as entradas e a sua origem, as saídas e a sua forma, as regras que nunca infringe, os pontos de intervenção humana, como é medido depois de entrar em funcionamento e as ferramentas aprovadas em Docs/Data Policy.md. Guarda-a em Outputs/ e passa a linha ao {qa} com o estado «{review}».',
-           'Lê Agents/Board.md e dá-me em cinco linhas: o que foi entregue hoje, o que aguarda revisão, o que aguarda a minha decisão com a tua recomendação para cada caso e o principal obstáculo.'],
-    "ru": ['Вы — «{qa}». Проверьте результат строки [номер] по пути, указанному на доске, на соответствие критериям приёмки из справочника, запишите своё заключение в Docs/QA/ в виде: принято / не принято, с причинами по степени серьёзности, затем обновите статус строки.',
-           'Вы — «{compass}». Прочитайте CLAUDE.md, затем Agents/Board.md. Наша цель: [цель]. Превратите её в полные строки на доске, по одной на каждого специалиста, и сообщите мне номер каждой строки и с кого начать.',
-           'Вы — «{pa}». Выберите повторяющийся процесс, указанный в вашей строке, опишите его шаг за шагом и измерьте для каждого шага: время, исполнителя, сколько раз в неделю он повторяется и типичные ошибки. Сохраните результат в Data/Before.csv со столбцами: step, owner, minutes, weekly runs, errors. Затем запишите в «{next}» шаги, подходящие для автоматизации, по убыванию эффекта.',
-           'Вы — «{ae}». Спроектируйте агента для процесса из вашей строки по спецификации из шести пунктов: входные данные и их источник, результаты и их форма, правила, которые он никогда не нарушает, точки вмешательства человека, способ измерения после запуска и утверждённые инструменты из Docs/Data Policy.md. Сохраните её в Outputs/ и передайте строку сотруднику «{qa}» со статусом «{review}».',
-           'Прочитайте Agents/Board.md и дайте мне в пяти строках: что сдано сегодня, что ожидает проверки, что ожидает моего решения с вашей рекомендацией по каждому пункту, и главное препятствие.'],
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B0C0E;--soft:#14161A;--fg:#F4F5F7;--mute:#9AA2B0;--line:rgba(244,245,247,.14);
+  --blue:#2C6CE5;--blue-text:#6EA2F8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B0C0E;--soft:#14161A;--fg:#F4F5F7;--mute:#9AA2B0;--line:rgba(244,245,247,.14);--blue:#2C6CE5;--blue-text:#6EA2F8;color-scheme:dark}
+:root{direction:rtl}:root[dir="ltr"]{direction:ltr}
+*{box-sizing:border-box}
+html,body{overflow-x:clip}html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.8 var(--font);-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto}
+:focus{outline:none}:focus-visible{outline:1.5px solid var(--mute);outline-offset:2px}input:focus-visible{outline:none;border-color:var(--mute)}
+
+/* الرأس */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar{max-width:860px;margin:0 auto;height:60px;display:flex;align-items:center;gap:20px}
+.brand{font-weight:700;font-size:18px;text-decoration:none;letter-spacing:-.01em;margin-inline-end:auto;direction:ltr}
+nav{display:flex;gap:22px;font-size:15px}
+nav a{text-decoration:none;color:var(--mute)}nav a:hover{color:var(--fg)}
+.tg{width:42px;height:24px;border-radius:99px;border:1px solid var(--line);background:var(--soft);position:relative;cursor:pointer;padding:0}
+.tg::after{content:"";position:absolute;top:2px;inset-inline-start:2px;width:18px;height:18px;border-radius:50%;background:var(--fg);transition:inset-inline-start .2s}
+.tg[aria-checked="true"]::after{inset-inline-start:20px}
+@media(max-width:640px){nav{display:none}}
+
+/* القسم الأول */
+.hero{padding:72px 0 56px}
+.hero h1{font-size:clamp(34px,6vw,54px);line-height:1.25;margin:0 0 20px;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.hero p.lead{font-size:20px;color:var(--mute);margin:0 0 32px;max-width:36em}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;height:48px;padding:0 26px;border-radius:12px;font:600 16px var(--font);text-decoration:none;border:1px solid var(--line);color:var(--fg);background:transparent;cursor:pointer}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.btn:hover{filter:brightness(1.06)}
+.facts{display:flex;gap:10px 22px;flex-wrap:wrap;margin:36px 0 0;padding:0;list-style:none;color:var(--mute);font-size:15px}
+.facts li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-inline-end:8px;vertical-align:middle}
+
+/* الأقسام */
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{font-size:30px;line-height:1.3;margin:0 0 12px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 36px;max-width:38em}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:30px 44px;margin:0;padding:0;list-style:none}
+.list h3{font-size:18px;margin:0 0 4px;font-weight:600}
+.list p{margin:0;color:var(--mute);font-size:16px;line-height:1.75}
+@media(max-width:640px){.list{grid-template-columns:1fr}}
+.steps{margin:0;padding:0;list-style:none;display:grid;gap:28px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start}
+.steps li::before{counter-increment:s;content:counter(s);width:44px;height:44px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue-text);display:grid;place-items:center;font:600 18px var(--font)}
+.steps h3{font-size:19px;margin:6px 0 4px;font-weight:600}
+.steps p{margin:0;color:var(--mute)}
+code.i{font:15px var(--mono);background:var(--soft);padding:2px 7px;border-radius:6px;direction:ltr;unicode-bidi:isolate}
+
+/* التثبيت والمكتبة */
+.opt{display:grid;gap:22px;margin:0 0 28px}
+.opt label,.opt .l{display:block;font-weight:600;font-size:15px;margin-bottom:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button,.seg button{font:500 15px var(--font);color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:10px;padding:8px 16px;cursor:pointer}
+.chips button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.hint{margin:0 0 12px;color:var(--mute);font-size:15px}
+.cw{position:relative;margin:0}
+pre.code{margin:0;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px 84px 18px 20px;font:14px/1.8 var(--mono);direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word}
+pre.code.pr{font-family:var(--font);font-size:15px}
+pre.code.ar{direction:rtl;text-align:right;font-family:var(--font);font-size:15px;padding:18px 20px 18px 84px}
+pre.code.ar+.copy{left:10px;right:auto}
+.copy{position:absolute;top:10px;right:10px;font:500 13px var(--font);padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.copy.ok{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.after{margin-top:18px;color:var(--mute);font-size:16px}
+.libbar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.search{flex:1;min-width:200px;height:42px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);padding:0 14px;font:15px var(--font)}
+.lib{display:grid;gap:26px}
+.item{display:grid;grid-template-columns:150px 1fr;gap:6px 22px;padding-top:26px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.nm{font-weight:600}.nm.m{font-family:var(--mono);font-size:15px;unicode-bidi:isolate;text-align:start}
+.d{margin:0 0 10px;color:var(--mute);font-size:16px}
+.empty{color:var(--mute)}
+@media(max-width:640px){.item{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding:32px 0 56px;color:var(--mute);font-size:15px}
+footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between}
+.toast{position:fixed;bottom:max(24px,env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,20px);background:var(--fg);color:var(--bg);padding:10px 20px;border-radius:10px;font-size:15px;opacity:0;pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* تحسينات التصميم */
+body{background:radial-gradient(70% 560px at 72% 0,color-mix(in srgb,var(--blue) 15%,transparent),transparent 70%) no-repeat,var(--bg)}
+header{margin:0 -16px;padding:0 16px}
+
+.logo{display:block;flex:none;width:30px;height:30px;border-radius:24%}
+.brand{display:flex;align-items:center;gap:10px}
+header{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}
+.hero{padding:56px 0 36px}
+.kick{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--font);color:var(--blue-text);background:color-mix(in srgb,var(--blue) 10%,transparent);border:1px solid color-mix(in srgb,var(--blue) 22%,transparent);padding:4px 14px;border-radius:99px;margin-bottom:22px}
+.nums{display:flex;gap:0;margin:44px 0 0;padding:0;list-style:none;border:1px solid var(--line);border-radius:16px;background:var(--soft);overflow:hidden}
+.nums li{flex:1;padding:18px 20px;text-align:center;border-inline-start:1px solid var(--line)}
+.nums li:first-child{border-inline-start:0}
+.nums b{display:block;font:700 30px/1.2 var(--font);letter-spacing:-.01em}
+.nums span{color:var(--mute);font-size:14px}
+.eyebrow{display:block;font:600 13px var(--font);letter-spacing:.08em;color:var(--blue-text);margin-bottom:10px}
+.list{gap:16px}
+.list li{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:24px 24px 22px}
+.list h3{font-size:18px;margin:0 0 6px}
+.steps{position:relative;gap:16px}
+.steps li{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:22px 24px;align-items:center}
+.steps li::before{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.steps h3{margin:0 0 4px}
+.btn.pri{box-shadow:0 8px 24px color-mix(in srgb,var(--blue) 35%,transparent)}
+.btn{transition:transform .15s,filter .15s}.btn:hover{transform:translateY(-1px)}
+section{border-top:0;padding:72px 0}
+section+section{border-top:1px solid var(--line)}
+@media(max-width:720px){.hero{padding:36px 0 36px}.nums b{font-size:24px}.nums li{padding:14px 8px}}
+.langbar{border-bottom:1px solid var(--line);background:var(--soft);margin:0 -16px;padding:0 16px}
+.bar2{max-width:860px;margin:0 auto;display:flex;align-items:center;gap:14px;min-height:56px;padding:8px 0}
+.bar2 .l{font-weight:600;font-size:14px;color:var(--mute);white-space:nowrap}
+.bar2 .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px}
+.bar2 .chips::-webkit-scrollbar{display:none}
+.bar2 .chips button{white-space:nowrap;padding:6px 14px;font-size:14px;background:var(--bg)}
+.bar2 .chips button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.hero{padding-top:56px}
+
+/* ===== زجاج موقع الإدارة: خلفية متدرجة بإضاءتين، وبطاقات زجاجية شفافة بضبابية وحافة واحدة وظل ناعم، ورأس كبسولة عائمة ===== */
+:root{--pg1:#EEF3FB;--pg2:#DAE6F8;--g:rgba(255,255,255,.66);--gl:rgba(20,55,120,.14);--gs:rgba(31,80,170,.22);--gb:rgba(255,255,255,.82)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg1:#0B0C0E;--pg2:#181A1F;--g:rgba(255,255,255,.045);--gl:rgba(244,245,247,.12);--gs:rgba(0,0,0,.55);--gb:rgba(20,22,27,.72)}}
+:root[data-theme="dark"]{--pg1:#0B0C0E;--pg2:#181A1F;--g:rgba(255,255,255,.045);--gl:rgba(244,245,247,.12);--gs:rgba(0,0,0,.55);--gb:rgba(20,22,27,.72)}
+html{background:var(--pg2)}
+body{background:radial-gradient(60% 520px at 90% -6%,color-mix(in srgb,var(--blue) 22%,transparent),transparent 70%),radial-gradient(55% 460px at -4% 14%,color-mix(in srgb,var(--blue) 16%,transparent),transparent 70%),linear-gradient(182deg,var(--pg1),var(--pg2)) fixed;background-attachment:fixed}
+body::before{background:transparent}
+header{margin:10px auto 0;max-width:900px;padding:0 20px;border:1px solid var(--gl);border-radius:22px;background:var(--gb);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 18px 40px -22px var(--gs);top:calc(env(safe-area-inset-top,0px) + 10px)}
+.langbar{margin:10px auto 0;max-width:900px;padding:0 20px;border:1px solid var(--gl);border-radius:22px;background:var(--g);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);box-shadow:0 18px 40px -24px var(--gs)}
+.bar2 .chips button{background:var(--g)}
+.list li,.steps li,pre.code{background:var(--g);border:1px solid var(--gl);-webkit-backdrop-filter:blur(2.5px) saturate(1.3);backdrop-filter:blur(2.5px) saturate(1.3);box-shadow:0 22px 40px -22px var(--gs)}
+.list li,.steps li{border-radius:18px}
+.chips button,.seg button,.btn:not(.pri){background:var(--g);border-color:var(--gl);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.copy{background:var(--gb);border-color:var(--gl)}
+code.i{background:var(--g);border:1px solid var(--gl)}
+section+section{border-top-color:var(--gl)}
+footer{border-top-color:var(--gl)}
+/* ===== رأس موقع الإدارة بالضبط: كبسولة زجاجية بانكسار وخط سفلي، بلا شفق ===== */
+:root{--gfill:rgba(255,255,255,.66);--hi:.35;--shd:rgba(31,80,170,.2);--s1:#0B0C0E;--s2:#1F6FEB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--gfill:rgba(255,255,255,0);--hi:.06;--shd:rgba(0,0,0,.5);--s1:#F4F5F7}}
+:root[data-theme="dark"]{--gfill:rgba(255,255,255,0);--hi:.06;--shd:rgba(0,0,0,.5);--s1:#F4F5F7}
+header{position:sticky;isolation:isolate;overflow:hidden;border:0;border-radius:999px;margin:10px auto 0;max-width:900px;padding:0 20px;top:calc(env(safe-area-inset-top,0px) + 10px);
+background:linear-gradient(90deg,transparent,#83B1F6,#88B4F6,#84B2F6,#75A8F5,#94BCF7,transparent) 50% calc(100% - 1px)/66% .3px no-repeat,var(--gfill);
+-webkit-backdrop-filter:blur(2.5px) saturate(1.3);backdrop-filter:blur(2.5px) saturate(1.3);backdrop-filter:url(#orf) blur(2.5px) saturate(1.3);
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 2px rgba(255,255,255,var(--hi)),inset 0 -3px 8px rgba(255,255,255,calc(var(--hi)*.35)),inset 5px 0 14px -6px rgba(255,255,255,calc(var(--hi)*.55)),0 22px 40px -18px var(--shd)}
+header>*{position:relative;z-index:1}
+@media(max-width:640px){header{margin-inline:-6px;padding:0 14px}.langbar{margin-inline:-6px;border-radius:18px;padding:0 14px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="orf" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="1" seed="4" result="n0"/><feGaussianBlur in="n0" stdDeviation="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="56" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.1"/></filter></svg>
+<header><div class="bar">
+  <a class="brand" href="#top"><i class="logo" aria-hidden="true"></i>Project Forge</a>
+  <nav aria-label="الأقسام"><a href="#install">التثبيت</a><a href="#features">ماذا يعطيك</a><a href="#how">كيف يعمل</a><a href="'''+REPO+'''" target="_blank" rel="noopener">GitHub</a></nav>
+  <button class="tg" id="theme" type="button" role="switch" aria-checked="false" aria-label="الوضع الداكن"></button>
+</div></header>
+<div class="langbar"><div class="bar2"><span class="l">اللغة</span><div class="chips" id="langs" role="group" aria-label="اللغة"></div></div></div>
+
+<main id="top">
+<div class="wrap">
+  <div class="hero">
+    <div>
+    <h1>فريقك من وكلاء الذكاء الاصطناعي، تحت إدارة واحدة.</h1>
+    <p class="lead">حوّل مجلد مشروعك إلى مكتب عمل واضح الأدوار: تُوزَّع فيه المهام، وتُراجَع المخرجات، ويظهر التقدم بالأرقام.</p>
+    <div class="btns"><a class="btn pri" href="#install">ابدأ التثبيت</a></div>
+    <ul class="facts"><li>مفتوح المصدر</li><li>بايثون وحده، بلا مكتبات خارجية</li><li>يعمل مع Claude وChatGPT وGemini وGrok</li></ul>
+    </div>
+  </div>
+
+  <section id="install">
+    <span class="eyebrow">البداية</span><h2>التثبيت</h2>
+    <p class="sub">سطر واحد تلصقه في Terminal فيُنزّل الأداة ويفتح صفحة الإنشاء في متصفحك. وفي المرات التالية يكفي السطر نفسه. إن لم يوجد Python على جهازك فسيُطلب تثبيته تلقائيًا.</p>
+    <div class="opt">
+      <div><span class="l">نظام جهازك</span><div class="seg" id="os"><button type="button" aria-selected="true">Mac</button><button type="button" aria-selected="false">Windows</button><button type="button" aria-selected="false">للمطورين</button></div></div>
+      <div><span class="l">منصة الذكاء الاصطناعي</span><div class="chips" id="plat"><button type="button" aria-pressed="true">Claude</button><button type="button" aria-pressed="false">ChatGPT</button><button type="button" aria-pressed="false">Gemini</button><button type="button" aria-pressed="false">Grok</button></div></div>
+    </div>
+    <p class="hint" id="osHint"></p>
+    <div id="inst"></div>
+    <p class="after">بعد الإنشاء افتح <code class="i">Office/Project Office.html</code> ثم كلّم البوصلة وحدها، وهي توزّع العمل على الفريق.</p>
+  </section>
+
+  <section id="features">
+    <span class="eyebrow">المزايا</span><h2>ماذا يعطيك</h2>
+    <p class="sub">من أول تكليف إلى آخر قرار، يعرف كل عضو في الفريق ما عليه، وتعرف أنت ما أُنجز وما ينتظر مراجعتك.</p>
+    <ul class="list">
+      <li><h3>بوصلة تجمع عمل الفريق</h3><p>توزّع المهام على المختصين، وتتابع التسليم، وتحرّك العمل العالق من لوحة واحدة.</p></li>
+      <li><h3>استمرارية تتجاوز المحادثة</h3><p>تُحفظ التعليمات والأدوار والقرارات في ملفات المشروع، فيرجع إليها الوكلاء عند استئناف العمل.</p></li>
+      <li><h3>مسؤولية واضحة لكل مهمة</h3><p>تعرف من يتولى كل مهمة، وما المطلوب تسليمه، وما الذي ينتظر إنجاز مهمة أخرى.</p></li>
+      <li><h3>مراجعة قبل أن يصلك المخرج</h3><p>يُفحص كل تسليم بمعايير القبول في المرجع، ويُعاد ما يحتاج إلى تعديل قبل عرضه عليك.</p></li>
+      <li><h3>تقدّم تراه بالأرقام</h3><p>نسبة التسليم، وزمن الإنجاز، والحمل على الأدوار، والقرارات المتأخرة، مع تصدير بصيغة CSV.</p></li>
+      <li><h3>فريق قابل للتخصيص</h3><p>ابدأ من 80 تخصصًا و334 دورًا و130 مهارة جاهزة، ثم عدّل الفريق بما يناسب مشروعك.</p></li>
+    </ul>
+  </section>
+
+  <section id="how">
+    <span class="eyebrow">الآلية</span><h2>كيف يعمل</h2>
+    <p class="sub">ثلاث خطوات، ثم يستمر العمل من اللوحة.</p>
+    <ol class="steps">
+      <li><div><h3>أنشئ المشروع</h3><p>أربعة أسئلة: الاسم، والهدف، وكيف تُخاطَب، ووصف المشروع بجملة. تقترح الأداة أقرب تخصص من 80، وتعدّل الأدوار والمهارات بالنقر.</p></div></li>
+      <li><div><h3>افتح محادثة لكل موظف</h3><p>انسخ أمر البدء من موقع الإدارة. يقرأ الموظف دوره من المجلد ويعمل على اللوحة.</p></div></li>
+      <li><div><h3>تابع وقِس</h3><p>موقع الإدارة يعرض ما ينتظرك ومن يعمل الآن. وفي نهاية الأسبوع: <code class="i">report</code> للتقرير و<code class="i">export</code> لملفات CSV.</p></div></li>
+    </ol>
+  </section>
+
+
+</div>
+</main>
+<footer><div class="wrap"><span>Project Forge · رخصة MIT</span><a href="'''+REPO+'''" target="_blank" rel="noopener">'''+REPO.replace('https://','')+'''</a></div></footer>
+<div class="toast" id="toast" role="status">تم النسخ</div>
+
+<script>
+(function(){
+"use strict";
+var REPO="'''+REPO+'''";
+var RAW="'''+RAW+'''";
+var LANGS='''+json.dumps(LANGS,ensure_ascii=False)+''';
+var CODE={Arabic:"ar",English:"en",Spanish:"es",German:"de",Portuguese:"pt",Russian:"ru",Chinese:"zh-Hans",Macedonian:"mk"};
+var GITC={Arabic:"للتحديث لاحقًا",English:"To update later",Spanish:"Para actualizar más adelante",German:"Zum späteren Aktualisieren",Portuguese:"Para atualizar mais tarde",Russian:"Для обновления позже",Chinese:"以后更新时运行",Macedonian:"За подоцнежно ажурирање"};
+var I18N='''+json.dumps(U,ensure_ascii=False)+''';
+
+function $(s){return document.querySelector(s)}
+function E(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var root=document.documentElement,tb=$("#theme");
+function isDark(){var t=root.getAttribute("data-theme");if(t)return t==="dark";return matchMedia("(prefers-color-scheme: dark)").matches}
+function syncTheme(){tb.setAttribute("aria-checked",String(isDark()))}
+tb.addEventListener("click",function(){var d=!isDark();root.setAttribute("data-theme",d?"dark":"light");try{localStorage.setItem("pf-theme",d?"dark":"light")}catch(e){}syncTheme()});
+try{var st=localStorage.getItem("pf-theme");if(st)root.setAttribute("data-theme",st)}catch(e){}
+syncTheme();
+var toastT;
+function toast(){var t=$("#toast");t.textContent=TX("toast");t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("show")},1500)}
+function done(btn){toast();if(btn){btn.classList.add("ok");btn.textContent=TX("cpd");setTimeout(function(){btn.classList.remove("ok");btn.textContent=TX("cp")},1300)}}
+function fallback(t,btn){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");done(btn)}catch(e){}a.remove()}
+function copy(t,btn){try{navigator.clipboard.writeText(t).then(function(){done(btn)},function(){fallback(t,btn)})}catch(e){fallback(t,btn)}}
+document.addEventListener("click",function(e){var b=e.target.closest(".copy");if(b)copy(decodeURIComponent(b.getAttribute("data-c")),b)});
+function block(t){var pr=!/^python3|^curl|^irm|^\\$env|^git/.test(t),ar=pr&&LANG==="Arabic";return'<div class="cw"><pre class="code'+(pr?" pr":"")+(ar?" ar":"")+'">'+E(t)+'</pre><button class="copy" type="button" data-c="'+E(encodeURIComponent(t))+'">'+TX("cp")+'</button></div>'}
+function seg(id,cb){var g=$(id);g.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-selected",String(x===b))});cb(b)})}
+var PLAT="Claude",LANG="Arabic",OS=/Win/i.test(navigator.platform||navigator.userAgent||"")?1:0;
+var lg=$("#langs");
+function TX(k){return(I18N[LANG]||I18N.Arabic)[k]}
+lg.innerHTML=LANGS.map(function(l){return'<button type="button" aria-pressed="false" data-v="'+l[1]+'" lang="'+CODE[l[1]]+'">'+E(l[0])+'</button>'}).join("");
+lg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;setLang(b.getAttribute("data-v"),true)});
+var pl=$("#plat");pl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;PLAT=b.textContent.trim();pl.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});inst()});
+function envs(){var o=[];if(PLAT!=="Claude")o.push(["FORGE_PLATFORM",PLAT]);if(LANG!=="Arabic")o.push(["FORGE_LANGUAGE",LANG]);return o}
+function cmd(i){
+  if(i===0){var e=envs().map(function(x){return x[0]+'="'+x[1]+'"'}).join(" ");return"curl -fsSL "+RAW+"install.sh | "+(e?e+" ":"")+"bash"}
+  if(i===1){return envs().map(function(x){return"$env:"+x[0]+'="'+x[1]+'"; '}).join("")+"irm "+RAW+"install.ps1 | iex"}
+  return"git clone "+REPO+".git\\ncd ProjectForge\\npython3 -m forge\\n\\n# "+GITC[LANG]+"\\ngit pull";
 }
+function inst(){$("#inst").innerHTML=block(cmd(OS));$("#osHint").textContent=TX("hint"+OS)}
+var osb=$("#os").querySelectorAll("button");osb.forEach(function(b,i){b.setAttribute("aria-selected",String(i===OS))});
+seg("#os",function(b){OS=Array.prototype.indexOf.call(osb,b);inst()});
 
-
-def tr(text, code):
-    return EX[text][code] if text in EX else core.loc_tr(text, code)
-
-
-cli_l, ag_l = {}, {}
-for code in ("en", "es", "mk", "de", "zh", "pt", "ru"):
-    q = lambda v: '"%s"' % tr(v, code)
-    cli_l[code] = {
-        "new": RUN + ' new %s --goal %s --owner %s --preset transformation --language %s --yes' % (q("اسم المشروع"), q("هدف المشروع"), q("الرئيس"), LANG_ARG[code]),
-        "rows": RUNP + " rows " + q("رئيس المنتج"),
-        "add-row": RUNP + ' add-row --from %s --to %s --task %s --inputs "—" --output "`Outputs/Reference.md`"' % (q("البوصلة"), q("رئيس المنتج"), q("كتابة المرجع")),
-        "set-status": RUNP + " set-status 3 %s --note %s" % (q("مسلّمة"), q("تم")),
-        "add-role": RUNP + " add-role %s --title %s --scope %s" % (q("المحلل"), q("تحليل البيانات"), q("التحليل والتقارير")),
-        "decide": RUNP + " decide %s --tag %s" % (q("اعتماد النسخة الأولى"), q("قابل للتراجع")),
-    }
-    v = dict(qa=tr(core.QA_NAME, code), compass=tr("البوصلة: التوجيه العام", code), pa=tr("محلل العمليات", code), ae=tr("مهندس الأتمتة", code),
-             review=tr("بانتظار التدقيق", code), next=tr("للتالي", code))
-    head = tr("رئيس المنتج", code)
-    ag_l[code] = [tr("أنت «%s». اقرأ Agents/Roles/%s.md ثم تابع.", code) % ("1. %s: %s" % (head, tr("المرجع والقرارات والخطة", code)), head),
-                  tr("تابع", code), tr(core.CLOSE_T, code), tr(core.RESUME_T, code)] + [t.format(**v) for t in AG[code]]
-for code, cmds in cli_l.items():
-    for c in cmds.values():
-        assert not re.search(r"[\u0600-\u06FF]", c), (code, c)
-for code, cmds in ag_l.items():
-    for c in cmds:
-        assert not re.search(r"[\u0600-\u06FF]", c), (code, c[:80])
-
-lib = {"repo": REPO, "tool": T, "cli": [dict(n=a, d=b, c=c) for a, b, c in cli],
-       "agents": [dict(n=a, d=b, c=c) for a, b, c in agents],
-       "tools": [dict(n=a, d=b, c=c, s=s) for a, b, c, s in tools], "cliL": cli_l, "agL": ag_l}
-html = (root / "site" / "template.html").read_text(encoding="utf-8")
-# الخط وطبقة التصميم الجديدة (سبيكة) تُحقن في آخر وسم style، وخط Cairo القديم يُحذف
-_tp = root / "forge" / "templates"
-html = re.sub(r'@font-face\{font-family:"Cairo"[^}]*\}\s*', "", html).replace('"Cairo",', '"Forge Sans",')
-_extra = "".join((_tp / f).read_text(encoding="utf-8") for f in ("fonts.css", "skin site.css") if (_tp / f).is_file())
-_i = html.rfind("</style>")
-if _extra and _i >= 0:
-    html = html[:_i] + "\n" + _extra + html[_i:]
-payload = json.dumps(lib, ensure_ascii=False).replace("</", "<\\/")
-out = root / "site" / "index.html"
-site_url = (sys.argv[2] if len(sys.argv) > 2 else "").rstrip("/") + ("/" if len(sys.argv) > 2 else "")
-en = (root / "site" / "en.json").read_text(encoding="utf-8")
-langs = json.dumps([list(x) for x in core.LANGUAGES], ensure_ascii=False)
-html = html.replace("@@EN@@", en.replace("</", "<\\/")).replace("@@LANGS@@", langs).replace("@@NSK@@", str(len(core.SKILLS)))
-out.write_text(html.replace("@@LIB@@", payload).replace("@@SITEURL@@", site_url), encoding="utf-8")
-print("Built", out, out.stat().st_size, "bytes")
+function setLang(v,save){
+  LANG=I18N[v]?v:"Arabic";
+  var rtl=LANG==="Arabic";root.setAttribute("dir",rtl?"rtl":"ltr");root.setAttribute("lang",CODE[LANG]);
+  document.querySelectorAll("[data-i]").forEach(function(n){var t=TX(n.getAttribute("data-i"));if(t!=null)n.textContent=t});
+  document.querySelectorAll("[data-h]").forEach(function(n){var t=TX(n.getAttribute("data-h"));if(t!=null)n.innerHTML=t});
+  document.querySelectorAll("[data-ph]").forEach(function(n){n.setAttribute("placeholder",TX(n.getAttribute("data-ph")))});
+  document.querySelectorAll("[data-al]").forEach(function(n){n.setAttribute("aria-label",TX(n.getAttribute("data-al")))});
+  lg.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-v")===LANG))});
+  if(save){try{localStorage.setItem("pf-lang",LANG)}catch(e){}}
+  inst();
+}
+setLang("English",false);
+})();
+</script>
+'''
+import re as _re
+cut=html.index('\n<script>\n(function')
+head,tail=html[:cut],html[cut:]
+HK={'after','s3p'}
+ar=U['Arabic']
+order=[k for k in KEYS if k not in ('nl','b2','le','lh','lsub','t1','t2','t3','kick','dark','ph','hint0','hint1','hint2','nores','cp','cpd','toast')]
+for k in order:
+    a=ar[k]; pat='>'+a+'<'
+    assert pat in head,(k,a[:40])
+    head=head.replace(pat,'>\x01'+k+'\x02<',1)
+for k in order:
+    a=ar[k]
+    head=head.replace('\x01'+k+'\x02','<span data-%s="%s">%s</span>'%('h' if k in HK else 'i',k,a))
+head=head.replace('aria-label="الوضع الداكن"','aria-label="الوضع الداكن" data-al="dark"')
+head=head.replace('placeholder="ابحث في المكتبة" aria-label="بحث في المكتبة"','placeholder="ابحث في المكتبة" aria-label="بحث في المكتبة" ')
+head=head.replace('role="group" aria-label="اللغة"','role="group" aria-label="اللغة" data-al="langlbl"')
+head=head.replace('<nav aria-label="الأقسام">','<nav aria-label="الأقسام" data-al="navl">')
+html=head+tail
+html+=(root / 'tools' / 'site' / 'atom.js').read_text(encoding='utf-8')
+html+='\n</body></html>\n'
+out = root / 'site' / 'index.html'
+out.write_text(html, encoding='utf-8')
+print('Built', out, out.stat().st_size, 'bytes')
