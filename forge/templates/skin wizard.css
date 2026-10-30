@@ -11,7 +11,7 @@ html:root{--bg:#E9EAED;--card:rgba(255,255,255,.32);--ink:#151619;--mut:#54575D;
 html body{font-family:"Forge Cairo","Forge Sans","IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;font-size:15.5px}
 html .logo{border-radius:14px;background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20256%20256%22%3E%3Cdefs%3E%3ClinearGradient%20id=%22g%22%20x1=%220%22%20y1=%220%22%20x2=%221%22%20y2=%221%22%3E%3Cstop%20offset=%220%22%20stop-color=%22%23013FF6%22/%3E%3Cstop%20offset=%22.5%22%20stop-color=%22%230A2C9E%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%2300182E%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width=%22256%22%20height=%22256%22%20rx=%2260%22%20fill=%22url(%23g)%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%2214%22%20stroke-linecap=%22round%22%3E%3Cpath%20d=%22M128%20128V64M128%20128L73%20160M128%20128l55%2032%22/%3E%3C/g%3E%3Cg%20fill=%22%23fff%22%3E%3Ccircle%20cx=%22128%22%20cy=%22128%22%20r=%2224%22/%3E%3Ccircle%20cx=%22128%22%20cy=%2256%22%20r=%2215%22/%3E%3Ccircle%20cx=%2266%22%20cy=%22164%22%20r=%2215%22/%3E%3Ccircle%20cx=%22190%22%20cy=%22164%22%20r=%2215%22/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;box-shadow:0 10px 26px -8px rgba(18,19,21,.55)}
 html .logo svg{display:none}
-html .card{-webkit-backdrop-filter:blur(2.5px) saturate(1);backdrop-filter:blur(2.5px) saturate(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 2px rgba(255,255,255,.12),inset 0 -3px 8px RGBA(VAR(--NGB-SH),inset 5px 0 14px -6px rgba(255,255,255,.07),0 22px 40px -18px rgba(0,0,0,.745)}
+html .card{-webkit-backdrop-filter:blur(2.5px) saturate(1);backdrop-filter:blur(2.5px) saturate(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 2px rgba(255,255,255,.12),inset 0 -3px 8px rgba(255,255,255,.1),inset 5px 0 14px -6px rgba(255,255,255,.07),0 22px 40px -18px rgba(0,0,0,.745)}
 html .opt,html .skill,html .role,html .g,html .ci,html .why,html .lib{-webkit-backdrop-filter:blur(2.5px);backdrop-filter:blur(2.5px);background:var(--card)}
 html input,html textarea,html select{background:var(--card);border-radius:999px}
 html textarea{border-radius:16px}
@@ -38,3 +38,9 @@ html[data-theme="dark"]:not(.z):not(.y){--card:rgba(201,221,251,.06)}
 html .card{animation:none!important;background-position:50% calc(100% - 1px),0 0!important}
 html:root{--e1:#1266E5;--e2:#0F59C7;--e3:#151619;--e4:#0F59C7;--e5:#1266E5}
 @media (prefers-color-scheme:dark){html:root{--e1:#1162DB;--e2:#1266E5;--e3:#669FF4;--e4:#1266E5;--e5:#1162DB}}
+
+html .done .ok{color:#15803D;background:rgba(21,128,61,.14)}
+html .done .pname,html .done .path{color:#15803D;text-shadow:0 0 10px rgba(21,128,61,.2)}
+@media (prefers-color-scheme:dark){html:not([data-theme="light"]) .done .ok{color:#4ADE80;background:rgba(74,222,128,.14)}html:not([data-theme="light"]) .done .pname,html:not([data-theme="light"]) .done .path{color:#4ADE80;text-shadow:0 0 10px rgba(74,222,128,.25)}}
+html[data-theme="dark"] .done .ok{color:#4ADE80;background:rgba(74,222,128,.14)}
+html[data-theme="dark"] .done .pname,html[data-theme="dark"] .done .path{color:#4ADE80;text-shadow:0 0 10px rgba(74,222,128,.25)}

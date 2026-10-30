@@ -2944,13 +2944,32 @@ def install_shortcut():
         macos.mkdir(parents=True, exist_ok=True)
         res.mkdir(parents=True, exist_ok=True)
         run = macos / "ProjectForge"
-        atomic_write(run, '#!/bin/bash\nexport PYTHONUTF8=1\nexec /usr/bin/env python3 -I "$HOME/Library/Application Support/Project Forge/%s" gui\n' % TOOL_NAME)
+        py = sys.executable if sys.executable and os.path.isabs(sys.executable) and "/CommandLineTools/" not in sys.executable else ""
+        script = (
+            '#!/bin/bash\n'
+            'export PYTHONUTF8=1\n'
+            'T="$HOME/Library/Application Support/Project Forge/%s"\n'
+            'LOG="$HOME/Library/Logs/Project Forge.log"\n'
+            'mkdir -p "$HOME/Library/Logs"\n'
+            'for P in "%s" /opt/homebrew/bin/python3 /usr/local/bin/python3 /Library/Frameworks/Python.framework/Versions/Current/bin/python3 "$HOME/miniconda3/bin/python3" "$HOME/anaconda3/bin/python3" /usr/bin/python3; do\n'
+            '  if [ -x "$P" ] && "$P" -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)" 2>/dev/null; then\n'
+            '    exec "$P" -I "$T" gui >>"$LOG" 2>&1\n'
+            '  fi\n'
+            'done\n'
+            '/usr/bin/osascript -e \'display alert "Project Forge" message "Python 3.9 or newer is required. Install it from python.org, then open Project Forge again."\' >/dev/null 2>&1\n'
+            'exit 1\n' % (TOOL_NAME, py))
+        atomic_write(run, script)
         run.chmod(run.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
         (res / "AppIcon.icns").write_bytes(b"icns" + struct.pack(">I", 16 + len(png)) + b"ic08" + struct.pack(">I", 8 + len(png)) + png)
         (app / "Contents" / "Info.plist").write_bytes(plistlib.dumps({
             "CFBundleName": "Project Forge", "CFBundleDisplayName": "Project Forge", "CFBundleExecutable": "ProjectForge",
             "CFBundleIdentifier": "com.hakamibros.projectforge", "CFBundlePackageType": "APPL", "CFBundleIconFile": "AppIcon",
-            "CFBundleVersion": str(VERSION), "CFBundleShortVersionString": "%d.0" % VERSION, "LSMinimumSystemVersion": "10.13", "LSUIElement": True}))
+            "CFBundleVersion": str(VERSION), "CFBundleShortVersionString": "%d.0" % VERSION, "LSMinimumSystemVersion": "10.13"}))
+        try:  # توقيع محلي بلا هوية يمنع رفض التشغيل على أجهزة Apple Silicon
+            import subprocess
+            subprocess.run(["/usr/bin/codesign", "--force", "--deep", "-s", "-", str(app)], capture_output=True, timeout=30)
+        except Exception:
+            pass
         return app
     if os.name == "nt":
         (home / "icon.png").write_bytes(png)
@@ -3121,10 +3140,17 @@ def cmd_gui(a):
     print(gui_msg("Project Forge is running. If the page does not open automatically, open this URL:\n\n    %s\n") % url)
     print(gui_msg("The tool stops automatically after the page is closed. To stop immediately, press Ctrl+C."))
     if not a.no_browser:
-        try:
-            webbrowser.open(url)
-        except Exception:
-            pass
+        opened = False
+        if sys.platform == "darwin":
+            try:
+                opened = subprocess.run(["/usr/bin/open", url], capture_output=True, timeout=15).returncode == 0
+            except Exception:
+                opened = False
+        if not opened:
+            try:
+                webbrowser.open(url)
+            except Exception:
+                pass
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

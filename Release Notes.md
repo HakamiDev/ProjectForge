@@ -1,4 +1,12 @@
-# v2.1.2: eight languages, new design
+# v2.1.3: fixes
+
+Released: 31 October 2026. Previous published release: v2.1.2.
+
+- Desktop icon (macOS): the launcher now records the exact Python that installed it and tries the usual install locations (Homebrew, python.org, conda) before the system one, writes its output to `~/Library/Logs/Project Forge.log`, shows an alert when no Python 3.9 or newer is found, is signed locally, and opens the page with the system `open` command.
+- Wizard finish screen: the check mark, the project name and the project path are green (light and dark).
+- Wizard style sheet: a malformed shadow value stopped the browser from reading every rule after it, so the pill buttons and fields fell back to defaults. Fixed.
+
+## v2.1.2: eight languages, new design
 
 Released: 31 October 2026. Previous published release: v1.1.9.
 
