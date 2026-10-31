@@ -17,7 +17,7 @@ Project Forge 1: أداة بناء مشروع بفريق ذكاء اصطناعي
   decide     يسجّل قرارًا في سجل القرارات.
   report     تقرير أداء: نسبة التسليم وزمن الدورة ومرور الجودة والحمل والقرارات المتأخرة.
   export     يصدّر اللوحة والفريق والقرارات والمؤشرات إلى CSV بترميز UTF-8 مع BOM.
-  check      يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات ووجود رئيس ضمان الجودة.
+  check      يفحص المشروع: التسمية والترقيم وسلامة اللوحة ومهلة القرارات.
   register   يسجّل المشروع في سجل مركز البوصلات (Registry.md).
   selftest   يختبر الأداة على مشروع مؤقت.
 
@@ -661,12 +661,12 @@ PRESET_BLURBS = {k: v[1] for k, v in PRESET_META.items()}
 PRESET_GROUPS = ["إدارة واستراتيجية", "مالية وقانون وامتثال", "موارد بشرية وتطوير", "تسويق ومبيعات وعملاء", "تقنية وبيانات", "عمليات وإمداد وجودة", "محتوى وإبداع وإعلام", "قطاعات", "بحث وتعليم", "حياة شخصية", "مخصص"]
 
 
-def role_library():
+def role_library(with_qa=False):
     """مكتبة أدوار فريدة بالاسم، مأخوذة من كل القوالب، مع القالب الذي جاءت منه."""
     seen, out = set(), []
     for k, roles in PRESETS.items():
         for n, t, sc, _ in roles:
-            if n == QA_NAME or n in seen:
+            if n in seen or (n == QA_NAME and not with_qa):
                 continue
             seen.add(n)
             out.append({"name": n, "title": t, "scope": sc, "from": PRESET_LABELS.get(k, k)})
@@ -1257,7 +1257,7 @@ def commands_library(team):
         {"label": "طلب مباشر لموظف", "text": "أضف صفًا إلى [اسم الموظف]: [المهمة]، المخرج: [المسار]، الموعد: [التاريخ]."},
         {"label": "إغلاق الأسبوع", "text": "طبّق مهارة «إغلاق الأسبوع»: التقرير، والأرشفة، والقرارات المتأخرة، وتعميم الأولويات."},
     ]})
-    groups.append({"title": "أوامر الجودة", "hint": "تُلصق في محادثة %s." % QA_NAME, "items": [
+    groups.append({"title": "أوامر الجودة", "hint": "تُلصق في محادثة %s." % qa_name(roster), "items": [
         {"label": "مراجعة صف", "text": "راجع الصف [الرقم] بمهارة «مراجعة جودة» واحكم: يمر أو لا يمر، مع سبب واحد حاسم."},
         {"label": "مراجعة شاملة", "text": "راجع كل الصفوف التي حالتها «بانتظار التدقيق» بالترتيب، وسجّل حكمك في اللوحة و`Docs/QA/`."},
     ]})
@@ -1270,7 +1270,7 @@ def commands_library(team):
         {"label": "خطة الأسبوع", "text": "خطط الأسبوع القادم: اختر من اللوحة أهم خمسة صفوف بأثرها على الهدف، ورتبها، وحدد لكل صف موظفه وموعده، واكتبها تعميمًا في القسم 2."},
         {"label": "مراجعة المخاطر", "text": "طبّق مهارة «سجل المخاطر» على المشروع كله: اجمع المخاطر من الصفوف المتأخرة والمعلقة، وقيّمها، واقترح لكل خطر عالٍ إجراءً وصاحبًا."},
         {"label": "مراجعة نهاية مرحلة", "text": "طبّق مهارة «مراجعة نهاية مرحلة» على الصفوف المسلّمة هذا الشهر، واكتب ثلاثة أشياء نكررها وثلاثة نوقفها، وحوّل كل قرار إلى صف."},
-        {"label": "تدقيق الجودة الشامل", "text": "اطلب من %s تطبيق مهارة «قائمة فحص جودة» على كل مخرج مسلّم في آخر أسبوعين، وأعطني النتيجة في جدول: المخرج، يمر أو لا يمر، السبب." % QA_NAME},
+        {"label": "تدقيق الجودة الشامل", "text": "اطلب من %s تطبيق مهارة «قائمة فحص جودة» على كل مخرج مسلّم في آخر أسبوعين، وأعطني النتيجة في جدول: المخرج، يمر أو لا يمر، السبب." % qa_name(roster)},
         {"label": "ترشيح للأتمتة", "text": "طبّق مهارة «ترشيح إجراء للأتمتة» على الإجراءات المتكررة في اللوحة، ورتّبها بالأثر والجهد، وأضف صفًا لأعلى مرشح إلى مهندس الأتمتة إن وُجد وإلا إليك."},
         {"label": "تقرير شهري للرئيس", "text": "اكتب تقريرًا شهريًا في صفحة واحدة بمهارة «تقرير تنفيذي»: ما أُنجز مقابل الهدف، والمؤشرات، والمخاطر، وما يحتاج قراري، واحفظه في Docs/."},
     ]})
@@ -1333,6 +1333,11 @@ def date_ymd(m):
 
 def fmt_dt(d):
     return "%s، %s" % (fmt_date(d), d.strftime("%H:%M"))
+
+
+def qa_name(roster):
+    """من يحكم على المخرجات: رئيس ضمان الجودة إن وُجد في الفريق، وإلا صاحب المرجع."""
+    return QA_NAME if any(r["name"] == QA_NAME for r in roster) else pm_name(roster)
 
 
 def pm_name(roster):
@@ -1987,7 +1992,7 @@ def role_doc(team, r):
     t = fill(COMPASS_T if r["id"] == "compass" else ROLE_T, name=r["name"], chat=r["chat"], platform=r["platform"], title=r["title"],
              scope=r["scope"], project=team["project"], goal=team["goal"], owner=team["owner"], pm=pm_name(team["roster"]),
              lang=lang_note(team.get("language")))
-    if r["name"] == QA_NAME:
+    if r["name"] == qa_name(team["roster"]):
         t += fill(QA_EXTRA, owner=team["owner"], pm=pm_name(team["roster"]))
     return t
 
@@ -2039,7 +2044,7 @@ def create_project(parent, name, goal, owner, preset, roles, accent, report, ski
             "platform": norm_platform(platform), "language": language, "lang_code": LOCAL or "ar"}
     save_team(root, team)
     report.append(("أُنشئ", root / "Agents" / "Team.json"))
-    qa = QA_NAME
+    qa = qa_name(roster)
     write_new(root / "CLAUDE.md", fill(CLAUDE_T, project=project, goal=goal, owner=owner, tool=TOOL_NAME, qa=qa, team_table=team_table(roster), pm=pm_name(roster), lang=lang_note(language)), report)
     write_new(root / "AGENTS.md", fill(AGENTS_T, project=project, owner=owner), report)
     write_new(root / "Read Me.md", fill(README_T, project=project, goal=goal, owner=owner, date=fmt_date(now()), tool=TOOL_NAME, office=OFFICE_FILE, pm=pm_name(roster)), report)
@@ -2614,15 +2619,11 @@ def customize_roles(base, drops, adds):
     roles = list(base)
     for d in drops or []:
         key = role_key(d)
-        if key == QA_NAME:
-            continue
         roles = [r for r in roles if role_key(r[0]) != key]
     for a in adds or []:
         r = parse_role_spec(a)
         if r and all(role_key(x[0]) != role_key(r[0]) for x in roles):
             roles.append(r)
-    if all(role_key(r[0]) != QA_NAME for r in roles):
-        roles.append((QA_NAME, "الاختبار المستقل والحكم", "الاختبار المستقل والحكم بيمر أو لا يمر على كل مخرج قبل أن يصل إلى صاحب المشروع", "Claude"))
     return roles
 
 
@@ -2630,7 +2631,7 @@ def choose_roles_interactive(base):
     """يعرض الفريق المقترح ويتيح الحذف والإضافة قبل الإنشاء."""
     roles = list(base)
     while True:
-        print("\nSuggested team (Compass is added automatically; the QA role cannot be removed):")
+        print("\nSuggested team (Compass is added automatically; any role can be removed):")
         for i, r in enumerate(roles, 1):
             print("  %d) %s: %s" % (i, terminal_label(r[0]), terminal_label(r[1])))
         print("Press Enter to accept, or type:")
@@ -2758,7 +2759,7 @@ def cmd_gui(a):
         return {"presets": [{"key": k, "label": PRESET_LABELS.get(k, k), "blurb": PRESET_BLURBS.get(k, ""),
                              "icon": PRESET_META[k][2], "group": PRESET_META[k][3], "tags": preset_tags(k), "syn": PRESET_SYNONYMS.get(k, ""),
                              "roles": [{"name": r[0], "title": r[1], "scope": r[2]} for r in PRESETS[k]]} for k in PRESETS],
-                "groups": PRESET_GROUPS, "library": role_library(), "dest": default_dest, "qa": QA_NAME,
+                "groups": PRESET_GROUPS, "library": role_library(True), "dest": default_dest, "qa": QA_NAME,
                 "examples": GOAL_EXAMPLES, "skills": [{"key": k, "name": v[0], "desc": v[1], "group": v[2]} for k, v in SKILLS.items()],
                 "skillGroups": SKILL_GROUPS, "recommended": {k: skills_for(k) for k in PRESETS}}
 
@@ -3304,7 +3305,7 @@ def attention(root, at=None):
         if n in last and st == "بانتظار التدقيق":
             age = (at - last[n]).total_seconds() / 3600
             if age > QA_WAIT_HOURS:
-                add("qa", n, QA_NAME, "الصف %d ينتظر التدقيق منذ %s" % (n, human_span(age)), age)
+                add("qa", n, qa_name(team["roster"]), "الصف %d ينتظر التدقيق منذ %s" % (n, human_span(age)), age)
     overdue_n = {i["n"] for i in items if i["kind"] == "overdue"}
     for t in b["tasks"]:
         if not is_open(t) or norm(t["status"]) not in ("محالة", "قيد التنفيذ"):
@@ -3448,8 +3449,6 @@ def check_project(root):
         if "_" in p.name and ".git" not in p.parts:
             problems.append("اسم فيه شرطة سفلية: %s" % p.relative_to(root))
     team = load_team(root)
-    if not any(r["name"] == QA_NAME for r in team["roster"]):
-        problems.append("لا يوجد %s في الفريق: لا يمكن ضمان أن مخرجًا يصل إلى %s بحكم مستقل" % (QA_NAME, team["owner"]))
     for r in team["roster"]:
         if not (root / "Agents" / "Roles" / ("%s.md" % r["name"])).exists():
             problems.append("ملف الدور ناقص: %s" % r["name"])

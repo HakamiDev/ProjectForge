@@ -139,9 +139,25 @@ class ForgeTests(unittest.TestCase):
         names = [x[0] for x in r]
         self.assertNotIn("محلل الأداء", names)
         self.assertIn("مراجع قانوني", names)
-        self.assertIn(core.QA_NAME, names)
+        self.assertNotIn(core.QA_NAME, names)
         r2 = core.customize_roles([("أ", "أ", "", "Claude")], [], [])
-        self.assertIn(core.QA_NAME, [x[0] for x in r2])
+        self.assertNotIn(core.QA_NAME, [x[0] for x in r2])
+        self.assertIn(core.QA_NAME, [x["name"] for x in core.role_library(True)])
+
+    def test_quality_role_is_optional(self):
+        roles = [r for r in core.PRESETS["operations"] if r[0] != core.QA_NAME]
+        with tempfile.TemporaryDirectory(prefix="forge noqa ") as d:
+            root = core.create_project(d, "بلا جودة", "هدف", "الرئيس", "operations", roles, None, [])
+            team = core.load_team(root)
+            names = [r["name"] for r in team["roster"]]
+            self.assertNotIn(core.QA_NAME, names)
+            self.assertFalse((root / "Agents" / "Roles" / ("%s.md" % core.QA_NAME)).exists())
+            pm = core.pm_name(team["roster"])
+            self.assertEqual(core.qa_name(team["roster"]), pm)
+            self.assertIn("## 6. حكمك", (root / "Agents" / "Roles" / ("%s.md" % pm)).read_text(encoding="utf-8"))
+            self.assertNotIn(core.QA_NAME, (root / "CLAUDE.md").read_text(encoding="utf-8"))
+            self.assertFalse([p for p in core.check_project(root) if "ضمان" in p])
+            core.commands_library(team)
 
     def test_wizard_template_and_defaults(self):
         w = core.load_wizard()

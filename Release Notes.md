@@ -1,4 +1,11 @@
-# v2.1.5: desktop icon removed
+# v2.1.6: optional quality role
+
+Released: 31 October 2026. Previous published release: v2.1.5.
+
+- The Head of Quality Assurance is no longer mandatory: it is still in every team preset by default, but it can be removed in the wizard (the role's × button), with `--drop-role` or in the terminal selector, and it can be added back from the roles library. When it is removed, the owner of the reference document (the Head of Product, or the Compass when there is none) takes over the verdicts: the generated instructions, the role file ("Your verdict" section), the command library and the attention list point to that role, and `check` no longer reports a missing quality role.
+- The wizard help text no longer says the role cannot be removed (all eight languages).
+
+## v2.1.5: desktop icon removed
 
 Released: 31 October 2026. Previous published release: v2.1.4.
 

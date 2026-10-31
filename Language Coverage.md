@@ -1,6 +1,6 @@
 # Interface language coverage
 
-Updated: 31 October 2026. Release: v2.1.5.
+Updated: 31 October 2026. Release: v2.1.6.
 
 The wizard, the public site and every generated project support **8 languages**: Arabic plus seven. The selector is generated from `forge/core.py: LANGUAGES`; the translation tables live in `forge/templates/loc.json` (project files, tool and management site) and in the wizard and site templates (interface).
 
