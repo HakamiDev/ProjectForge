@@ -1,4 +1,10 @@
-# v2.1.4: desktop icon fix
+# v2.1.5: desktop icon removed
+
+Released: 31 October 2026. Previous published release: v2.1.4.
+
+- Removed the desktop icon feature completely: the wizard button, the `shortcut` command, the local `/api/shortcut` route, the launcher code and its test. Start the wizard with `python3 -I "Project Forge 1.py" gui` or with the install line. An icon created by an earlier version can be deleted from the desktop; the folder `Project Forge` in the application data directory (macOS: `~/Library/Application Support/Project Forge`) can be deleted too.
+
+## v2.1.4: desktop icon fix
 
 Released: 31 October 2026. Previous published release: v2.1.3.
 
